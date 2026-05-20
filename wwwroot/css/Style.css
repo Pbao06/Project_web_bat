@@ -1,0 +1,41 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
+/* reset css defaut */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* giup padding ko bi phinh ra qua */
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+:root {
+    --poppins: 'Poppins',sans-serif;
+    --lato: 'Lato',sans-serif;
+    --light: #f9f9f9;
+    --blue: #3c91E6;
+    --light-blue: #cfe8ff;
+    --grey: #eee;
+    --dark-grey: #AAAA;
+    --dark: #342E37;
+    --red: #DB504A;
+    --yellow: #FFCE26;
+    --light-yellow: #FFF2C6;
+    --orange: #FD7238;
+    --light-orange: #FFE0D3;
+    --green: #22C55E;
+}
+/* html
+{
+    overflow: hidden;
+} */
+body {
+    background: var(--grey);
+    overflow-x: hidden;
+}

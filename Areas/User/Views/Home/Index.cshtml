@@ -1,0 +1,245 @@
+﻿
+@model IEnumerable<Getdata1.DTOs.ProductDto>
+@{
+}
+
+
+@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "~/Areas/User/Views/Shared/Layout.cshtml";
+}
+@* no se auto render vao day *@
+@section Styles
+{
+    <link href="~/css/Use_web/Home/home.css" rel="stylesheet" />
+}
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-eyebrow">
+            <i class='bx bx-sun'></i>
+            <span>Season 2026</span>
+            — New Collection Dropped
+        </div>
+        <h1>Play<br><em>Without</em><br>Limits.</h1>
+        <p class="hero-sub">Professional-grade badminton gear built for players who refuse to compromise on performance.</p>
+        <div class="hero-cta">
+            <button class="btn-hero-primary">Shop Collection</button>
+            <button class="btn-hero-ghost">Watch Campaign <i class='bx bx-play-circle' style="vertical-align:-2px"></i></button>
+        </div>
+    </div>
+
+    <div class="hero-stats">
+        <div class="hero-stats-inner">
+            <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Products</div></div>
+            <div class="stat-item"><div class="stat-num">12K+</div><div class="stat-label">Happy Players</div></div>
+            <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Average Rating</div></div>
+            <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">Shipping over $150</div></div>
+        </div>
+    </div>
+</section>
+
+<div class="feature-block">
+    <div class="feature-inner">
+        <div class="feature-text">
+            <span class="feature-tag">New Arrival 2026</span>
+            <h2>Carbon<br>X-10</h2>
+            <p>Weightless power. Absolute control. Our most advanced frame ever — built with aerospace-grade carbon fibre and tungsten weighting.</p>
+            <div class="feature-price"><span>From</span>$230.00</div>
+            <div class="feature-btns">
+                <button class="btn-white">Buy Now</button>
+                <button class="btn-outline-white">Learn More</button>
+            </div>
+        </div>
+        <div class="feature-visual">
+            <div class="racket-wrap" id="featureRacket">
+                <div class="r-head"><div class="r-strings" id="fStrings"></div></div>
+                <div class="r-throat"></div>
+                <div class="r-handle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <span class="section-label">Browse</span>
+    <div class="section-head">
+        <h2>Shop by Category</h2>
+        <a asp-area="User" asp-controller="Store" asp-action="Index">All Products <i class='bx bx-right-arrow-alt'></i></a>
+    </div>
+    <div class="cat-grid">
+        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-baseball'></i></div><h3>Vợt cầu lông</h3><p>Attack, Defense, All-Round & more.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-football'></i></div><h3>Cầu lông</h3><p>Feather & nylon for every level.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-user'></i></div><h3>Quần áo</h3><p>Performance tees, shorts & kits.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-run'></i></div><h3>Giày</h3><p>Court grip, cushion & stability.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-briefcase'></i></div><h3>Túi / Balo</h3><p>From 2-racket to 9-racket bags.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-git-branch'></i></div><h3>Dây cước</h3><p>Tension, repulsion & durability.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-transfer-alt'></i></div><h3>Grip / Cuốn cán</h3><p>Dry, tacky & towel grips.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-package'></i></div><h3>Phụ kiện</h3><p>Wristbands, covers & more.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+    </div>
+</div>
+
+<div class="section">
+    <span class="section-label">Top Picks</span>
+    <div class="section-head">
+        <h2>Best Sellers</h2>
+        <a href="#">View All <i class='bx bx-right-arrow-alt'></i></a>
+    </div>
+    <div class="products-strip" id="bestSellers"></div>
+</div>
+
+<div class="dual-banner">
+    <div class="banner-card banner-apparel">
+        <div class="banner-bg"></div>
+        <i class='bx bx-user banner-icon'></i>
+        <div class="banner-body">
+            <span class="banner-tag">New Season Kit</span>
+            <h3>Pro Series<br>Apparel</h3>
+            <p>Engineered for movement and style.</p>
+            <button class="btn-banner">Shop Apparel</button>
+        </div>
+    </div>
+    <div class="banner-card banner-footwear">
+        <div class="banner-bg"></div>
+        <i class='bx bx-run banner-icon'></i>
+        <div class="banner-body">
+            <span class="banner-tag">AeroStep Series</span>
+            <h3>Court<br>Footwear</h3>
+            <p>Unmatched grip. All-day cushion.</p>
+            <button class="btn-banner">Shop Shoes</button>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <span class="section-label">Just Landed</span>
+    <div class="section-head">
+        <h2>New Arrivals</h2>
+        <a href="#">See All New <i class='bx bx-right-arrow-alt'></i></a>
+    </div>
+    <div class="products-strip" id="newArrivals"></div>
+</div>
+
+<div class="brand-strip">
+    <div class="brand-strip-inner">
+        <div class="brand-item">YONEX <span>Official Partner</span></div>
+        <div class="brand-item">VICTOR <span>Official Partner</span></div>
+        <div class="brand-item">LI-NING <span>Official Partner</span></div>
+        <div class="brand-item">PBAO <span>Exclusive Series</span></div>
+        <div class="brand-item">APACS <span>Selected Range</span></div>
+    </div>
+</div>
+
+<div class="testimonials">
+    <span class="section-label">Reviews</span>
+    <div class="section-head" style="margin-bottom:28px">
+        <h2>What Players Say</h2>
+    </div>
+    <div class="testimonial-grid">
+        <div class="t-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-text">The Astrox 100ZZ completely transformed my smash. It's like hitting a different sport — the power transfer is unreal.</p>
+            <div class="t-author">
+                <div class="t-avatar" style="background:#0071e3">NT</div>
+                <div><div class="t-name">Nguyễn Thanh</div><div class="t-role">Club Player, HCMC</div></div>
+            </div>
+        </div>
+        <div class="t-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-text">Fastest delivery I've ever had from an online sports store. The racket was strung perfectly at my requested tension.</p>
+            <div class="t-author">
+                <div class="t-avatar" style="background:#34c759">KL</div>
+                <div><div class="t-name">Kevin Lim</div><div class="t-role">Tournament Player, SGP</div></div>
+            </div>
+        </div>
+        <div class="t-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-text">AeroStep 1 shoes are worth every cent. Non-slip grip on any court surface, and my knees thank me after 3-hour sessions.</p>
+            <div class="t-author">
+                <div class="t-avatar" style="background:#ff6b35">PS</div>
+                <div><div class="t-name">Priya S.</div><div class="t-role">Recreational Player, KL</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="newsletter">
+    <div class="newsletter-inner">
+        <h2>Stay in the Game.</h2>
+        <p>New arrivals, exclusive drops & training tips — straight to your inbox.</p>
+        <div class="nl-form">
+            <input class="nl-input" type="email" placeholder="Your email address">
+            <button class="btn-nl">Subscribe</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        /* ── Draw racket strings ── */
+        const fs = document.getElementById('fStrings');
+        if(fs){
+          for(let i=0;i<=6;i++){const v=document.createElement('div');v.className='r-sv';v.style.left=(i*16)+'px';fs.appendChild(v);}
+          for(let i=0;i<=8;i++){const h=document.createElement('div');h.className='r-sh';h.style.top=(i*16)+'px';fs.appendChild(h);}
+        }
+
+        /* ── Product data ── */
+        const PRODUCTS = @Html.Raw(Json.Serialize(Model?.Select(p => new {
+                id = p.Id,
+                name = p.Name,
+                price = p.Price,
+                oldPrice = (decimal?)null,
+                rating = 4.5,
+                reviews = p.Stock,
+                badge = "new",
+                icon = "bx-baseball",
+                isNew = true,
+                image = p.Image,
+                cat = p.CategoryName ?? "Sản phẩm",
+                brand = p.Brand
+            }) ?? Enumerable.Empty<object>()));
+       
+        let wished = new Set();
+
+        function badgeHTML(b){
+          if(b==='new') return '<span class="badge badge-new">New</span>';
+          if(b==='sale') return '<span class="badge badge-sale">Sale</span>';
+          return '';
+        }
+        function stars(r){ return '★'.repeat(Math.floor(r))+'☆'.repeat(5-Math.floor(r)); }
+
+        function cardHTML(p, idx){
+            const imgHTML = p.image 
+                ? `<img src="/img/${p.image}" style="width:100%;height:100%;object-fit:cover;">` 
+                : `<i class='bx ${p.icon}'></i>`;
+    
+            return `
+            <div class="product-card" style="animation-delay:${idx*0.06}s">
+                <div class="card-img">
+                    ${imgHTML}
+                    ...
+                </div>
+                ...
+            </div>`;
+        }
+
+        function toggleWish(e,id){
+          e.stopPropagation();
+          if(wished.has(id)) wished.delete(id); else wished.add(id);
+          renderAll();
+        }
+        function addCart(id){
+          const dot=document.querySelector('.cart-dot');
+          dot.style.transform='scale(1.8)'; dot.style.background='#34c759';
+          setTimeout(()=>{dot.style.transform='';dot.style.background='var(--accent)';},400);
+        }
+
+        function renderAll(){
+          const bs = [...PRODUCTS].sort((a,b)=>b.reviews-a.reviews).slice(0,4);
+          document.getElementById('bestSellers').innerHTML = bs.map((p,i)=>cardHTML(p,i)).join('');
+          const na = PRODUCTS.filter(p=>p.isNew).slice(0,4);
+          document.getElementById('newArrivals').innerHTML = na.map((p,i)=>cardHTML(p,i)).join('');
+        }
+
+        renderAll();
+    </script>
+}

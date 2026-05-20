@@ -1,0 +1,437 @@
+﻿:root {
+    --bg: #ffffff;
+    --bg2: #f5f5f7;
+    --bg3: #e8e8ed;
+    --text: #1d1d1f;
+    --sub: #6e6e73;
+    --muted: #aeaeb2;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --border: #d2d2d7;
+    --new: #bf4800;
+    --sale: #1d7a3c;
+    --card-r: 18px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 48px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 0.5px solid rgba(0,0,0,0.08);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-inner {
+    width: 100%;
+    max-width: 1080px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+
+.logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    text-decoration: none;
+    color: var(--text);
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2px;
+}
+
+    .nav-links a {
+        text-decoration: none;
+        color: var(--sub);
+        font-size: 12px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        transition: background .2s, color .2s;
+    }
+
+        .nav-links a:hover {
+            color: var(--text);
+            background: var(--bg2);
+        }
+
+.nav-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+    .nav-actions i {
+        font-size: 18px;
+        cursor: pointer;
+        color: var(--sub);
+        transition: color .2s;
+    }
+
+        .nav-actions i:hover {
+            color: var(--text);
+        }
+
+.cart-wrap {
+    position: relative;
+}
+
+.cart-dot {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 1.5px solid #fff;
+    transition: transform .3s, background .3s;
+}
+
+/* ──────────────────────────────────────
+   SECTION WRAPPER (Dùng chung cho các khối nội dung)
+────────────────────────────────────── */
+.section {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 80px 24px 0;
+}
+
+.section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 36px;
+}
+
+    .section-head h2 {
+        font-family: 'Syne',sans-serif;
+        font-size: 34px;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+
+    .section-head a {
+        font-size: 13px;
+        color: var(--accent);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: gap .2s;
+    }
+
+        .section-head a:hover {
+            gap: 8px;
+        }
+
+.section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* ──────────────────────────────────────
+   PRODUCT CARDS STRIP (Dùng chung cho Home, Store, Cart...)
+────────────────────────────────────── */
+.products-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.product-card {
+    background: var(--bg2);
+    border-radius: var(--card-r);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .28s ease, box-shadow .28s ease;
+    animation: fadeUp .5s ease both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 44px rgba(0,0,0,0.1);
+}
+
+.card-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg2);
+}
+
+    .card-img i {
+        font-size: 48px;
+        color: var(--muted);
+        transition: transform .35s ease;
+    }
+
+.product-card:hover .card-img i {
+    transform: scale(1.1);
+}
+
+.card-badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.badge-new {
+    background: #fff0e6;
+    color: var(--new);
+}
+
+.badge-sale {
+    background: #e6f5ec;
+    color: var(--sale);
+}
+
+.card-wish {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+    .card-wish:hover {
+        background: #fff;
+    }
+
+    .card-wish i {
+        font-size: 14px;
+        color: var(--sub);
+    }
+
+    .card-wish.wished i {
+        color: #e03;
+    }
+
+.card-body {
+    padding: 14px 14px 16px;
+}
+
+.card-cat {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+
+.card-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-price {
+    font-family: 'Syne',sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+    .card-price .old {
+        font-size: 11px;
+        color: var(--muted);
+        text-decoration: line-through;
+        font-family: 'DM Sans',sans-serif;
+        font-weight: 400;
+        margin-left: 3px;
+    }
+
+.card-stars {
+    font-size: 10px;
+    color: #f5a623;
+}
+
+    .card-stars span {
+        color: var(--muted);
+        font-size: 9px;
+    }
+
+.add-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--text);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    transition: background .2s, transform .15s;
+}
+
+    .add-btn:hover {
+        background: #333;
+        transform: scale(1.12);
+    }
+
+/* ──────────────────────────────────────
+   FOOTER
+────────────────────────────────────── */
+footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 40px 24px 28px;
+    font-size: 12px;
+    color: var(--sub);
+    margin-top: 80px;
+}
+
+.footer-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.footer-cols {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 32px;
+    margin-bottom: 32px;
+}
+
+    .footer-cols h4 {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 12px;
+    }
+
+    .footer-cols ul {
+        list-style: none;
+    }
+
+    .footer-cols li {
+        margin-bottom: 8px;
+    }
+
+    .footer-cols a {
+        text-decoration: none;
+        color: var(--sub);
+        transition: color .2s;
+    }
+
+        .footer-cols a:hover {
+            color: var(--text);
+        }
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+    .footer-bottom a {
+        color: var(--muted);
+        text-decoration: none;
+        margin-left: 16px;
+    }
+
+        .footer-bottom a:hover {
+            color: var(--sub);
+        }
+
+/* ──────────────────────────────────────
+   RESPONSIVE (Phần Chung)
+────────────────────────────────────── */
+@media(max-width:900px) {
+    .products-strip {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .footer-cols {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+}
+
+@media(max-width:560px) {
+    .products-strip {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+}

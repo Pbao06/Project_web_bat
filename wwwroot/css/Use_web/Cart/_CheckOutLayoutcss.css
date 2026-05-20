@@ -1,0 +1,181 @@
+﻿/* ══════════════════════════════════════
+   CSS VARIABLES
+══════════════════════════════════════ */
+:root {
+    --bg: #ffffff;
+    --bg2: #f5f5f7;
+    --bg3: #e8e8ed;
+    --text: #1d1d1f;
+    --sub: #6e6e73;
+    --muted: #aeaeb2;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --border: #d2d2d7;
+    --new: #bf4800;
+    --sale: #1d7a3c;
+    --err: #d70015;
+    --success: #34c759;
+    --card-r: 18px;
+}
+
+/* ══════════════════════════════════════
+   RESET + BODY
+══════════════════════════════════════ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-inner {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+
+.logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    text-decoration: none;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    transition: opacity .2s;
+}
+.logo:hover { opacity: .7; }
+
+/* ── STEP PILLS ── */
+.nav-steps {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.step-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    color: var(--muted);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+    .step-pill.active {
+        background: var(--text);
+        color: #fff;
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .step-pill.done {
+        color: var(--success);
+    }
+
+.step-sep {
+    color: var(--border);
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.step-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    background: var(--bg3);
+    color: var(--sub);
+    flex-shrink: 0;
+    transition: all 0.4s ease;
+}
+
+.step-pill.active .step-num {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.step-pill.done .step-num {
+    background: var(--success);
+    color: #fff;
+    transform: rotate(360deg);
+}
+
+/* ── ANIMATIONS ── */
+main {
+    animation: fadeIn .6s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 52px;
+    min-height: calc(100vh - 52px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── NAV ACTIONS ── */
+.nav-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+    .nav-actions a {
+        font-size: 12px;
+        color: var(--sub);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: color .2s;
+    }
+
+        .nav-actions a:hover {
+            color: var(--text);
+        }
+
+/* ── RESPONSIVE NAV ── */
+@media (max-width: 900px) {
+    .nav-steps {
+        display: none;
+    }
+}

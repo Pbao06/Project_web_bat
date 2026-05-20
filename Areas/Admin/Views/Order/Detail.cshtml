@@ -1,0 +1,126 @@
+﻿@model Getdata1.Areas.Admin.ViewModels.OrderVM
+
+@{
+    // ViewData["Title"] = "Detail page";
+    // Layout = "~/Views/Shared/_Layout.cshtml"; Đảm bảo nó trỏ đúng về Layout bạn vừa làm
+}
+<title>@(ViewData["Title"] ?? "Default Title")</title>
+
+@section Styles {
+    @* nhúng css vao *@
+    <link rel="stylesheet" href="~/css/Layout.css" />
+    <link rel="stylesheet" href="~/css/order/Detail_order.css" />
+
+}
+
+<main>
+
+    @* mini box *@
+    <div class="head-title">
+        <div class="left">
+            <h1>Order</h1>
+            <ul class="Breakcrumb">
+                <li>
+                    <a href="#">Order</a>
+                </li>
+                <li><i class='bx bx-chevron-right'></i></li>
+                <li>
+                    <a class="active" href="#">Orders</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="table-data">
+        <div class="order">
+            <div class="head">
+                <h3>Recent Orders </h3>
+                <a asp-action="Index" class="btn-back">
+                      <i class='bx bx-arrow-back'></i> Back to Orders
+                 </a>
+               
+            </div>
+
+
+            @* this for info user order detail *@
+            @* this for info user order detail *@
+            <div class="order-info">
+                <div class="info-item">
+                    <span class="label"><i class='bx bx-hash'></i> Order ID</span>
+                    <span class="value">#@Model.OrderId</span>
+                </div>
+                <div class="info-item">
+                    <span class="label"><i class='bx bx-user'></i> Customer</span>
+                    <span class="value">@Model.UserName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label"><i class='bx bx-calendar'></i> Date</span>
+                    <span class="value">@Model.OrderDate.ToString("dd-MM-yyyy")</span>
+                </div>
+                <div class="info-item">
+                    <span class="label"><i class='bx bx-signal-5'></i> Status</span>
+                    <span class="value">
+                        <span class="status @Model.Status.ToString().ToLower()">
+                            @Model.Status
+                        </span>
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="label"><i class='bx bx-money'></i> Total</span>
+                    <span class="value">@Model.TotalPrice.ToString("N0") VND</span>
+                </div>
+            </div>
+
+
+
+            <table>
+                <thead>
+                  
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+
+         
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Price.ToString("N0") VND</td>
+                            <td>@item.Subtotal.ToString("N0") VND</td>
+                        </tr>
+                    }
+                    <!-- total row add class -->
+                    <tr class="total-row">
+                        <td colspan="3"><strong>Total</strong></td>
+                        <td><strong>@Model.TotalPrice.ToString("N0") VND</strong></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</main>
+@section Scripts {
+    <script>
+        function toggleFilter() {
+            var dropdown = document.getElementById('filterDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // close when click outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.filter-wrapper')) {
+                document.getElementById('filterDropdown').style.display = 'none';
+            }
+        });
+    </script>
+}
+

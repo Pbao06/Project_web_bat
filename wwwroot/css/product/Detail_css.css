@@ -1,0 +1,225 @@
+﻿
+
+.head.detail h3 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    border-bottom: 3px solid #000; /* Tạo gạch chân dày kiểu hiện đại */
+}
+
+
+.detail-content {
+    display: flex;
+    gap: 60px; /* Khoảng cách rộng tạo sự sang trọng */
+    align-items: flex-start;
+}
+
+
+/* Layout chung */
+.product-detail-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.detail-content {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+/* Cột Trái: Ảnh (Copy chuẩn từ Detail sang) */
+.image-section {
+    flex: 1.2;
+}
+
+.image-main-preview {
+    background: #f1f1f1; /* Nền xám nhạt như Detail */
+    border-radius: 4px;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 450px;
+}
+
+    .image-main-preview img {
+        max-width: 100%;
+        height: auto;
+        mix-blend-mode: multiply;
+    }
+
+.image-thumbnails {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.thumb-item {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    cursor: pointer;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+    .thumb-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .thumb-item.active, .thumb-item:hover {
+        border-color: #3C91E6;
+    }
+
+/* Cột Phải: Thông tin */
+.info-section {
+    flex: 1;
+}
+
+.delete-warning {
+    color: #ff4d4d;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.product-name {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 10px 0;
+}
+
+.product-price {
+    font-size: 1.6rem;
+    color: #2ecc71; /* Màu xanh lá cho giá tiền giống ảnh mẫu */
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.detail-group label {
+    display: block;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 700;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+/* Nút bấm trang Delete */
+.btn-delete {
+    background: #ff4d4d; /* Màu đỏ xác nhận xóa */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+    .btn-delete:hover {
+        background: #e63939;
+    }
+
+.btn-back {
+    text-decoration: none;
+    color: #666;
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+
+
+
+
+/* Cột thông tin */
+.info-section {
+    flex: 1;
+}
+
+.product-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 1.4rem;
+    color: #444;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.detail-group {
+    margin-bottom: 25px;
+}
+
+    .detail-group label {
+        display: block;
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: 700;
+        color: #999;
+        margin-bottom: 8px;
+        letter-spacing: 1px;
+    }
+
+.description-text {
+    line-height: 1.6;
+    color: #555;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 20px;
+}
+
+/* Buttons */
+.info-footer {
+    margin-top: 40px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn-edit {
+    background: var(--dark);
+    color: var(--light);
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+    .btn-edit:hover {
+        background: var(--orange);
+    }
+
+.btn-back {
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge {
+    background: #f0f0f0;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}

@@ -1,0 +1,199 @@
+﻿/* Layout chung cho form container */
+.form-container {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 30px;
+    padding: 20px;
+}
+
+/* Cột bên trái: Ảnh */
+.image-section {
+    text-align: center;
+    border-right: 1px solid var(--grey);
+    padding-right: 20px;
+}
+
+    .image-section label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+.image-preview {
+    margin-bottom: 15px;
+}
+
+    .image-preview img {
+        width: 100%;
+        max-width: 300px;
+        max-height: 400px;
+        border-radius: 12px;
+        aspect-ratio: 3 / 4; /* Hoặc 1 / 1 nếu muốn hình vuông */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        object-fit: cover;
+    }
+
+.upload-info {
+    font-size: 12px;
+    color: var(--dark-grey);
+    margin-top: 10px;
+}
+
+/* Cột bên phải: Input */
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-item {
+    margin-bottom: 15px;
+}
+
+    .form-item label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-item .my-input {
+        padding: 10px;
+        outline: none;
+        overflow: hidden;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid var(--grey);
+        box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+    }
+
+/* Footer chứa nút bấm */
+.form-footer {
+    padding: 20px;
+    border-top: 1px solid var(--grey);
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+    .form-footer .btn-cancel {
+        text-decoration: none;
+        color: var(--dark);
+    }
+
+.btn-cancel {
+    cursor: pointer;
+}
+
+.btn-submit {
+    background: var(--blue);
+    color: var(--light);
+    height: 36px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 36px;
+    grid-gap: 10px;
+    border:none;
+    font-weight: 500;
+    cursor:pointer;
+}
+
+/* Ẩn input file mặc định */
+#file-upload {
+    display: none;
+}
+.my-input {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px); /* Hiệu ứng kính mờ cho ô nhập liệu */
+    border-radius: 8px;
+    padding: 10px;
+}
+/* Custom cho trang Edit dựa trên style Detail */
+.image-main-preview {
+    background: #f1f1f1;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #eee;
+}
+
+    .image-main-preview img {
+        max-height: 250px;
+        width: auto;
+        mix-blend-mode: multiply;
+    }
+
+.image-thumbnails {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.thumb-item {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    border: 2px solid #eee;
+    cursor: pointer;
+    overflow: visible;
+    position: relative;
+    transition: 0.3s;
+}
+
+    .thumb-item:hover {
+        border-color: var(--blue);
+        transform: translateY(-2px);
+    }
+
+    .thumb-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.delete-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    padding: 0 4px;
+    border-bottom-left-radius: 4px;
+}
+
+
+
+thumb-item {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-delete {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+    .btn-delete:hover {
+        background: #cc0000;
+        transform: scale(1.1);
+    }

@@ -1,0 +1,148 @@
+﻿
+
+/* icon table action edit delete detail  */
+#content main .table-data .order table tbody tr .btn-Edit-Delete-Detail .bx {
+    font-size: 18px;
+    color: var(--dark);
+}
+
+
+:root {
+    --primary-blue: #3b82f6;
+    --bg-gray: var(--grey);
+    --border-color: #edf2f7;
+    --radius: 12px; /* Đồng bộ với bo góc của card trong hình */
+}
+
+.filter-card {
+    padding-bottom: 10px;
+    margin-bottom: 24px;
+    font-family: var(--poppins);
+    border-bottom: 1px solid var(--grey);
+}
+
+.filter-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Khoảng cách giữa hàng 1 và hàng 2 */
+}
+
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Group styling */
+.filter-group {
+    background: var(--grey);
+    border: 1px solid var(--grey);
+    border-radius: 10px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    transition: all 0.2s;
+}
+
+    .filter-group:focus-within {
+        background: #fff;
+    }
+
+/* Row 1 Specifics */
+.search-box {
+    flex: 2;
+    min-width: 250px;
+}
+
+    .search-box input {
+        border: none;
+        background: transparent;
+        outline: none;
+        width: 100%;
+        padding-left: 10px;
+        font-size: 14px;
+    }
+
+.select-box {
+    flex: 1;
+    min-width: 150px;
+}
+
+    .select-box select {
+        border: none;
+        background: transparent;
+        outline: none;
+        width: 100%;
+        font-size: 14px;
+        color: #4a5568;
+        cursor: pointer;
+    }
+
+/* Row 2 Specifics */
+.filter-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--dark);
+    text-transform: uppercase;
+    margin-right: 12px;
+}
+
+.range-inputs {
+    display: flex;
+    align-items: center;
+}
+
+    .range-inputs input {
+        width: 70px;
+        border: none;
+        background: transparent;
+        outline: none;
+        text-align: center;
+        font-size: 13px;
+    }
+
+.range-divider {
+    width: 1px;
+    height: 14px;
+    background: #cbd5e0;
+    margin: 0 8px;
+}
+
+/* Actions */
+.filter-actions {
+    margin-left: auto; /* Đẩy cụm nút sang phải */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-primary {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 0 24px;
+    height: 42px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .btn-primary:hover {
+        background: #2563eb;
+        transform: translateY(-1px);
+    }
+
+.btn-reset {
+    color: #a0aec0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+    .btn-reset:hover {
+        color: #4a5568;
+    }

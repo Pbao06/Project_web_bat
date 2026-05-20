@@ -1,0 +1,73 @@
+﻿#content main .table-data .order .order-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* ← auto fit */
+    gap: 12px;
+    padding: 16px 0;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--grey)
+}
+
+    #content main .table-data .order .order-info .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: var(--grey);
+        padding: 14px 20px;
+        border-radius: 12px;
+        min-width: 120px;
+    }
+
+        #content main .table-data .order .order-info .info-item .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--dark-grey);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        #content main .table-data .order .order-info .info-item .value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+
+
+/* Total row */
+#content main .table-data .order table tr.total-row td {
+    border-top: 2px solid var(--grey);
+    padding-top: 16px;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+/* status colors */
+#content main .table-data .order table tr td span.paid {
+    background: var(--blue);
+}
+
+#content main .table-data .order table tr td span.cancelled {
+    background: var(--red);
+}
+
+/* Back button */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 16px;
+    color: var(--dark-grey);
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+#content main .table-data .order table tr.total-row:hover {
+    background: transparent !important;
+    cursor: default;
+}
+    .btn-back:hover {
+        color: var(--blue);
+    }

@@ -1,0 +1,184 @@
+﻿@model Getdata1.Models.Product
+<title>@(ViewData["Title"] ?? "Default Title")</title>
+@section Styles {
+    <link rel="stylesheet" href="~/css/product/Edit_css.css" />
+    @* nhúng css vao *@
+}
+
+<main>
+    <div class="head-title">
+        <div class="left">
+            <h1>Edit Product</h1>
+            <ul class="Breakcrumb">
+                <li>
+                    <a href="#">Inventory</a>
+                </li>
+                <li><i class='bx bx-chevron-right'></i></li>
+                <li>
+                    <a class="active" href="#">Edit product</a>
+                </li>
+            </ul>
+        </div>
+        <!-- above is title  -->
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>Edit Product</h3>
+                </div>
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-container">
+
+                        <!-- CỘT BÊN TRÁI: HÌNH ẢNH -->
+                        <!-- CỘT BÊN TRÁI: HÌNH ẢNH (Thiết kế theo style Detail) -->
+<div class="image-section">
+    <label>Product Visuals</label>
+    
+    <!-- KHUNG ẢNH CHÍNH TO (Giống Detail) -->
+    <div class="image-main-preview">
+        @if (!string.IsNullOrEmpty(Model.Image))
+        {
+                                    <img src="@Model.Image"
+                                         alt="Product"
+                                         id="img-display"
+                                         class="glass-image"
+                                         onerror="this.onerror=null;this.src='/img/no-img.jfif';">
+        }
+        else
+        {
+            <img src="~/img/no-img.jfif" alt="No Image" id="img-display" class="glass-image">
+        }
+    </div>
+
+    <!-- KHU VỰC THUMBNAILS (Ảnh nhỏ từ Gallery) -->
+    <div class="image-thumbnails">
+                                @if (!string.IsNullOrEmpty(Model.Image))
+                                {
+                                    <!-- Click vào đây thì gọi hàm changeImage để hiện lên khung to -->
+                                    <div class="thumb-item active" onclick="changeImage('@Model.Image', this)">
+                                        <img src="@Model.Image">
+                                    </div>
+                                }
+
+                                @if (Model.ProductImages != null)
+                                {
+                                    @foreach (var galleryImg in Model.ProductImages)
+                                    {
+                                        <div class="thumb-item" id="gallery-item-@galleryImg.Id"  onclick="changeImage('@galleryImg.Url', this)">
+                                            <img src="@galleryImg.Url" onclick="changeImage('@galleryImg.Url', this)">
+                                            <!-- Nút xóa từng ảnh -->
+                                            <button type="button" class="btn-delete" onclick="deleteImage(@galleryImg.Id)">
+                                                <i class='bx bx-x'></i>
+                                            </button>
+                                        </div>
+                                    }
+                                }
+     
+    </div>
+
+    <!-- NÚT ĐIỀU KHIỂN UPLOAD -->
+    <div class="upload-controls" style="margin-top: 20px; display: grid; gap: 10px;">
+        <label for="file-upload" class="btn-download" style="cursor: pointer; background: var(--blue);">
+            <i class='bx bx-cloud-upload'></i> Đổi ảnh đại diện chính
+        </label>
+        <input id="file-upload" type="file" asp-for="ImageFile" style="display:none;" onchange="previewImage(this)">
+
+        <label for="gallery-upload" class="btn-download" style="cursor: pointer; background: var(--orange);">
+            <i class='bx bx-images'></i> Thêm ảnh vào bộ sưu tập
+        </label>
+        <input id="gallery-upload" type="file" asp-for="GalleryFiles" multiple style="display:none;" onchange="updateGalleryCount(this)">
+        <p id="gallery-count" class="upload-info"></p>
+    </div>
+
+    <input type="hidden" asp-for="Image" />
+</div>
+                        
+
+                        <!-- CỘT BÊN PHẢI: NỘI DUNG -->
+                        <div class="form-content">
+                            <div class="form-item">
+                                <label>Product Name</label>
+                                <input type="text" asp-for="Name" class="my-input" placeholder="Ví dụ: Yonex Astrox 100ZZ">
+                            </div>
+
+                            <div class="input-row">
+                                <div class="form-item">
+                                    <label asp-for="Price">Price ($)</label>
+                                    <input  type="number" asp-for="Price" class="my-input">
+                                </div>
+                                <div class="form-item">
+                                    <label asp-for="Brand">Brand</label>
+                                    <input asp-for="Brand" class="my-input">
+                                </div>
+                            </div>
+                            <div class="input-row">
+                                <div class="form-item">
+                                    <label asp-for="Stock">Stock</label>
+                                    <input type="number" asp-for="Stock" class="my-input">
+                                </div>
+                                <div class="form-item">
+                                    <label asp-for="CategoryId">Categories</label>
+                                    <select asp-for="CategoryId" asp-items="@(ViewData["Category"]) as SelectList" class="my-input">
+                                        <option value="">Category</option>
+ 
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <label>Description</label>
+                                <textarea asp-for="Description" class="my-input" rows="6"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn-submit">
+                            <i class='bx bxs-save'></i>
+                            <span class="text">Update Changes</span>
+                        </button>
+                        <a asp-action="Index" class="btn-cancel">Cancel</a>
+                    </div>
+                </form>
+                
+                
+                
+            </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function deleteImage(imageId) {
+        if (confirm("Bạn có chắc muốn xóa tấm ảnh này không?")) {
+            $.ajax({
+                url: '/ProductManual/DeleteImage',
+                type: 'POST',
+                data: { id: imageId },
+                success: function (response) {
+                    if (response.success) {
+                        $("#gallery-item-" + imageId).fadeOut(300, function() {
+                            $(this).remove();
+                        });
+                    } else {
+                        alert("Lỗi từ server: " + response.message);
+                    }
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                    alert("Không thể kết nối đến server để xóa ảnh!");
+                }
+            });
+        }
+    } // <--- THÊM DẤU NÀY ĐỂ ĐÓNG HÀM deleteImage
+
+    function changeImage(url, el) {
+        console.log("Đang đổi ảnh sang: " + url); // Thêm dòng này để debug cho chắc
+        var mainImg = document.getElementById('img-display');
+        if (mainImg) {
+            mainImg.src = url;
+
+            // Reset active class bằng jQuery
+            $('.thumb-item').removeClass('active');
+            $(el).addClass('active');
+        }
+    }
+</script>

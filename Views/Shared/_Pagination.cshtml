@@ -1,0 +1,81 @@
+@model Getdata1.Models.PaginationVM
+
+@if (Model != null && Model.TotalPages > 1)
+{
+    <nav class="pagination-container" aria-label="Page navigation">
+        @* Previous Page *@
+        <a class="pagination-item @(Model.HasPreviousPage ? "" : "disabled")"
+           asp-area="@(ViewData["Area"] ?? "")"
+           asp-controller="@Model.ControllerName"
+           asp-action="@Model.ActionName"
+           asp-all-route-data="@Model.RouteValues"
+           asp-route-page="@(Model.CurrentPage - 1)"
+           aria-label="Previous">
+            <span class="pagination-nav-icon">
+                <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 1L2 6L7 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </span>
+        </a>
+
+        @{
+            int startPage = Math.Max(1, Model.CurrentPage - 2);
+            int endPage = Math.Min(Model.TotalPages, Model.CurrentPage + 2);
+
+            if (startPage > 1)
+            {
+                <a class="pagination-item" 
+                   asp-area="@(ViewData["Area"] ?? "")"
+                   asp-controller="@Model.ControllerName" 
+                   asp-action="@Model.ActionName" 
+                   asp-all-route-data="@Model.RouteValues"
+                   asp-route-page="1">1</a>
+                if (startPage > 2)
+                {
+                    <span class="pagination-ellipsis">...</span>
+                }
+            }
+
+            for (int i = startPage; i <= endPage; i++)
+            {
+                <a class="pagination-item @(i == Model.CurrentPage ? "active" : "")"
+                   asp-area="@(ViewData["Area"] ?? "")"
+                   asp-controller="@Model.ControllerName"
+                   asp-action="@Model.ActionName"
+                   asp-all-route-data="@Model.RouteValues"
+                   asp-route-page="@i">
+                    @i
+                </a>
+            }
+
+            if (endPage < Model.TotalPages)
+            {
+                if (endPage < Model.TotalPages - 1)
+                {
+                    <span class="pagination-ellipsis">...</span>
+                }
+                <a class="pagination-item" 
+                   asp-area="@(ViewData["Area"] ?? "")"
+                   asp-controller="@Model.ControllerName" 
+                   asp-action="@Model.ActionName" 
+                   asp-all-route-data="@Model.RouteValues"
+                   asp-route-page="@Model.TotalPages">@Model.TotalPages</a>
+            }
+        }
+
+        @* Next Page *@
+        <a class="pagination-item @(Model.HasNextPage ? "" : "disabled")"
+           asp-area="@(ViewData["Area"] ?? "")"
+           asp-controller="@Model.ControllerName"
+           asp-action="@Model.ActionName"
+           asp-all-route-data="@Model.RouteValues"
+           asp-route-page="@(Model.CurrentPage + 1)"
+           aria-label="Next">
+            <span class="pagination-nav-icon">
+                <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L6 6L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </span>
+        </a>
+    </nav>
+}

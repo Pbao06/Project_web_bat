@@ -1,0 +1,438 @@
+﻿
+
+@model Getdata1.DTOs.CartDto
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+    Layout = "~/Areas/User/Views/Shared/_CheckOutLayout.cshtml";
+    ViewBag.Step = 1;
+}
+
+@section Styles {
+    <link href="~/css/Use_web/Cart/cart.css" rel="stylesheet" />
+}
+
+<div class="page">
+
+    <div class="page-heading">
+        <div class="page-heading-left">
+            <h1>Giỏ hàng <span id="headCount" style="color:var(--muted);font-weight:400;font-size:28px">(3)</span></h1>
+            <p id="headSub">Bạn có <strong>3 sản phẩm</strong> trong giỏ hàng.</p>
+        </div>
+        <button class="btn-clear" onclick="clearAll()">
+            <i class='bx bx-trash'></i> Xoá tất cả
+        </button>
+    </div>
+
+    <div class="cart-grid">
+
+        <!-- ── LEFT: ITEMS ── -->
+        <div>
+            <div class="cart-table-head">
+                <div class="col-product">Sản phẩm</div>
+                <div class="col-price">Đơn giá</div>
+                <div class="col-qty">Số lượng</div>
+                <div class="col-del"></div>
+            </div>
+
+            <div class="cart-items" id="cartItems">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- Empty state -->
+            <div class="cart-empty" id="cartEmpty">
+                <div class="empty-icon"><i class='bx bx-shopping-bag'></i></div>
+                <h3>Giỏ hàng trống</h3>
+                <p>Có vẻ bạn chưa thêm sản phẩm nào. Khám phá bộ sưu tập mới nhất của Pbao nhé!</p>
+                <button class="btn-shop-now" onclick="addBack()">
+                    <i class='bx bx-store'></i> Khám phá sản phẩm
+                </button>
+            </div>
+
+            <!-- You may also like -->
+            <div class="also-like" id="alsoLike">
+                <span class="section-label">Gợi ý cho bạn</span>
+                <div class="also-like-head">
+                    <h2>Có thể bạn thích</h2>
+                    <a href="#">Xem tất cả <i class='bx bx-right-arrow-alt'></i></a>
+                </div>
+                <div class="suggest-strip" id="suggestStrip"></div>
+            </div>
+        </div>
+
+        <!-- ── RIGHT: SUMMARY ── -->
+        <div class="order-summary">
+            <div class="os-header">
+                <h3>Tóm tắt đơn hàng</h3>
+            </div>
+
+            <!-- Promo -->
+            <div class="promo-row">
+                <div class="promo-inner">
+                    <input class="promo-input" type="text" placeholder="Mã giảm giá..." id="promoInput">
+                    <button class="btn-promo" onclick="applyPromo()">Áp dụng</button>
+                </div>
+                <div class="promo-success" id="promoSuccess">
+                    <i class='bx bx-check-circle'></i>
+                    Mã <strong>PBAO2026</strong> — Giảm $23.00!
+                </div>
+                <div class="promo-err" id="promoErr">Mã không hợp lệ. Thử lại nhé!</div>
+            </div>
+
+            <!-- Totals -->
+            <div class="os-totals">
+                <div class="os-row">
+                    <span>Tạm tính</span>
+                    <span class="val" id="subTotal">$434.00</span>
+                </div>
+                <div class="os-row discount" id="discountRow" style="display:none">
+                    <span>Giảm giá (PBAO2026)</span>
+                    <span class="val">-$23.00</span>
+                </div>
+                <div class="os-row shipping">
+                    <span>Vận chuyển</span>
+                    <span class="val">Miễn phí</span>
+                </div>
+                <div class="free-ship-notice" id="freeShipNotice">
+                    <i class='bx bx-check-shield'></i>
+                    <div>
+                        Đơn hàng của bạn đủ điều kiện giao hàng miễn phí!
+                        <div class="ship-progress-bar" style="margin-top:6px">
+                            <div class="ship-progress-fill" id="shipFill" style="width:100%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="os-row total">
+                    <span>Tổng cộng</span>
+                    <span class="val" id="totalVal">$434.00</span>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="os-cta">
+                <button class="btn-checkout" onclick="window.location.href='/User/Cart/Payment'">
+                    <i class='bx bx-lock-alt'></i>
+                    Tiến hành thanh toán
+                </button>
+                <button class="btn-continue" onclick="window.location.href='/User/Store'">
+                    <i class='bx bx-left-arrow-alt'></i>
+                    Tiếp tục mua sắm
+                </button>
+                <div class="os-secure">
+                    <i class='bx bx-shield-quarter'></i>
+                    Bảo mật 256-bit SSL · Thanh toán an toàn
+                </div>
+            </div>
+
+            <div class="pay-logos">
+                <div class="pay-logo-pill">VISA</div>
+                <div class="pay-logo-pill">MC</div>
+                <div class="pay-logo-pill">JCB</div>
+                <div class="pay-logo-pill">MOMO</div>
+                <div class="pay-logo-pill">COD</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    /* ── DATA & INITIALIZATION ── */
+    let currentCart = null;
+
+    async function loadCart() {
+        try {
+            const response = await fetch('/User/Cart/GetCart');
+            const data = await response.json();
+            currentCart = data;
+            render(data);
+        } catch (error) {
+            console.error('Error loading cart:', error);
+        }
+    }
+
+    /* ── RENDER ── */
+    function render(data) {
+        if (!data) return;
+
+        const container = document.getElementById('cartItems');
+        const empty     = document.getElementById('cartEmpty');
+        const heading   = document.getElementById('headCount');
+        const headSub   = document.getElementById('headSub');
+        
+        const items = data.items || [];
+        const itemCount = data.totalItems;
+
+        heading.textContent = `(${itemCount})`;
+        headSub.innerHTML = items.length
+            ? `Bạn có <strong>${itemCount} sản phẩm</strong> trong giỏ hàng.`
+            : `Giỏ hàng của bạn đang trống.`;
+
+        if (items.length === 0) {
+            container.innerHTML = '';
+            empty.classList.add('show');
+            document.getElementById('alsoLike').style.opacity = '.5';
+        } else {
+            empty.classList.remove('show');
+            document.getElementById('alsoLike').style.opacity = '1';
+            container.innerHTML = items.map((item, idx) => itemHTML(item, idx)).join('');
+        }
+
+        // totals
+        document.getElementById('subTotal').textContent = '$' + data.subTotal.toFixed(2);
+        
+        const hasPromo = data.appliedPromoCode != null;
+        document.getElementById('discountRow').style.display = hasPromo ? 'flex' : 'none';
+        if (hasPromo) {
+            document.getElementById('discountRow').querySelector('span:first-child').textContent = `Giảm giá (${data.appliedPromoCode})`;
+            document.getElementById('discountRow').querySelector('.val').textContent = '-$' + data.discountAmount.toFixed(2);
+            document.getElementById('promoSuccess').classList.add('show');
+            document.getElementById('promoSuccess').innerHTML = `<i class='bx bx-check-circle'></i> Mã <strong>${data.appliedPromoCode}</strong> — Giảm $${data.discountAmount.toFixed(2)}!`;
+        }
+
+        document.getElementById('totalVal').textContent = '$' + data.totalPrice.toFixed(2);
+
+        // shipping bar (example threshold $150)
+        const sub = data.subTotal;
+        const pct = Math.min((sub / 150) * 100, 100);
+        document.getElementById('shipFill').style.width = pct + '%';
+        if (sub >= 150) {
+            document.getElementById('freeShipNotice').querySelector('div').innerHTML =
+                'Đơn hàng của bạn đủ điều kiện giao hàng <strong>miễn phí</strong>!<div class="ship-progress-bar" style="margin-top:6px"><div class="ship-progress-fill" id="shipFill" style="width:100%"></div></div>';
+        } else {
+            const need = (150 - sub).toFixed(2);
+            document.getElementById('freeShipNotice').querySelector('div').innerHTML =
+                `Mua thêm <strong>$${need}</strong> để được <strong>miễn phí vận chuyển</strong>!<div class="ship-progress-bar" style="margin-top:6px"><div class="ship-progress-fill" id="shipFill" style="width:${pct}%"></div></div>`;
+        }
+    }
+
+    function itemHTML(item, idx) {
+        // Assume badges or extra info might come from product logic later, for now simplified
+        const imgPath = item.image ? `/img/${item.image}` : '/img/no-img.jfif';
+        
+        return `
+        <div class="cart-item" id="item-${item.productId}" style="animation-delay:${idx*0.06}s">
+            <div class="item-product">
+                <div class="item-thumb">
+                    <img src="${imgPath}" alt="${item.productName}" style="width:100%; height:100%; object-fit:cover; border-radius:8px;" />
+                </div>
+                <div class="item-meta">
+                    <div class="item-cat">${item.categoryName || 'Sản phẩm'}</div>
+                    <div class="item-name">${item.productName}</div>
+                    <div class="item-variant">
+                        <span class="item-variant-pill">${item.variantInfo || 'Tiêu chuẩn'}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="item-price">$${item.price.toFixed(2)}</div>
+            <div class="item-qty-wrap">
+                <div class="qty-ctrl">
+                    <button class="qty-btn" onclick="changeQty(${item.productId}, -1)"><i class='bx bx-minus'></i></button>
+                    <span class="qty-num">${item.quantity}</span>
+                    <button class="qty-btn" onclick="changeQty(${item.productId}, 1)"><i class='bx bx-plus'></i></button>
+                </div>
+            </div>
+            <div class="item-del">
+                <button class="btn-del" onclick="removeItem(${item.productId})" title="Xoá">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+        </div>`;
+    }
+
+    /* ── ACTIONS ── */
+    async function changeQty(productId, delta) {
+        const item = currentCart.items.find(i => i.productId === productId);
+        if (!item) return;
+        
+        const newQty = item.quantity + delta;
+        if (newQty <= 0) {
+            removeItem(productId);
+            return;
+        }
+
+        try {
+            const response = await fetch(`/User/Cart/UpdateQuantity?productId=${productId}&quantity=${newQty}`, {
+                method: 'POST'
+            });
+            const result = await response.json();
+            if (result.success) {
+                currentCart = result.cart;
+                render(result.cart);
+                
+                // bump animation
+                const el = document.querySelector(`#item-${productId} .qty-num`);
+                if (el) { el.style.transform='scale(1.4)'; setTimeout(()=>el.style.transform='',200); }
+            }
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+        }
+    }
+
+    async function removeItem(productId) {
+        if (!confirm('Xoá sản phẩm này khỏi giỏ hàng?')) return;
+
+        const el = document.getElementById('item-' + productId);
+        if (el) {
+            el.style.transition = 'opacity .3s, transform .3s, max-height .35s, padding .35s';
+            el.style.opacity = '0';
+            el.style.transform = 'translateX(20px)';
+            el.style.maxHeight = el.offsetHeight + 'px';
+            
+            setTimeout(() => {
+                el.style.maxHeight = '0';
+                el.style.padding = '0';
+                el.style.borderBottom = 'none';
+            }, 280);
+
+            try {
+                const response = await fetch(`/User/Cart/RemoveFromCart?productId=${productId}`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                if (result.success) {
+                    setTimeout(() => {
+                        currentCart = result.cart;
+                        render(result.cart);
+                    }, 500);
+                }
+            } catch (error) {
+                console.error('Error removing item:', error);
+            }
+        }
+    }
+
+    async function clearAll() {
+        if (!currentCart || currentCart.items.length === 0) return;
+        if (!confirm('Xoá toàn bộ giỏ hàng?')) return;
+
+        const items = document.querySelectorAll('.cart-item');
+        items.forEach((el, i) => {
+            setTimeout(() => {
+                el.style.transition = '.25s'; el.style.opacity='0'; el.style.transform='translateX(20px)';
+            }, i * 60);
+        });
+
+        try {
+            const response = await fetch('/User/Cart/ClearCart', { method: 'POST' });
+            const result = await response.json();
+            if (result.success) {
+                setTimeout(() => {
+                    currentCart = { items: [], totalItems: 0, subTotal: 0, totalPrice: 0, discountAmount: 0 };
+                    render(currentCart);
+                }, items.length * 60 + 300);
+            }
+        } catch (error) {
+            console.error('Error clearing cart:', error);
+        }
+    }
+
+    async function applyPromo() {
+        const val = document.getElementById('promoInput').value.trim();
+        if (!val) return;
+
+        const successEl = document.getElementById('promoSuccess');
+        const errEl     = document.getElementById('promoErr');
+        successEl.classList.remove('show');
+        errEl.classList.remove('show');
+
+        try {
+            const response = await fetch(`/User/Cart/ApplyPromo?promoCode=${encodeURIComponent(val)}`, {
+                method: 'POST'
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                currentCart = result.cart;
+                render(result.cart);
+            } else {
+                errEl.textContent = result.message;
+                errEl.classList.add('show');
+                document.getElementById('promoInput').style.borderColor = 'var(--err)';
+                setTimeout(() => document.getElementById('promoInput').style.borderColor = '', 1200);
+            }
+        } catch (error) {
+            console.error('Error applying promo:', error);
+        }
+    }
+
+    /* ── SUGGESTIONS (Mock for UI) ── */
+    const SUGGEST = [
+        { id: 4, name: 'Victor K9900', cat: 'Vợt', price: '$195.00', icon: 'bx-baseball' },
+        { id: 5, name: 'Yonex PC 65 Z3', cat: 'Giày', price: '$135.00', icon: 'bx-run' },
+        { id: 6, name: 'Pbao Carbon X-10', cat: 'Vợt', price: '$210.00', icon: 'bx-baseball' },
+        { id: 7, name: 'Pro Series Tee', cat: 'Quần áo', price: '$45.00', icon: 'bx-user' },
+    ];
+
+    function renderSuggest() {
+        const strip = document.getElementById('suggestStrip');
+        if (!strip) return;
+        strip.innerHTML = SUGGEST.map(s => `
+            <div class="suggest-card">
+                <div class="suggest-img"><i class='bx ${s.icon}'></i></div>
+                <div class="suggest-body">
+                    <div class="suggest-cat">${s.cat}</div>
+                    <div class="suggest-name">${s.name}</div>
+                    <div class="suggest-footer">
+                        <span class="suggest-price">${s.price}</span>
+                        <button class="btn-suggest-add" onclick="addToCart(${s.id})">
+                            <i class='bx bx-plus'></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    async function addToCart(productId) {
+        try {
+            const response = await fetch(`/User/Cart/AddToCart?productId=${productId}&quantity=1`, {
+                method: 'POST'
+            });
+            const result = await response.json();
+            if (result.success) {
+                currentCart = result.cart;
+                render(result.cart);
+                
+                // flash cart heading
+                const h = document.getElementById('headCount');
+                h.style.color = 'var(--success)';
+                setTimeout(() => h.style.color = 'var(--muted)', 600);
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+        }
+    }
+
+    function addBack() {
+        window.location.href = '/';
+    }
+
+    /* Enter key on promo */
+    document.addEventListener('DOMContentLoaded', () => {
+        loadCart();
+        renderSuggest();
+        
+        document.getElementById('promoInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') applyPromo();
+        });
+
+        // Checkout button
+        const btnCheckout = document.querySelector('.btn-checkout');
+        if (btnCheckout) {
+            btnCheckout.onclick = function() {
+                window.location.href = '/User/Cart/Payment';
+            };
+        }
+
+        // Continue shopping
+        const btnContinue = document.querySelector('.btn-continue');
+        if (btnContinue) {
+            btnContinue.onclick = function() {
+                window.location.href = '/User/Store';
+            };
+        }
+    });
+</script>

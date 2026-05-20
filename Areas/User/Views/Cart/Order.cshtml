@@ -1,0 +1,190 @@
+﻿@using Getdata1.Areas.User.ViewModels
+@model OrderSuccessVM
+@{
+    // Khai báo sử dụng cái Layout vừa tạo ở trên
+    Layout = "~/Areas/User/Views/Shared/_CheckOutLayout.cshtml";
+    ViewData["Title"] = "Đơn hàng";
+    ViewBag.Step = 3;
+}
+@section Styles
+{
+    <link href="~/css/Use_web/Cart/Order.css" rel="stylesheet" />
+}
+<div class="page">
+
+    <!-- SUCCESS HERO -->
+    <div class="success-hero">
+        <div class="success-icon-wrap">
+            <i class='bx bx-check-double'></i>
+        </div>
+        <h1>Đặt hàng thành công! 🎉</h1>
+        <p>Cảm ơn bạn đã tin tưởng Pbao. Đơn hàng của bạn đang được xử lý và sẽ sớm được giao đến tay bạn.</p>
+        <div class="order-id-tag">
+            <i class='bx bx-receipt'></i>
+            Mã đơn hàng: <strong>@Model.OrderNumber</strong>
+        </div>
+    </div>
+
+    <div class="order-grid">
+
+        <!-- LEFT -->
+        <div>
+
+            <!-- ITEMS -->
+            <div class="section-card">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <i class='bx bx-box'></i>
+                        <span class="card-title">Sản phẩm đã đặt (@Model.Items.Sum(i => i.Quantity))</span>
+                    </div>
+                    <span class="card-badge badge-processing">@Model.Status</span>
+                </div>
+                <div class="order-items">
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="order-item">
+                            <div class="oi-thumb"><i class='bx bx-baseball'></i></div>
+                            <div class="oi-meta">
+                                <div class="oi-cat">@item.CategoryName</div>
+                                <div class="oi-name">@item.ProductName</div>
+                                @* <div class="oi-variant">
+                                    <span class="oi-pill">Tiêu chuẩn</span>
+                                </div> *@
+                            </div>
+                            <div class="oi-price-wrap">
+                                <div class="oi-price">$@item.Price.ToString("N2")</div>
+                                <div class="oi-qty">x@item.Quantity</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- TRACKING -->
+            <div class="section-card">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <i class='bx bx-map'></i>
+                        <span class="card-title">Trạng thái đơn hàng</span>
+                    </div>
+                    <span class="card-badge badge-processing">@Model.Status</span>
+                </div>
+                <div class="tracking-steps">
+                    <div class="track-step done">
+                        <div class="track-dot"><i class='bx bx-check'></i></div>
+                        <div class="track-body">
+                            <div class="track-label">Đơn hàng đã được đặt</div>
+                            <div class="track-time">@Model.OrderDate.ToString("dd/MM/yyyy · HH:mm tt")</div>
+                        </div>
+                    </div>
+                    <div class="track-step active">
+                        <div class="track-dot"><i class='bx bx-loader-alt'></i></div>
+                        <div class="track-body">
+                            <div class="track-label">Đang đóng gói & chuẩn bị hàng</div>
+                            <div class="track-time">Dự kiến hoàn thành: @DateTime.Now.AddDays(1).ToString("dd/MM/yyyy")</div>
+                        </div>
+                    </div>
+                    <div class="track-step">
+                        <div class="track-dot"><i class='bx bx-trip'></i></div>
+                        <div class="track-body">
+                            <div class="track-label">Đang vận chuyển</div>
+                            <div class="track-time">Chờ cập nhật</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDEBAR -->
+        <div>
+            <div class="summary-card">
+
+                <div class="summary-header">
+                    <i class='bx bx-receipt'></i>
+                    <h3>Chi tiết thanh toán</h3>
+                </div>
+                <div class="summary-rows">
+                    <div class="sr">
+                        <span>Tạm tính</span>
+                        <span class="val">$@Model.SubTotal.ToString("N2")</span>
+                    </div>
+                    @if (Model.DiscountAmount > 0)
+                    {
+                        <div class="sr discount">
+                            <span>Giảm giá (@Model.PromoCode)</span>
+                            <span class="val">-$@Model.DiscountAmount.ToString("N2")</span>
+                        </div>
+                    }
+                    <div class="sr">
+                        <span>Vận chuyển</span>
+                        @if (Model.ShippingFee == 0)
+                        {
+                            <span class="val" style="color:var(--success);font-weight:600">Miễn phí</span>
+                        }
+                        else
+                        {
+                            <span class="val">$@Model.ShippingFee.ToString("N2")</span>
+                        }
+                    </div>
+                    <div class="sr total">
+                        <span>Tổng cộng</span>
+                        <span class="val">$@((Model.SubTotal - Model.DiscountAmount + Model.ShippingFee).ToString("N2"))</span>
+                    </div>
+                </div>
+
+                <div class="card-divider"></div>
+
+                <div class="est-delivery">
+                    <div class="est-icon"><i class='bx bx-package'></i></div>
+                    <div>
+                        <div class="est-label">Dự kiến giao hàng</div>
+                        <div class="est-date">@Model.EstimatedDeliveryMin.ToString("dd") – @Model.EstimatedDeliveryMax.ToString("dd MMMM, yyyy")</div>
+                    </div>
+                </div>
+
+                <div class="card-divider" style="margin-top:0"></div>
+
+                <div class="ship-info">
+                    <div class="ship-row">
+                        <div class="ship-icon"><i class='bx bx-map-pin'></i></div>
+                        <div>
+                            <div class="ship-label">Địa chỉ giao hàng</div>
+                            <div class="ship-val">@Model.CustomerName<br>@Model.Address</div>
+                        </div>
+                    </div>
+                    <div class="ship-row">
+                        <div class="ship-icon"><i class='bx bx-credit-card'></i></div>
+                        <div>
+                            <div class="ship-label">Phương thức thanh toán</div>
+                            <div class="ship-val">@Model.PaymentMethod</div>
+                        </div>
+                    </div>
+                    <div class="ship-row">
+                        <div class="ship-icon"><i class='bx bx-envelope'></i></div>
+                        <div>
+                            <div class="ship-label">Email xác nhận</div>
+                            <div class="ship-val">@Model.Email</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-divider"></div>
+
+                <div class="order-actions">
+                    <button class="btn-primary">
+                        <i class='bx bx-download'></i> Tải hoá đơn PDF
+                    </button>
+                    <button class="btn-secondary">
+                        <i class='bx bx-support'></i> Liên hệ hỗ trợ
+                    </button>
+                    <a href="/" class="btn-secondary" style="text-align:center;text-decoration:none;display:block">
+                        <i class='bx bx-store'></i> Tiếp tục mua sắm
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

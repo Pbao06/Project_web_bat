@@ -1,0 +1,94 @@
+﻿
+.my-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: var(--light);
+    outline: none;
+    display: block;
+    font-family: var(--poppins);
+
+}
+
+    .my-input:focus {
+
+    }
+
+label {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--dark);
+}
+
+.form-footer {
+    display: flex;
+    align-items: center;
+}
+
+.form-footer .btn-download {
+        margin-right: auto;
+ }
+
+ .form-footer .btn-cancel {
+        cursor: pointer;
+  }
+/* Style cho ảnh trong bảng */
+.product-img-thumb {
+    width: 50px;
+    height: 50px;
+    object-fit: cover; /* Giữ tỉ lệ ảnh không bị móp */
+    border-radius: 8px; /* Bo góc nhẹ cho đẹp */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Căn chỉnh các nút thao tác */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+    .action-buttons a {
+        font-size: 18px;
+        transition: transform 0.2s;
+    }
+
+ .action-buttons a:hover {
+            transform: scale(1.2);
+   }
+
+.edit-link {
+    color: var(--blue);
+}
+
+.detail-link {
+    color: var(--dark);
+}
+
+.delete-link {
+    color: #f44336;
+}
+.btn-save-product {
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: var(--poppins);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+    .btn-save-product:hover {
+        opacity: 0.85;
+        transform: scale(1.02);
+    }
+
+    .btn-save-product:active {
+        opacity: 0.7;
+        transform: scale(0.98);
+    }

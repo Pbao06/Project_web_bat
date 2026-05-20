@@ -1,0 +1,222 @@
+﻿    
+@model Getdata1.Areas.Admin.ViewModels.ProductFilterVM
+@{
+    // vi productfilter chua ca list product nen ta ko can Ienumberable
+}
+@{
+    
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<title>@(ViewData["Title"] ?? "Default Title")</title>
+@section Styles {
+    <link rel="stylesheet" href="~/css/product/Product_index.css" />
+    <link rel="stylesheet" href="~/css/pagination.css" />
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        alert('@TempData["SuccessMessage"]');
+    </script>
+}
+<main>
+    <div class="head-title">
+        <div class="left">
+            <h1>Product</h1>
+            <ul class="Breakcrumb"> 
+                <li>
+                    <a asp-action="Index">Inventory</a>
+                </li>
+                <li><i class='bx bx-chevron-right'></i></li>
+                <li>
+                    <a class="active" href="#">List product</a>
+                </li>
+            </ul>
+        </div>
+        <a asp-action="Create"  class="btn-download">
+            <i class='bx bx-add-to-queue'></i>
+            <span class="text">Create new product</span>
+        </a>
+    </div>
+
+
+
+    @* mini box *@
+    <ul class="box-info">
+        <li>
+            <i class='bx bxs-check-circle'></i>
+            <span class="text">
+                <h3>@ViewBag.TotalProducts</h3>
+                <p>Total products</p>
+            </span>
+        </li>
+        <li>
+            <i class='bx bxs-battery-low'></i>
+            <span class="text">
+                <h3>3</h3>
+                <p>Product Sold</p>
+            </span>
+        </li>
+    </ul>
+
+
+
+    <div class="table-data">
+        <div class="order">
+            <div class="head">
+                <h3>Our Product</h3>
+                @* <i class="bx bx-filter"></i>
+                <i class="bx bx-search"></i> *@
+            </div>
+            @* section filter *@
+   <form method="get" asp-action="Index" asp-controller="ProductManual" class="filter-card">
+  <div class="filter-content">
+    
+    <!-- Row 1: Định danh -->
+    <div class="filter-row">
+      <div class="filter-group search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a0aec0" stroke-width="2.5">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" asp-for="Name" value="@Model.Name" placeholder="Search product name..." />
+      </div>
+
+      <div class="filter-group select-box">
+        <span class="filter-icon">📁</span>
+                            <select name="CategoryId"
+                                    asp-for="CategoryId"
+                                    asp-items="@(ViewBag.Category as SelectList)"
+                                    class="minimal-select">
+                                <option value="">All Categories</option>
+                            </select>
+      </div>
+    </div>
+
+    <!-- Row 2: Thông số & Trạng thái -->
+    <div class="filter-row">
+      <div class="filter-group range-container">
+        <span class="filter-tag">Price</span>
+        <div class="range-inputs">
+          <input type="number" asp-for="MinPrice" value="@Model.MinPrice" placeholder="Min" />
+          <span class="range-divider"></span>
+          <input type="number" asp-for="MaxPrice" value="@Model.MaxPrice" placeholder="Max" />
+        </div>
+      </div>
+
+      <div class="filter-group range-container">
+        <span class="filter-tag">Stock</span>
+        <div class="range-inputs">
+          <input type="number" name="MinStock" value="@Model.MinStock" placeholder="Min" />
+          <span class="range-divider"></span>
+          <input type="number" name="MaxStock" value="@Model.MaxStock" placeholder="Max" />
+        </div>
+      </div>
+
+      <!-- Dự phòng cho trạng thái sản phẩm sau này -->
+      <div class="filter-group select-box">
+        <span class="filter-icon">⚡</span>
+        <select name="Status">
+          <option value="">All Status</option>
+          <option value="1">In Stock</option>
+          <option value="0">Out of Stock</option>
+        </select>
+      </div>
+
+      <!-- Nút bấm đẩy về cuối hàng 2 -->
+      <div class="filter-actions">
+        <a asp-action="Index" asp-controller="ProductManual" class="btn-reset">Reset</a>
+        <button type="submit" class="btn-primary">Apply Filter</button>
+        @* after submit they'll send data to index-> controller *@
+      </div>
+    </div>
+
+  </div>
+  @* form below just display *@
+</form>
+           
+            @* filter *@
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Image
+                        </th>
+                        <th>
+                            Tên
+                        </th>
+                        <th>
+                           Giá
+                        </th>
+                        <th>
+                           Thương hiệu
+                        </th>
+                        <th>
+                            Tồn kho
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products) {
+                <tr>
+                  <td>
+                                @if (!string.IsNullOrEmpty(item.Image))
+                                {
+                                    <!-- Ưu tiên số 1: Ảnh chính của sản phẩm -->
+                                    <img src="@item.Image" alt="Main" class="product-img-thumb" />
+                                }
+                                else if (item.ProductImages != null && item.ProductImages.Any())
+                                {
+                                    <!-- Ưu tiên số 2: Nếu không có ảnh chính, lấy ảnh đầu tiên trong Gallery -->
+                                    <img src="@item.ProductImages.First().Url" alt="Gallery First" class="product-img-thumb" />
+                                }
+                                else
+                                {
+                                    <!-- Ưu tiên số 3: Ảnh mặc định nếu trắng tay -->
+                                    <img src="~/img/no-img.jfif" alt="Default" class="product-img-thumb" />
+                                }
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                       @item.Price.ToString("#,##0") ₫
+                </td>
+                <td>
+                    @item.Brand
+                </td>
+                 <td>
+                    @item.Stock
+                </td>
+                            <td class="btn-Edit-Delete-Detail">
+                                <a asp-action="Edit" asp-route-id="@item.Id"><i class='bx bxs-edit-alt'></i></a>
+                                <a asp-action="Detail" asp-route-id="@item.Id"><i class='bx bxs-show'></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.Id"><i class='bx bxs-trash'></i></a>
+                            </td>
+                         
+            </tr>
+                 }
+                </tbody>
+            </table>
+            @* pagination *@
+            @{
+                var pagination = new Getdata1.Models.PaginationVM
+                {
+                    CurrentPage = Model.CurrentPage,
+                    TotalPages = Model.TotalPages,
+                    ActionName = "Index",
+                    RouteValues = new Dictionary<string, string> 
+                    { 
+                        { "Name", Model.Name ?? "" },
+                        { "CategoryId", Model.CategoryId?.ToString() ?? "" },
+                        { "MinPrice", Model.MinPrice?.ToString() ?? "" },
+                        { "MaxPrice", Model.MaxPrice?.ToString() ?? "" }
+                    }
+                };
+            }
+            <partial name="_Pagination" model="pagination" />
+        </div>
+    </div>
+</main>

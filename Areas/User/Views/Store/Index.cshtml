@@ -1,0 +1,261 @@
+﻿@model Getdata1.ViewModels.StoreVM
+@{
+    ViewData["Title"] = "Store — Pbao Performance";
+    Layout = "~/Areas/User/Views/Shared/Layout.cshtml"; // Sử dụng layout chung của hệ thống
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pagination.css" />
+    <link href="~/css/Use_web/Store/store.css" rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+}
+
+<div style="max-width:1080px; margin:48px auto 0; padding:44px 24px 0;">
+    <p style="font-size:12px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; font-weight:600; margin-bottom:8px">Pbao Performance</p>
+    <h1 style="font-family:'Syne',sans-serif; font-size:52px; font-weight:800; letter-spacing:-2px; line-height:1; margin-bottom:8px">Store.</h1>
+    <p style="font-size:16px; color:var(--sub)">Everything you need to play at your best.</p>
+</div>
+
+<div class="cat-scroll-wrap" style="margin-top:24px;">
+    <div class="cat-scroll" id="catScroll">
+        <a style="text-decoration:none" asp-area="User" asp-action="Index" 
+           asp-route-searchTerm="@Model.SearchTerm" 
+           asp-route-brand="@Model.SortBy" @* Truyền các tham số lọc hiện tại *@
+           class="cat-pill @(Model.CategoryId == null ? "active" : "")" style="text-decoration: none;">
+            <i class='bx bx-grid-alt'></i> <span>All Products</span>
+        </a>
+
+        @foreach (var cat in Model.Categories)
+        {
+            // Hàm gán icon tự động dựa vào tên danh mục 
+            string categoryIcon = cat.Name.ToLower() switch
+            {
+                var t when t.Contains("vợt") => "bx-baseball",
+                var t when t.Contains("cầu") => "bx-football",
+                var t when t.Contains("áo") || t.Contains("quần") => "bx-user",
+                var t when t.Contains("giày") => "bx-run",
+                var t when t.Contains("túi") || t.Contains("balo") => "bx-briefcase",
+                var t when t.Contains("cước") || t.Contains("dây") => "bx-git-branch",
+                var t when t.Contains("cuốn") || t.Contains("grip") => "bx-transfer-alt",
+                var t when t.Contains("phụ kiện") => "bx-package",
+                var t when t.Contains("sale") => "bx-purchase-tag",
+                _ => "bx-package"
+            };
+
+            <a asp-area="User" asp-action="Index" 
+               asp-route-categoryId="@cat.Id"
+               asp-route-searchTerm="@Model.SearchTerm"
+               asp-route-sortBy="@Model.SortBy"
+               class="cat-pill @(Model.CategoryId == cat.Id ? "active" : "")" style="text-decoration: none;">
+                <i class='bx @categoryIcon'></i> 
+                <span>@cat.Name</span>
+                <small style="opacity: 0.6; margin-left: 2px;">(@cat.ProductCount)</small>
+            </a>
+        }
+    </div>
+</div>
+
+<div class="promo-banner">
+    <div class="promo-inner">
+        <div class="promo-text">
+            <span>Limited Offer</span>
+            <h2>Carbon X-10 — New Season Drop</h2>
+            <p>Weightless power. Absolute control. From $230.</p>
+        </div>
+        <button class="promo-cta">Shop Now</button>
+    </div>
+</div>
+
+<form id="filterForm" asp-area="User" asp-action="Index" method="get">
+    <input type="hidden" name="categoryId" value="@Model.CategoryId" />
+    <input type="hidden" id="currentViewInput" name="viewMode" value="@(Context.Request.Query["viewMode"].ToString() ?? "grid")" />
+
+    <div class="filter-bar">
+        <div class="filter-left">
+            <span class="result-count" id="resultCount">@Model.Products.Count() sản phẩm</span>
+            
+            <input type="text" name="searchTerm" value="@Model.SearchTerm" class="filter-select" placeholder="Tìm kiếm tên..." style="width: 140px; background-image: none; appearance: auto; padding-right: 10px;" onchange="this.form.submit()" />
+
+            <select name="sortBy" class="filter-select" id="sortSelect" onchange="this.form.submit()">
+                <option value="">Featured</option>
+                <option value="price_asc" selected="@(Model.SortBy == "price_asc")">Price: Low to High</option>
+                <option value="price_desc" selected="@(Model.SortBy == "price_desc")">Price: High to Low</option>
+                <option value="latest" selected="@(Model.SortBy == "latest")">Newest</option>
+            </select>
+
+            <select name="brand" class="filter-select" id="brandSelect" onchange="this.form.submit()">
+                <option value="">All Brands</option>
+                <option value="yonex" selected="@(Context.Request.Query["brand"] == "yonex")">Yonex</option>
+                <option value="victor" selected="@(Context.Request.Query["brand"] == "victor")">Victor</option>
+                <option value="lining" selected="@(Context.Request.Query["brand"] == "lining")">Li-Ning</option>
+                <option value="pbao" selected="@(Context.Request.Query["brand"] == "pbao")">Pbao</option>
+            </select>
+        </div>
+
+        <div class="view-toggle">
+            <button type="button" class="view-btn" id="btnGrid" onclick="setView('grid')">
+                <i class='bx bx-grid-alt'></i>
+            </button>
+            <button type="button" class="view-btn" id="btnList" onclick="setView('list')">
+                <i class='bx bx-list-ul'></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<div class="products-wrap">
+    <div class="product-grid" id="productGrid">
+        @foreach (var product in Model.Products)
+        {
+            // Thiết lập Icon hiển thị dựa trên danh mục của sản phẩm
+            string productIcon = product.CategoryId.ToString() switch {
+                _ => "bx-baseball" // Mặc định hiển thị icon vợt, bạn có thể tinh chỉnh logic này theo ý muốn
+            };
+
+            <div class="product-card" style="cursor: pointer;" onclick="location.href='@Url.Action("Details", "Store", new { area = "User", id = product.Id })'">
+                <div class="card-img">
+                    <div class="img-placeholder">
+                        @if (!string.IsNullOrEmpty(product.Image))
+                        {
+                            var imagePath = product.Image.StartsWith("/") ? "~" + product.Image : "~/img/" + product.Image;
+                            <img src="@Url.Content(imagePath)" alt="@product.Name" style="width: 100%; height: 100%; object-fit: contain;" />
+                        }
+                        else
+                        {
+                            <i class='bx @productIcon'></i>
+                        }
+                    </div>
+                    
+                    <div class="card-badges">
+                        @if (Model.SortBy == "latest")
+                        {
+                            <span class="badge badge-new">New</span>
+                        }
+                    </div>
+                    
+                    <button type="button" class="card-wish" onclick="toggleWish(event, this)">
+                        <i class='bx bx-heart'></i>
+                    </button>
+                </div>
+
+                <div class="card-body">
+                    <p class="card-cat">@product.Brand</p>
+                    <p class="card-name">
+                        @product.Name
+                    </p>
+                    <p class="card-desc">@product.Description</p>
+                    
+                    <div class="card-footer">
+                        <div>
+                            <div class="card-price">
+                                @product.Price.ToString("C0") @* Tự động format định dạng tiền tệ *@
+                            </div>
+                            <div class="card-stars">
+                                ★★★★☆ <span style="font-size: 11px; color: var(--muted); font-weight: 400;">(88)</span>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="add-btn" onclick="addToCart(event, @product.Id)">
+                            <i class='bx bx-plus'></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Products.Any())
+    {
+        <div class="empty-state" style="display:block">
+            <i class='bx bx-search-alt'></i>
+            <p>Không tìm thấy sản phẩm nào phù hợp với bộ lọc.</p>
+        </div>
+    }
+
+    <div style="margin-top: 56px; display: flex; justify-content: center;">
+        <partial name="_Pagination" model="Model.Pagination" />
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Hàm chuyển đổi linh hoạt chế độ hiển thị Grid / List kế thừa từ mẫu thiết kế 
+        function setView(viewMode) {
+            const grid = document.getElementById('productGrid');
+            document.getElementById('currentViewInput').value = viewMode;
+            
+            document.getElementById('btnGrid').classList.toggle('active', viewMode === 'grid');
+            document.getElementById('btnList').classList.toggle('active', viewMode === 'list');
+            
+            if (viewMode === 'list') {
+                grid.classList.add('list-view');
+            } else {
+                grid.classList.remove('list-view');
+            }
+        }
+
+        // Khôi phục lại trạng thái hiển thị Grid/List sau khi trang bị tải lại (Reload)
+        document.addEventListener("DOMContentLoaded", function() {
+            const initialView = document.getElementById('currentViewInput').value;
+            setView(initialView);
+        });
+
+        // Xử lý hiệu ứng tim đổi màu khi click nút yêu thích
+        function toggleWish(event, button) {
+            event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài thẻ card (tránh nhảy trang Details)
+            button.classList.toggle('wished');
+            const icon = button.querySelector('i');
+            if (button.classList.contains('wished')) {
+                icon.className = 'bx bxs-heart';
+            } else {
+                icon.className = 'bx bx-heart';
+            }
+        }
+
+        // Xử lý thêm vào giỏ hàng bằng AJAX
+        async function addToCart(event, productId) {
+            event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài thẻ card
+            
+            try {
+                const response = await fetch('/User/Cart/AddToCart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `productId=${productId}&quantity= 1`
+                });
+                // đợi cho server xử lý -> trả về dữ lieuj jsson
+                const result = await response.json();
+                // dao diện tại chỗ không load lại page 
+                if (result.success) {
+                    alert(result.message);
+                    animateCartDot(); // hiệu ứng nhấp nháy 
+                    // Có thể cập nhật số lượng trên icon giỏ hàng nếu có
+                    const cartCountElement = document.querySelector('.cart-count');
+                    if (cartCountElement && result.cartCount !== undefined) {
+                        cartCountElement.innerText = result.cartCount;
+                    }
+                } else {
+                    alert(result.message || 'Có lỗi xảy ra.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Không thể kết nối tới máy chủ.');
+            }
+        }
+
+        // Giữ hiệu ứng chấm thông báo giỏ hàng nhảy mượt mà
+        function animateCartDot() {
+            const dot = document.querySelector('.cart-dot');
+            if(dot) {
+                dot.style.transform = 'scale(1.8)';
+                dot.style.background = '#34c759';
+                setTimeout(() => { 
+                    dot.style.transform = ''; 
+                    dot.style.background = 'var(--accent)'; 
+                }, 400);
+            }
+        }
+    </script>
+}

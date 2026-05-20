@@ -1,0 +1,89 @@
+﻿@model Getdata1.Models.Product
+@{
+}
+@{
+    // Layout = "~/Views/Shared/_Layout.cshtml"; Đảm bảo nó trỏ đúng về Layout bạn vừa làm
+}
+    ViewData["Title"] = "Create page";
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/product/Create_css.css" />
+    @* nhúng css vao *@
+}
+<main>
+    <div class="head-title">
+        <div class="left">
+            <h1>Create new product</h1>
+            <ul class="Breakcrumb">
+                <li>
+                    <a href="#">Inventory</a>
+                </li>
+                <li><i class='bx bx-chevron-right'></i></li>
+                <li>
+                    <a  href="#"> product</a>
+                </li>
+                <li><i class='bx bx-chevron-right'></i></li>
+                <li>
+                    <a class="active" href="#">add product</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    @* mini box *@
+
+
+
+    <div class="table-data">
+        <div class="order">
+            <div class="head">
+                <h3>Our Product</h3>
+            </div>
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px;">
+
+                    <!-- Cột bên trái: Thông tin cơ bản -->
+                    <div class="form-group">
+                        <label asp-for="Name">Product Name</label>
+                        <input asp-for="Name" type="text"  class="my-input" placeholder="Ví dụ: Yonex Astrox 100ZZ">
+
+                        <label asp-for="Price">Price</label>
+                        <input asp-for="Price" type="number"  class="my-input" placeholder="Nhập giá bán...">
+
+                        <label asp-for="Brand">Brand</label>
+                        <input asp-for="Brand" class="my-input">
+                        <label asp-for="CategoryId">Danh mục</label>
+                        <select asp-for="CategoryId" asp-items="@(ViewData["Category"]) as SelectList" class="my-input">
+                            <option value="">Chọn danh mục</option>
+                        </select>
+                    </div>
+
+
+                    <!-- Cột bên phải: Hình ảnh & Mô tả -->
+                    <div class="form-group">
+                        <label asp-for="Stock">Stock Quantity</label>
+                        <input asp-for="Stock" type="number"  class="my-input" value="0">
+
+                        <label asp-for="ImageFile" >Product Main Image</label>
+                        <input asp-for="ImageFile" type="file"  class="my-input" style="cursor:pointer">
+                        <!-- EXTRA GALLERY IMAGES (New) -->
+                        <label>Product Gallery (Select multiple)</label>
+                        <input asp-for="GalleryFiles" type="file" class="my-input" style="cursor:pointer" multiple>
+
+                        <label asp-for="Description" >Description</label>
+                        <textarea asp-for="Description"  class="my-input" rows="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-footer" style="padding: 20px; border-top: 1px solid var(--grey);">
+                    <button type="submit" class="btn-save-product" style="border: none; cursor: pointer;">
+                        <i class='bx bxs-save'></i>
+                        <span class="text">Save Product</span>
+                    </button>
+                    <a asp-action="Index" class="btn-cancel" style="margin-left: 10px; color: var(--dark-grey);">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>

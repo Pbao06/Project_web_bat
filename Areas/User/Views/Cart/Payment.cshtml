@@ -1,0 +1,553 @@
+﻿@{
+    // Khai báo sử dụng cái Layout vừa tạo ở trên
+    Layout = "~/Areas/User/Views/Shared/_CheckOutLayout.cshtml";
+    ViewData["Title"] = "Thanh toán";
+    ViewBag.Step = 2;
+}
+@section Styles
+{
+    <link href="~/css/Use_web/Cart/Payment.css" rel="stylesheet" />
+}
+<div class="checkout-wrap">
+
+    <!-- ── LEFT ── -->
+    <div class="checkout-left">
+        <div class="checkout-heading">
+            <h1>Thanh toán</h1>
+            <p>Điền thông tin bên dưới để hoàn tất đơn hàng của bạn.</p>
+        </div>
+
+        <!-- 1. Thông tin liên hệ -->
+        <div class="co-section" id="sec1">
+            <div class="co-section-head">
+                <div class="co-section-title">
+                    <div class="section-badge">1</div>
+                    <h3>Thông tin liên hệ</h3>
+                </div>
+            </div>
+            <div class="co-body">
+                <div class="field-row col2">
+                    <div class="field-group">
+                        <label class="field-label">Họ</label>
+                        <input class="field-input" type="text" placeholder="Nguyễn" id="lastName">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Tên</label>
+                        <input class="field-input" type="text" placeholder="Văn A" id="firstName">
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field-group">
+                        <label class="field-label">Email</label>
+                        <input class="field-input" type="email" placeholder="email@example.com" id="email">
+                        <span class="field-error" style="display:none">Vui lòng nhập email hợp lệ.</span>
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field-group">
+                        <label class="field-label">Số điện thoại</label>
+                        <div class="phone-row">
+                            <div class="phone-prefix">
+                                🇻🇳 <span>+84</span>
+                            </div>
+                            <input class="field-input" type="tel" placeholder="0912 345 678" style="flex:1" id="phone">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Địa chỉ giao hàng -->
+        <div class="co-section" id="sec2">
+            <div class="co-section-head">
+                <div class="co-section-title">
+                    <div class="section-badge">2</div>
+                    <h3>Địa chỉ giao hàng</h3>
+                </div>
+            </div>
+            <div class="co-body">
+                <div class="field-row">
+                    <div class="field-group">
+                        <label class="field-label">Địa chỉ</label>
+                        <input class="field-input" type="text" placeholder="Số nhà, tên đường" id="address">
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field-group">
+                        <label class="field-label">Căn hộ / Tầng (tùy chọn)</label>
+                        <input class="field-input" type="text" placeholder="Số căn hộ, tầng, tên toà nhà..." id="address2">
+                    </div>
+                </div>
+                <div class="field-row col3">
+                    <div class="field-group">
+                        <label class="field-label">Tỉnh / Thành phố</label>
+                        <select class="field-input" id="city">
+                            <option>TP. Hồ Chí Minh</option>
+                            <option>Hà Nội</option>
+                            <option>Đà Nẵng</option>
+                            <option>Cần Thơ</option>
+                            <option>Bình Dương</option>
+                            <option>Đồng Nai</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Quận / Huyện</label>
+                        <select class="field-input" id="district">
+                            <option>Quận 1</option>
+                            <option>Quận 3</option>
+                            <option>Quận 7</option>
+                            <option>Bình Thạnh</option>
+                            <option>Gò Vấp</option>
+                            <option>Tân Bình</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Mã bưu chính</label>
+                        <input class="field-input" type="text" placeholder="70000" id="zip">
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field-group">
+                        <label class="field-label">Ghi chú cho tài xế (tùy chọn)</label>
+                        <input class="field-input" type="text" placeholder="Cổng màu xanh, giao giờ hành chính..." id="notes">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Phương thức vận chuyển -->
+        <div class="co-section" id="sec3">
+            <div class="co-section-head">
+                <div class="co-section-title">
+                    <div class="section-badge">3</div>
+                    <h3>Phương thức vận chuyển</h3>
+                </div>
+            </div>
+            <div class="co-body">
+                <div class="shipping-opts">
+                    <label class="shipping-opt selected" onclick="selectShipping(this,'standard')">
+                        <input type="radio" name="shipping" value="standard" checked>
+                        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+                        <div class="opt-icon"><i class='bx bx-package'></i></div>
+                        <div class="opt-info">
+                            <div class="opt-name">Giao hàng tiêu chuẩn</div>
+                            <div class="opt-desc">3–5 ngày làm việc · J&T Express</div>
+                        </div>
+                        <div class="opt-price free">Miễn phí</div>
+                    </label>
+                    <label class="shipping-opt" onclick="selectShipping(this,'express')">
+                        <input type="radio" name="shipping" value="express">
+                        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+                        <div class="opt-icon"><i class='bx bx-rocket'></i></div>
+                        <div class="opt-info">
+                            <div class="opt-name">Giao hàng nhanh</div>
+                            <div class="opt-desc">1–2 ngày làm việc · Giao Hàng Nhanh</div>
+                        </div>
+                        <div class="opt-price">$4.99</div>
+                    </label>
+                    <label class="shipping-opt" onclick="selectShipping(this,'same-day')">
+                        <input type="radio" name="shipping" value="same-day">
+                        <div class="opt-radio"><div class="opt-radio-inner"></div></div>
+                        <div class="opt-icon"><i class='bx bx-run'></i></div>
+                        <div class="opt-info">
+                            <div class="opt-name">Giao trong ngày</div>
+                            <div class="opt-desc">Trong 4 giờ · Nội thành HCM · GHTK</div>
+                        </div>
+                        <div class="opt-price">$8.99</div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Thanh toán -->
+        <div class="co-section" id="sec4">
+            <div class="co-section-head">
+                <div class="co-section-title">
+                    <div class="section-badge">4</div>
+                    <h3>Thanh toán</h3>
+                </div>
+            </div>
+            <div class="co-body">
+                <div class="pay-tabs">
+                    <div class="pay-tab active" onclick="selectPay(this,'card')">
+                        <i class='bx bx-credit-card'></i> Thẻ tín dụng
+                    </div>
+                    <div class="pay-tab" onclick="selectPay(this,'momo')">
+                        <i class='bx bx-wallet'></i> MoMo
+                    </div>
+                    <div class="pay-tab" onclick="selectPay(this,'banking')">
+                        <i class='bx bx-building-house'></i> Banking
+                    </div>
+                    <div class="pay-tab" onclick="selectPay(this,'cod')">
+                        <i class='bx bx-money'></i> COD
+                    </div>
+                </div>
+
+                <div id="payCard">
+                    <div class="field-row">
+                        <div class="field-group">
+                            <label class="field-label">Tên chủ thẻ</label>
+                            <input class="field-input" type="text" placeholder="NGUYEN VAN A">
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-group">
+                            <label class="field-label">Số thẻ</label>
+                            <div class="card-number-wrap">
+                                <input class="field-input" type="text" placeholder="0000  0000  0000  0000" id="cardNum" oninput="formatCard(this)" maxlength="19">
+                                <i class='bx bx-credit-card-front'></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-row col2">
+                        <div class="field-group">
+                            <label class="field-label">Ngày hết hạn</label>
+                            <input class="field-input" type="text" placeholder="MM / YY" oninput="formatExpiry(this)" maxlength="7">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">CVV</label>
+                            <input class="field-input" type="password" placeholder="•••" maxlength="4">
+                        </div>
+                    </div>
+                    <div class="card-icons">
+                        <div class="card-icon-pill">VISA</div>
+                        <div class="card-icon-pill">MC</div>
+                        <div class="card-icon-pill">JCB</div>
+                        <div class="card-icon-pill">AMEX</div>
+                    </div>
+                </div>
+
+                <div id="payMomo" style="display:none">
+                    <div style="background:#fce4f3;border-radius:14px;padding:20px 18px;display:flex;align-items:center;gap:14px;">
+                        <div style="width:48px;height:48px;border-radius:12px;background:#a50064;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex-shrink:0;">
+                            <i class='bx bx-wallet-alt'></i>
+                        </div>
+                        <div>
+                            <div style="font-size:13px;font-weight:600;color:#a50064;margin-bottom:2px;">Thanh toán qua MoMo</div>
+                            <div style="font-size:12px;color:#9b006b;">Quét mã QR hoặc nhập số điện thoại MoMo để thanh toán nhanh chóng.</div>
+                        </div>
+                    </div>
+                    <div class="field-row" style="margin-top:12px">
+                        <div class="field-group">
+                            <label class="field-label">Số điện thoại MoMo</label>
+                            <input class="field-input" type="tel" placeholder="0912 345 678">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="payBanking" style="display:none">
+                    <div style="background:var(--bg2);border-radius:14px;padding:20px 18px;">
+                        <div style="font-size:13px;font-weight:600;margin-bottom:12px;">Thông tin chuyển khoản</div>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--sub)">Ngân hàng</span><span style="font-weight:600">Vietcombank</span></div>
+                            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--sub)">Số tài khoản</span><span style="font-weight:600;letter-spacing:1px">1234 5678 9012</span></div>
+                            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--sub)">Chủ tài khoản</span><span style="font-weight:600">PBAO SPORT CO.,LTD</span></div>
+                            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--sub)">Nội dung</span><span style="font-weight:600;color:var(--accent)">#PBAO-ORDER</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="payCod" style="display:none">
+                    <div style="background:#f0fdf4;border-radius:14px;padding:20px 18px;display:flex;align-items:center;gap:14px;">
+                        <div style="width:48px;height:48px;border-radius:12px;background:var(--success);display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex-shrink:0;">
+                            <i class='bx bx-money-withdraw'></i>
+                        </div>
+                        <div>
+                            <div style="font-size:13px;font-weight:600;color:#166534;margin-bottom:2px;">Thanh toán khi nhận hàng (COD)</div>
+                            <div style="font-size:12px;color:#15803d;">Chuẩn bị tiền mặt đúng số tiền để giao dịch thuận tiện nhất.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Mã giảm giá -->
+        <div class="co-section" id="sec5">
+            <div class="co-section-head">
+                <div class="co-section-title">
+                    <div class="section-badge" style="background:var(--bg3);color:var(--sub)">%</div>
+                    <h3>Mã giảm giá</h3>
+                </div>
+            </div>
+            <div class="co-body">
+                <div class="coupon-wrap">
+                    <input class="coupon-input" type="text" placeholder="Nhập mã giảm giá..." id="couponInput">
+                    <button class="btn-coupon" onclick="applyPromo()">Áp dụng</button>
+                </div>
+                <div class="coupon-success" id="couponSuccess">
+                    <i class='bx bx-check-circle'></i>
+                    Mã <strong>PBAO2026</strong> đã được áp dụng — giảm $23.00
+                </div>
+                <div class="promo-err" id="promoErr" style="display:none; color:var(--err); font-size:12px; margin-top:8px;">Mã không hợp lệ.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── RIGHT: ORDER SUMMARY ── -->
+    <div class="checkout-right">
+        <div class="order-summary">
+            <div class="os-header">
+                <h3>Đơn hàng của bạn</h3>
+                <div class="os-count" id="osCount">0 sản phẩm</div>
+            </div>
+
+            <div class="os-items" id="osItems">
+                <!-- Ajax Render -->
+            </div>
+
+            <div class="os-divider"></div>
+
+            <div class="os-totals">
+                <div class="os-row">
+                    <span class="label">Tạm tính</span>
+                    <span class="val" id="osSubTotal">$0.00</span>
+                </div>
+                <div class="os-row discount" id="osDiscountRow" style="display:none">
+                    <span class="label">Giảm giá</span>
+                    <span class="val" id="osDiscountVal">-$0.00</span>
+                </div>
+                <div class="os-row" id="osShippingRow">
+                    <span class="label">Vận chuyển</span>
+                    <span class="val" id="osShippingVal" style="color:var(--success);font-weight:600">Miễn phí</span>
+                </div>
+                <div class="os-row total">
+                    <span class="label">Tổng cộng</span>
+                    <span class="val" id="osTotalVal">$0.00</span>
+                </div>
+            </div>
+
+            <div class="os-cta">
+                <button class="btn-place-order" onclick="placeOrder()">
+                    <i class='bx bx-lock-alt'></i>
+                    Đặt hàng ngay
+                </button>
+                <div class="os-secure">
+                    <i class='bx bx-shield-quarter'></i>
+                    Thanh toán 256-bit SSL · Bảo mật tuyệt đối
+                </div>
+            </div>
+
+            <div class="os-divider"></div>
+
+            <div class="trust-row">
+                <div class="trust-item">
+                    <i class='bx bx-undo'></i>
+                    Đổi trả<br>30 ngày
+                </div>
+                <div class="trust-item">
+                    <i class='bx bx-shield-alt-2'></i>
+                    Bảo hành<br>12 tháng
+                </div>
+                <div class="trust-item">
+                    <i class='bx bx-support'></i>
+                    Hỗ trợ<br>24/7
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ORDER CONFIRMED OVERLAY -->
+<div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-card">
+        <div class="confirm-icon">
+            <i class='bx bx-check'></i>
+        </div>
+        <h2>Đặt hàng thành công!</h2>
+        <p>Cảm ơn bạn đã tin tưởng Pbao.<br>Chúng tôi sẽ giao hàng trong thời gian sớm nhất.</p>
+        <div class="confirm-order-num" id="confirmOrderNum">#PBAO-20260518</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">Email xác nhận đã được gửi tới địa chỉ của bạn.</p>
+        @* <button class="btn-confirm-close" onclick="window.location.href='/'">
+            Xem đơn hàng <i class='bx bx-right-arrow-alt' style="vertical-align:-2px"></i>
+        </button> *@
+        <button class="btn-confirm-close" onclick="window.location.href='/'">
+            Tiếp tục mua sắm <i class='bx bx-right-arrow-alt' style="vertical-align:-2px"></i>
+        </button>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+@section Scripts {
+    <script>
+        let currentCart = null;
+        let selectedShipping = 'standard';
+        let shippingFee = 0;
+
+        async function loadOrderSummary() {
+            try {
+                const response = await fetch('/User/Cart/GetCart');
+                const data = await response.json();
+                currentCart = data;
+                renderSummary(data);
+            } catch (error) {
+                console.error('Error loading summary:', error);
+            }
+        }
+
+        function renderSummary(data) {
+            const container = document.getElementById('osItems');
+            const items = data.items || [];
+            
+            document.getElementById('osCount').textContent = `${data.totalItems} sản phẩm`;
+            container.innerHTML = items.map(item => `
+                <div class="os-item">
+                    <div class="os-item-img">
+                        <img src="${item.image ? '/img/' + item.image : '/img/no-img.jfif'}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" />
+                        <div class="os-item-qty">${item.quantity}</div>
+                    </div>
+                    <div class="os-item-info">
+                        <div class="os-item-name">${item.productName}</div>
+                        <div class="os-item-variant">${item.variantInfo || 'Tiêu chuẩn'}</div>
+                    </div>
+                    <div class="os-item-price">$${item.price.toFixed(2)}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('osSubTotal').textContent = '$' + data.subTotal.toFixed(2);
+            
+            if (data.appliedPromoCode) {
+                document.getElementById('osDiscountRow').style.display = 'flex';
+                document.getElementById('osDiscountRow').querySelector('.label').textContent = `Giảm giá (${data.appliedPromoCode})`;
+                document.getElementById('osDiscountVal').textContent = '-$' + data.discountAmount.toFixed(2);
+                document.getElementById('couponSuccess').classList.add('show');
+                document.getElementById('couponSuccess').innerHTML = `<i class='bx bx-check-circle'></i> Mã <strong>${data.appliedPromoCode}</strong> đã áp dụng — giảm $${data.discountAmount.toFixed(2)}`;
+            }
+
+            updateTotal();
+        }
+
+        function updateTotal() {
+            if (!currentCart) return;
+            const total = currentCart.subTotal - currentCart.discountAmount + shippingFee;
+            document.getElementById('osTotalVal').textContent = '$' + total.toFixed(2);
+        }
+
+        function selectShipping(el, type) {
+            document.querySelectorAll('.shipping-opt').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedShipping = type;
+            
+            const shValEl = document.getElementById('osShippingVal');
+            if (type === 'standard') {
+                shippingFee = 0;
+                shValEl.textContent = 'Miễn phí';
+                shValEl.style.color = 'var(--success)';
+            } else if (type === 'express') {
+                shippingFee = 4.99;
+                shValEl.textContent = '$4.99';
+                shValEl.style.color = 'var(--text)';
+            } else {
+                shippingFee = 8.99;
+                shValEl.textContent = '$8.99';
+                shValEl.style.color = 'var(--text)';
+            }
+            updateTotal();
+        }
+
+        function selectPay(el, type) {
+            document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            ['payCard','payMomo','payBanking','payCod'].forEach(id => document.getElementById(id).style.display='none');
+            const map = {card:'payCard',momo:'payMomo',banking:'payBanking',cod:'payCod'};
+            document.getElementById(map[type]).style.display='block';
+        }
+
+        function formatCard(el) {
+            let v = el.value.replace(/\D/g,'').substring(0,16);
+            el.value = v.replace(/(.{4})/g,'$1  ').trim();
+        }
+        function formatExpiry(el) {
+            let v = el.value.replace(/\D/g,'').substring(0,4);
+            if(v.length>2) v = v.slice(0,2)+' / '+v.slice(2);
+            el.value = v;
+        }
+
+        async function applyPromo() {
+            const val = document.getElementById('couponInput').value.trim();
+            if (!val) return;
+
+            try {
+                const response = await fetch(`/User/Cart/ApplyPromo?promoCode=${encodeURIComponent(val)}`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                if (result.success) {
+                    currentCart = result.cart;
+                    renderSummary(result.cart);
+                } else {
+                    document.getElementById('promoErr').textContent = result.message;
+                    document.getElementById('promoErr').style.display = 'block';
+                    setTimeout(() => document.getElementById('promoErr').style.display = 'none', 2000);
+                }
+            } catch (error) {
+                console.error('Error applying promo:', error);
+            }
+        }
+
+        async function placeOrder() {
+            // Validation basic
+            const email = document.getElementById('email').value;
+            if (!email.includes('@@')) {
+                document.querySelector('.field-error').style.display = 'block';
+                return;
+            }
+
+            const btn = document.querySelector('.btn-place-order');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="bx bx-loader-alt" style="animation:spin .7s linear infinite"></i> Đang xử lý...';
+            btn.disabled = true;
+
+            // Collect data
+            const checkoutData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: email,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                address2: document.getElementById('address2').value,
+                city: document.getElementById('city').value,
+                district: document.getElementById('district').value,
+                zipCode: document.getElementById('zip').value,
+                notes: document.getElementById('notes').value,
+                shippingMethod: selectedShipping,
+                paymentMethod: document.querySelector('.pay-tab.active').textContent.trim(),
+                promoCode: currentCart?.appliedPromoCode
+            };
+
+            try {
+                const response = await fetch('/User/Order/PlaceOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify(checkoutData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('confirmOrderNum').textContent = '#PBAO-SUCCESS';
+                    document.getElementById('confirmOverlay').classList.add('show');
+                    
+                    setTimeout(() => {
+                        window.location.href = result.redirectUrl;
+                    }, 2000);
+                } else {
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    alert(result.message || 'Có lỗi xảy ra khi đặt hàng.');
+                }
+            } catch (error) {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi kết nối máy chủ.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadOrderSummary();
+        });
+    </script>
+}

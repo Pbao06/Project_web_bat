@@ -1,0 +1,7 @@
+﻿#content main .table-data .order table tr td span.vip {
+    background-color: #d4af37; /* Gold */
+}
+
+#content main .table-data .order table tr td span.regular {
+    background: var(--dark-grey);
+}

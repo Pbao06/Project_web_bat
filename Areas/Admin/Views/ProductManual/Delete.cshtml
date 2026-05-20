@@ -1,0 +1,130 @@
+﻿@model Getdata1.Models.Product
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<title>@(ViewData["Title"] ?? "Default Title")</title>
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/product/Delete_css.css" />
+    @* nhúng css vao *@
+}
+
+<main>
+    <div class="head-title">
+        <div class="left">
+            <h1>Delete</h1>
+            <ul class="Breakcrumb">
+                <li>
+                    <a href="#">Inventory</a>
+                </li>
+                <li><i class='bx bx-chevron-right'></i></li>
+                <li>
+                    <a class="active" href="#">Delete</a>
+                </li>
+            </ul>
+        </div>
+        <!-- above is title  -->
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>Are you sure to delete this</h3>
+                </div>
+
+
+                <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+
+    <div class="product-detail-container">
+        <div class="detail-content">
+            @* nay la delete *@
+            <!-- CỘT TRÁI: HÌNH ẢNH -->
+            <div class="image-section">
+                <div class="image-main-preview">
+                                    @if (!string.IsNullOrEmpty(Model.Image))
+                                    {
+                                        <img src="@Model.Image" alt="Product" id="img-display" class="glass-image">
+                                        // vi tao file la luu sang /img/ roi nen ko can/img/@model.img
+                                    }
+                                    else
+                                    {
+                                        <img src="~/img/no-img.jfif" alt="Product" id="img-display" class="glass-image">
+                                    }
+                                 </div>
+                              <div class="image-thumbnails">
+
+                                    @if (Model.ProductImages != null && Model.ProductImages.Any())
+                                    {
+                                        @foreach (var galleryImg in Model.ProductImages)
+                                        {
+                                            <!-- Thumbnails của các ảnh con trong Gallery -->
+                                            <div class="thumb-item" onclick="changeImage('@galleryImg.Url', this)">
+                                                <img src="@galleryImg.Url">
+                                            </div>
+                                        }
+                                    }
+                                   
+                             </div>
+            </div>
+
+            <!-- CỘT PHẢI: THÔNG TIN -->
+            <div class="info-section">
+                <div class="info-header">
+                    <span class="delete-warning">Confirm Deletion</span>
+                    <h1 class="product-name">@Model.Name</h1>
+                                    <p class="product-price">$@Model.Price.ToString("#,##0") ₫</p>
+                </div>
+
+                <div class="info-body">
+                    <div class="detail-group">
+                        <label>Description</label>
+                        <p class="description-text">@Model.Description</p>
+                    </div>
+
+                    <div class="detail-grid">
+                        <div class="detail-group">
+                            <label>Brand</label>
+                            <span class="badge">@Model.Brand</span>
+                        </div>
+                        <div class="detail-group">
+                            <label>Stock Quantity</label>
+                            <span class="stock-count">@Model.Stock units available</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-group">
+                        <label>SKU</label>
+                        <span class="text-muted">PROD-@Model.Id.ToString("D5")</span>
+                    </div>
+                </div>
+
+                <div class="info-footer">
+                    <button type="submit" class="btn-delete">
+                        <i class='bx bxs-trash'></i> Delete Product
+                    </button>
+                    <a asp-action="Index" class="btn-back">
+                        <i class='bx bx-arrow-back'></i> Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+           
+                <script>
+                    // giup load anh sau khi chon anh moi
+                                    // Hàm xử lý đổi ảnh chính và hiệu ứng active
+                    function changeImage(url, element) {
+                        // Đổi ảnh to ở trên
+                        document.getElementById('img-display').src = url;
+
+                        // Xử lý border cho ảnh nhỏ đang được chọn
+                        document.querySelectorAll('.thumb-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        element.classList.add('active');
+                    }
+                </script>
+            </div>
+</main>

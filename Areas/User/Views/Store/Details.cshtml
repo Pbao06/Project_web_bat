@@ -1,0 +1,300 @@
+@model Getdata1.DTOs.ProductDto
+@{
+    ViewData["Title"] = Model.Name + " - Details";
+}
+@section Styles
+{
+    <link href="~/css/Use_web/Store/Detail.css" rel="stylesheet" />
+}
+
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+    <a asp-action="Index">Store</a>
+    <i class='bx bx-chevron-right'></i>
+    <a href="#">@Model.CategoryName</a>
+    <i class='bx bx-chevron-right'></i>
+    <span>@Model.Name</span>
+</div>
+
+<!-- PRODUCT LAYOUT -->
+<div class="product-layout">
+
+    <!-- GALLERY -->
+    <div class="gallery">
+        <div class="gallery-main" id="galleryMain">
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+                var mainImagePath = Model.Image.StartsWith("/") || Model.Image.StartsWith("http") ? Model.Image : (Model.Image.StartsWith("~") ? Model.Image : "~/img/" + Model.Image);
+                <img src="@Url.Content(mainImagePath)" alt="@Model.Name" style="width: 100%; height: 100%; object-fit: contain;" />
+            }
+            else
+            {
+                <i class='bx bx-baseball gallery-main-icon' id="mainIcon"></i>
+            }
+            <div class="gallery-badge">New</div>
+            <button class="gallery-wish" id="wishBtn" onclick="toggleWish()">
+                <i class='bx bx-heart' id="wishIcon"></i>
+            </button>
+        </div>
+        <div class="gallery-thumbs">
+            @if (Model.GalleryImages != null && Model.GalleryImages.Any())
+            {
+                foreach (var img in Model.GalleryImages)
+                {
+                    var thumbPath = img.StartsWith("/") || img.StartsWith("http") ? img : (img.StartsWith("~") ? img : "~/img/" + img);
+                    <div class="thumb" onclick="changeMainImage(this, '@Url.Content(thumbPath)')">
+                        <img src="@Url.Content(thumbPath)" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover;" />
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="thumb active" onclick="selectThumb(this,'bx-baseball')"><i class='bx bx-baseball'></i></div>
+            }
+        </div>
+    </div>
+
+    <!-- PRODUCT INFO -->
+    <div class="product-info">
+        <p class="info-brand">@Model.Brand</p>
+        <h1 class="info-name">@Model.Name</h1>
+        <div class="info-rating">
+            <span class="stars">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    @(i <= Math.Round(Model.AverageRating) ? "★" : "☆")
+                }
+            </span>
+            <span class="rating-val">@Model.AverageRating.ToString("F1")</span>
+            <a class="reviews-link" onclick="switchTab('reviews')">(@Model.ReviewCount đánh giá)</a>
+        </div>
+
+        <div class="info-price">
+            <span class="price-current">@Model.Price.ToString("C")</span>
+        </div>
+        <p class="info-tax">Đã bao gồm thuế. Miễn phí vận chuyển đơn từ $100.</p>
+
+        <div class="divider"></div>
+
+        <!-- Specs summary -->
+        @if (!string.IsNullOrEmpty(Model.Stiffness))
+        {
+            <p class="spec-label">Độ cứng cán: <strong>@Model.Stiffness</strong></p>
+        }
+        @if (!string.IsNullOrEmpty(Model.Weight))
+        {
+            <p class="spec-label">Trọng lượng: <strong>@Model.Weight</strong></p>
+        }
+        @if (!string.IsNullOrEmpty(Model.Color))
+        {
+            <p class="spec-label">Màu sắc: <strong>@Model.Color</strong></p>
+        }
+
+        <div class="divider"></div>
+
+        <!-- Qty & stock -->
+        <div class="qty-row">
+            <div class="qty-box">
+                <button class="qty-btn" onclick="changeQty(-1)"><i class='bx bx-minus'></i></button>
+                <span class="qty-val" id="qtyVal">1</span>
+                <button class="qty-btn" onclick="changeQty(1)"><i class='bx bx-plus'></i></button>
+            </div>
+            <span class="stock-tag">
+                <span class="stock-dot" style="background-color: @(Model.Stock > 0 ? "#10b981" : "#ef4444")"></span> 
+                @(Model.Stock > 0 ? $"Còn hàng ({Model.Stock} chiếc)" : "Hết hàng")
+            </span>
+        </div>
+
+        <!-- CTAs -->
+        <div class="cta-row">
+            <button class="btn-cart" onclick="addToCart()">
+                <i class='bx bx-shopping-bag'></i> Thêm vào giỏ
+            </button>
+            <button class="btn-buy">Mua ngay</button>
+        </div>
+
+        <!-- Perks -->
+        <div class="perks">
+            <div class="perk"><i class='bx bx-package'></i> Miễn phí vận chuyển đơn từ $100</div>
+            <div class="perk"><i class='bx bx-revision'></i> Đổi trả trong 30 ngày nếu lỗi nhà sản xuất</div>
+            <div class="perk"><i class='bx bx-shield-quarter'></i> Bảo hành chính hãng 12 tháng</div>
+            <div class="perk"><i class='bx bx-credit-card'></i> Thanh toán an toàn — Visa, MoMo, ZaloPay</div>
+        </div>
+    </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-section">
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('desc')">Mô tả</button>
+        <button class="tab" onclick="switchTab('specs')">Thông số kỹ thuật</button>
+        <button class="tab" onclick="switchTab('reviews')">Đánh giá (@Model.ReviewCount)</button>
+        <button class="tab" onclick="switchTab('stringing')">Hướng dẫn căng dây</button>
+    </div>
+
+    <!-- DESC -->
+    <div class="tab-content active" id="tab-desc">
+        <div class="desc-text">
+            @Html.Raw(Model.Description)
+        </div>
+    </div>
+
+    <!-- SPECS -->
+    <div class="tab-content" id="tab-specs">
+        <table class="specs-table">
+            <tr><td>Thương hiệu</td><td>@Model.Brand</td></tr>
+            <tr><td>Dòng sản phẩm</td><td>@Model.CategoryName</td></tr>
+            <tr><td>Loại cán</td><td>@Model.Stiffness</td></tr>
+            <tr><td>Trọng lượng</td><td>@Model.Weight</td></tr>
+            <tr><td>Điểm cân bằng</td><td>@Model.BalancePoint</td></tr>
+            <tr><td>Chiều dài</td><td>@Model.Length</td></tr>
+            <tr><td>Vật liệu khung</td><td>@Model.Material</td></tr>
+            <tr><td>Độ căng dây khuyến nghị</td><td>@Model.RecommendedTension</td></tr>
+            <tr><td>Dây kèm theo</td><td>@Model.IncludedString</td></tr>
+            <tr><td>Grip size</td><td>@Model.GripSize</td></tr>
+            <tr><td>Màu sắc</td><td>@Model.Color</td></tr>
+            <tr><td>Xuất xứ</td><td>@Model.Origin</td></tr>
+            <tr><td>Bảo hành</td><td>@Model.Warranty</td></tr>
+        </table>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="tab-content" id="tab-reviews">
+        <div class="reviews-header">
+            <div class="reviews-summary">
+                <div>
+                    <div class="big-rating">@Model.AverageRating.ToString("F1")</div>
+                    <div class="stars" style="font-size:16px">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            @(i <= Math.Round(Model.AverageRating) ? "★" : "☆")
+                        }
+                    </div>
+                    <div style="font-size:11px;color:var(--muted);margin-top:2px">@Model.ReviewCount đánh giá</div>
+                </div>
+                <div class="rating-bars">
+                    @for (int i = 5; i >= 1; i--)
+                    {
+                        var count = Model.Reviews?.Count(r => r.Rating == i) ?? 0;
+                        var percent = Model.ReviewCount > 0 ? (count * 100 / Model.ReviewCount) : 0;
+                        <div class="rating-bar-row">@i★ <div class="rating-bar-track"><div class="rating-bar-fill" style="width:@percent%"></div></div> @percent%</div>
+                    }
+                </div>
+            </div>
+            <button class="btn-cart" style="max-width:160px;padding:10px 18px;font-size:13px">Viết đánh giá</button>
+        </div>
+
+        @if (Model.Reviews != null && Model.Reviews.Any())
+        {
+            foreach (var review in Model.Reviews)
+            {
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="review-avatar">@(review.UserName?.Substring(0, 1).ToUpper() ?? "U")</div>
+                        <div>
+                            <div class="review-name">@review.UserName</div>
+                            <div class="review-date">@review.CreatedAt.ToString("dd MMMM, yyyy")</div>
+                        </div>
+                        <div class="review-stars" style="margin-left:auto">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                @(i <= review.Rating ? "★" : "☆")
+                            }
+                        </div>
+                    </div>
+                    <div class="review-title">@review.Title</div>
+                    <div class="review-body">@review.Comment</div>
+                    @if (review.IsVerified)
+                    {
+                        <span class="review-tag">✅ Đã mua tại Pbao</span>
+                    }
+                    <div class="review-helpful">@review.HelpfulCount người thấy đánh giá này hữu ích</div>
+                </div>
+            }
+        }
+        else
+        {
+            <p style="text-align:center; padding: 20px; color: var(--muted);">Chưa có đánh giá nào cho sản phẩm này.</p>
+        }
+    </div>
+
+    <!-- STRINGING -->
+    <div class="tab-content" id="tab-stringing">
+        <div class="desc-text">
+            <h3>Độ căng dây khuyến nghị</h3>
+            <p>Yonex khuyến nghị căng từ <strong>20–28 lbs</strong> tùy phong cách chơi:</p>
+            <ul>
+                <li><strong>20–22 lbs</strong> — Dành cho người mới, tập trung vào kiểm soát và độ bền dây.</li>
+                <li><strong>23–25 lbs</strong> — Phù hợp hầu hết người chơi, cân bằng lực và kiểm soát.</li>
+                <li><strong>26–28 lbs</strong> — Dành cho vận động viên nâng cao, tối đa lực đập.</li>
+            </ul>
+            <h3>Dây phù hợp</h3>
+            <ul>
+                <li><strong>BG80</strong> — Phổ biến nhất, phản lực cao, độ bền tốt.</li>
+                <li><strong>BG65 Ti</strong> — Bền hơn BG80, phù hợp chơi nhiều.</li>
+                <li><strong>Aerobite</strong> — Kết hợp hai loại dây, tối ưu spin và lực.</li>
+            </ul>
+            <h3>Lưu ý khi căng</h3>
+            <p>Nên căng vợt bởi thợ có kinh nghiệm. Pbao cung cấp dịch vụ căng dây chuyên nghiệp tại cửa hàng với giá từ $5/lần.</p>
+        </div>
+    </div>
+</div>
+
+<!-- RELATED PRODUCTS -->
+<div class="related-section">
+    <div class="section-title">Sản phẩm liên quan</div>
+    <div class="related-grid">
+        <div class="related-card">
+            <div class="related-img"><i class='bx bx-baseball'></i></div>
+            <div class="related-body">
+                <div class="related-cat">Vợt</div>
+                <div class="related-name">Pbao Carbon X-10</div>
+                <div class="related-stars">★★★★★</div>
+                <div class="related-price">$210.00</div>
+            </div>
+        </div>
+        <div class="related-card" style="animation-delay:.06s">
+            <div class="related-img"><i class='bx bx-baseball'></i></div>
+            <div class="related-body">
+                <div class="related-cat">Vợt</div>
+                <div class="related-name">Victor Thruster K 9900</div>
+                <div class="related-stars">★★★★★</div>
+                <div class="related-price">$195.00 <span style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400;text-decoration:line-through">$220</span></div>
+            </div>
+        </div>
+        <div class="related-card" style="animation-delay:.12s">
+            <div class="related-img"><i class='bx bx-git-branch'></i></div>
+            <div class="related-body">
+                <div class="related-cat">Dây cước</div>
+                <div class="related-name">BG65 Titanium</div>
+                <div class="related-stars">★★★★★</div>
+                <div class="related-price">$12.00</div>
+            </div>
+        </div>
+        <div class="related-card" style="animation-delay:.18s">
+            <div class="related-img"><i class='bx bx-transfer-alt'></i></div>
+            <div class="related-body">
+                <div class="related-cat">Grip</div>
+                <div class="related-name">Yonex AC102EX Towel Grip</div>
+                <div class="related-stars">★★★★★</div>
+                <div class="related-price">$8.00</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function changeMainImage(thumb, url) {
+            const mainImg = document.querySelector('#galleryMain img');
+            if (mainImg) {
+                mainImg.src = url;
+            }
+            
+            // Update active thumb
+            document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+        }
+    </script>
+}

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] — Pbao</title>
+
+    <link rel="stylesheet" href="~/css/Use_web/Cart/_CheckOutLayoutcss.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="/" class="logo">Pbao</a>
+            <div class="nav-steps">
+                @{
+                    int currentStep = ViewBag.Step ?? 1;
+                    string step1Class = currentStep == 1 ? "active" : (currentStep > 1 ? "done" : "");
+                    string step2Class = currentStep == 2 ? "active" : (currentStep > 2 ? "done" : "");
+                    string step3Class = currentStep == 3 ? "active" : "";
+                }
+
+                <div class="step-pill @step1Class">
+                    <div class="step-num">
+                        @if (currentStep > 1)
+                        {
+                            <i class='bx bx-check'></i>
+                        }
+                        else
+                        {
+                            <text>1</text>
+                        }
+                    </div>
+                    Giỏ hàng
+                </div>
+
+                <span class="step-sep">›</span>
+
+                <div class="step-pill @step2Class">
+                    <div class="step-num">
+                        @if (currentStep > 2)
+                        {
+                            <i class='bx bx-check'></i>
+                        }
+                        else
+                        {
+                            <text>2</text>
+                        }
+                    </div>
+                    Thanh toán
+                </div>
+
+                <span class="step-sep">›</span>
+
+                <div class="step-pill @step3Class">
+                    <div class="step-num">3</div>
+                    Xác nhận
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <a href="/User/Store"><i class='bx bx-left-arrow-alt'></i> Tiếp tục mua sắm</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

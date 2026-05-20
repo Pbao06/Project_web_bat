@@ -1,0 +1,49 @@
+﻿@model dynamic
+@* Using 'dynamic' lets this work for both ProductVM and CustomerVM *@
+
+<div class="pagination-container">
+    <div class="pagination-controls-wrapper">
+        @* Previous Button *@
+        <div class="prev-box">
+            @if (Model.CurrentPage > 1)
+            {
+                <a href="?page=@(Model.CurrentPage - 1)@(Context.Request.QueryString.HasValue? Context.Request.QueryString.Value.Replace("?page=" + Model.CurrentPage, "").Replace("&page=" + Model.CurrentPage, "") : "")" class="page-btn">
+                    <i class='bx bx-chevron-left'></i> Previous
+                </a>
+            }
+            else
+            {
+                <span class="page-btn disabled"><i class='bx bx-chevron-left'></i> Previous</span>
+            }
+        </div>
+
+        @* Page Numbers *@
+        <div class="page-numbers">
+            @{
+                int startPage = Math.Max(1, Model.CurrentPage - 1);
+                int endPage = Math.Min(Model.TotalPages, startPage + 2);
+
+                for (int i = startPage; i <= endPage; i++)
+                {
+                    <a href="?page=@i" class="page-num @(i == Model.CurrentPage ? "active" : "")">
+                        @i.ToString("D2")
+                    </a>
+                }
+            }
+        </div>
+
+        @* Next Button *@
+        <div class="next-box">
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <a href="?page=@(Model.CurrentPage + 1)" class="page-btn">
+                    Next <i class='bx bx-chevron-right'></i>
+                </a>
+            }
+            else
+            {
+                <span class="page-btn disabled">Next <i class='bx bx-chevron-right'></i></span>
+            }
+        </div>
+    </div>
+</div>
