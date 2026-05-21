@@ -34,7 +34,7 @@ namespace Getdata1.Data
             var userEmail = "Ronaldo07@gmail.com";
             // check ton tai 
             var taikhoanUser= await userManager.FindByNameAsync(userEmail);
-            if(taikhoanUser != null)
+            if(taikhoanUser == null)
             {
                 // tao new user contains information -> User 
                 var newUser = new Getdata1.Models.User

@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\areas\\user\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:areas\\user\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\areas\\user\\views\\shared\\layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:areas\\user\\views\\shared\\layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\areas\\user\\views\\shared\\_checkoutlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:areas\\user\\views\\shared\\_checkoutlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\areas\\user\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:areas\\user\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\viewmodels\\registerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:viewmodels\\registerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\services\\implementations\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\areas\\user\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:areas\\user\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\areas\\user\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:areas\\user\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\areas\\user\\views\\cart\\payment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -107,20 +115,12 @@
       "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:areas\\user\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\areas\\user\\views\\shared\\_checkoutlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:areas\\user\\views\\shared\\_checkoutlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\wwwroot\\css\\use_web\\cart\\payment.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:wwwroot\\css\\use_web\\cart\\payment.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\wwwroot\\css\\use_web\\cart\\_checkoutlayoutcss.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:wwwroot\\css\\use_web\\cart\\_checkoutlayoutcss.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\areas\\user\\views\\shared\\layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:areas\\user\\views\\shared\\layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -321,12 +321,12 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 741,
-          "SelectedChildIndex": 1,
+          "DockedHeight": 790,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "Areas\\User\\Views\\Account\\Login.cshtml",
@@ -339,7 +339,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "Areas\\User\\Controllers\\AccountController.cs",
@@ -348,12 +348,11 @@
               "ViewState": "AgIAAGQAAAAAAAAAAAAcwF8AAABZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-15T10:37:30.326Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "RegisterViewModel.cs",
               "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\ViewModels\\RegisterViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\RegisterViewModel.cs",
@@ -362,8 +361,7 @@
               "ViewState": "AgIAAAMAAAAAAAAAAAAUwBkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-16T03:50:36.961Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -379,281 +377,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Areas\\User\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Areas\\User\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwBMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T09:40:42.372Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAAC0AAABdAAAAAAAAAA==",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAAAGIAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-14T13:42:50.436Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Shared\\Layout.cshtml",
+              "RelativeDocumentMoniker": "Areas\\User\\Views\\Shared\\Layout.cshtml",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Shared\\Layout.cshtml",
+              "RelativeToolTip": "Areas\\User\\Views\\Shared\\Layout.cshtml",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAACoAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-18T07:02:36.816Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ProductService.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Implementations\\ProductService.cs",
-              "RelativeDocumentMoniker": "Services\\Implementations\\ProductService.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Implementations\\ProductService.cs",
-              "RelativeToolTip": "Services\\Implementations\\ProductService.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAwwBoAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T05:59:57.111Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IProductService.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Interfaces\\IProductService.cs",
-              "RelativeDocumentMoniker": "Services\\Interfaces\\IProductService.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Interfaces\\IProductService.cs",
-              "RelativeToolTip": "Services\\Interfaces\\IProductService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAABUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-19T11:55:44.398Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "OrderService.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Implementations\\OrderService.cs",
-              "RelativeDocumentMoniker": "Services\\Implementations\\OrderService.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Implementations\\OrderService.cs",
-              "RelativeToolTip": "Services\\Implementations\\OrderService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-19T11:54:38.895Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CartController.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\CartController.cs",
-              "RelativeDocumentMoniker": "Areas\\User\\Controllers\\CartController.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\CartController.cs",
-              "RelativeToolTip": "Areas\\User\\Controllers\\CartController.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAIwD8AAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T10:54:19.152Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Areas\\User\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Areas\\User\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T09:40:42.372Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Payment.cshtml",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Payment.cshtml",
-              "RelativeDocumentMoniker": "Areas\\User\\Views\\Cart\\Payment.cshtml",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Payment.cshtml",
-              "RelativeToolTip": "Areas\\User\\Views\\Cart\\Payment.cshtml",
-              "ViewState": "AgIAAFABAAAAAAAAAAAAAHQBAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-18T09:40:11.136Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Store\\Index.cshtml",
-              "RelativeDocumentMoniker": "Areas\\User\\Views\\Store\\Index.cshtml",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Store\\Index.cshtml",
-              "RelativeToolTip": "Areas\\User\\Views\\Store\\Index.cshtml",
-              "ViewState": "AgIAANIAAAAAAAAAAAAIwOwAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-15T07:09:52.623Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "OrderStatus.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\Enums\\OrderStatus.cs",
-              "RelativeDocumentMoniker": "Models\\Enums\\OrderStatus.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\Enums\\OrderStatus.cs",
-              "RelativeToolTip": "Models\\Enums\\OrderStatus.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-19T11:14:56.905Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Style.css",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Style.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\Use_web\\Style.css",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Style.css",
-              "RelativeToolTip": "wwwroot\\css\\Use_web\\Style.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-05-15T07:01:28.517Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "cart.css",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Cart\\cart.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\Use_web\\Cart\\cart.css",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Cart\\cart.css",
-              "RelativeToolTip": "wwwroot\\css\\Use_web\\Cart\\cart.css",
-              "ViewState": "AgIAAC8DAAAAAAAAAAAwwEMDAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-05-15T08:33:39.117Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Order.cshtml",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Order.cshtml",
-              "RelativeDocumentMoniker": "Areas\\User\\Views\\Cart\\Order.cshtml",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Order.cshtml",
-              "RelativeToolTip": "Areas\\User\\Views\\Cart\\Order.cshtml",
-              "ViewState": "AgIAAGwAAAAAAAAAAAAAAHkAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-19T08:51:54.433Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Index.cshtml",
-              "RelativeDocumentMoniker": "Areas\\User\\Views\\Cart\\Index.cshtml",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Index.cshtml",
-              "RelativeToolTip": "Areas\\User\\Views\\Cart\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-15T07:31:14.636Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "ProductsImage.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\ProductsImage.cs",
-              "RelativeDocumentMoniker": "Models\\ProductsImage.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\ProductsImage.cs",
-              "RelativeToolTip": "Models\\ProductsImage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-18T08:00:30.053Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "ProductReview.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\ProductReview.cs",
-              "RelativeDocumentMoniker": "Models\\ProductReview.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\ProductReview.cs",
-              "RelativeToolTip": "Models\\ProductReview.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAcwA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-18T08:00:17.083Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Order.css",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Cart\\Order.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\Use_web\\Cart\\Order.css",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Cart\\Order.css",
-              "RelativeToolTip": "wwwroot\\css\\Use_web\\Cart\\Order.css",
-              "ViewState": "AgIAAHEBAAAAAAAAAAAYwD4CAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-05-19T08:54:03.996Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Views\\Cart\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Cart\\Index.cshtml",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Views\\Cart\\Index.cshtml",
-              "RelativeToolTip": "Views\\Cart\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-19T05:18:28.135Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-16T15:03:49.501Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "IOrderService.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Interfaces\\IOrderService.cs",
-              "RelativeDocumentMoniker": "Services\\Interfaces\\IOrderService.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Interfaces\\IOrderService.cs",
-              "RelativeToolTip": "Services\\Interfaces\\IOrderService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T14:50:21.723Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "SessionExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Helpers\\SessionExtensions.cs",
-              "RelativeDocumentMoniker": "Helpers\\SessionExtensions.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Helpers\\SessionExtensions.cs",
-              "RelativeToolTip": "Helpers\\SessionExtensions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-17T15:20:27.652Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "20260515034748_InitialIdentity.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\20260515034748_InitialIdentity.cs",
-              "RelativeDocumentMoniker": "Migrations\\20260515034748_InitialIdentity.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\20260515034748_InitialIdentity.cs",
-              "RelativeToolTip": "Migrations\\20260515034748_InitialIdentity.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAgwDIAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T11:26:12.974Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "ApplicationDbContextModelSnapshot.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "RelativeToolTip": "Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABEAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T11:28:01.899Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
               "Title": "_CheckOutLayout.cshtml",
               "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Shared\\_CheckOutLayout.cshtml",
               "RelativeDocumentMoniker": "Areas\\User\\Views\\Shared\\_CheckOutLayout.cshtml",
@@ -665,7 +426,247 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 6,
+              "Title": "ProductService.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Implementations\\ProductService.cs",
+              "RelativeDocumentMoniker": "Services\\Implementations\\ProductService.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Implementations\\ProductService.cs",
+              "RelativeToolTip": "Services\\Implementations\\ProductService.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAwwBoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T05:59:57.111Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IProductService.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Interfaces\\IProductService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\IProductService.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Interfaces\\IProductService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\IProductService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-19T11:55:44.398Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "OrderService.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Implementations\\OrderService.cs",
+              "RelativeDocumentMoniker": "Services\\Implementations\\OrderService.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Implementations\\OrderService.cs",
+              "RelativeToolTip": "Services\\Implementations\\OrderService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-19T11:54:38.895Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\CartController.cs",
+              "RelativeDocumentMoniker": "Areas\\User\\Controllers\\CartController.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\CartController.cs",
+              "RelativeToolTip": "Areas\\User\\Controllers\\CartController.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAIwD8AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-15T10:54:19.152Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Payment.cshtml",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Payment.cshtml",
+              "RelativeDocumentMoniker": "Areas\\User\\Views\\Cart\\Payment.cshtml",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Payment.cshtml",
+              "RelativeToolTip": "Areas\\User\\Views\\Cart\\Payment.cshtml",
+              "ViewState": "AgIAAFABAAAAAAAAAAAAAHQBAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-18T09:40:11.136Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Store\\Index.cshtml",
+              "RelativeDocumentMoniker": "Areas\\User\\Views\\Store\\Index.cshtml",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Store\\Index.cshtml",
+              "RelativeToolTip": "Areas\\User\\Views\\Store\\Index.cshtml",
+              "ViewState": "AgIAANIAAAAAAAAAAAAIwOwAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-15T07:09:52.623Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "OrderStatus.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\Enums\\OrderStatus.cs",
+              "RelativeDocumentMoniker": "Models\\Enums\\OrderStatus.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\Enums\\OrderStatus.cs",
+              "RelativeToolTip": "Models\\Enums\\OrderStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-19T11:14:56.905Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Style.css",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Style.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\Use_web\\Style.css",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Style.css",
+              "RelativeToolTip": "wwwroot\\css\\Use_web\\Style.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-05-15T07:01:28.517Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "cart.css",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Cart\\cart.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\Use_web\\Cart\\cart.css",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Cart\\cart.css",
+              "RelativeToolTip": "wwwroot\\css\\Use_web\\Cart\\cart.css",
+              "ViewState": "AgIAAC8DAAAAAAAAAAAwwEMDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-05-15T08:33:39.117Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Order.cshtml",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Order.cshtml",
+              "RelativeDocumentMoniker": "Areas\\User\\Views\\Cart\\Order.cshtml",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Order.cshtml",
+              "RelativeToolTip": "Areas\\User\\Views\\Cart\\Order.cshtml",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAAAHkAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-19T08:51:54.433Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Index.cshtml",
+              "RelativeDocumentMoniker": "Areas\\User\\Views\\Cart\\Index.cshtml",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Cart\\Index.cshtml",
+              "RelativeToolTip": "Areas\\User\\Views\\Cart\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-15T07:31:14.636Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ProductsImage.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\ProductsImage.cs",
+              "RelativeDocumentMoniker": "Models\\ProductsImage.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\ProductsImage.cs",
+              "RelativeToolTip": "Models\\ProductsImage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T08:00:30.053Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ProductReview.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\ProductReview.cs",
+              "RelativeDocumentMoniker": "Models\\ProductReview.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Models\\ProductReview.cs",
+              "RelativeToolTip": "Models\\ProductReview.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAcwA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T08:00:17.083Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Order.css",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Cart\\Order.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\Use_web\\Cart\\Order.css",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Cart\\Order.css",
+              "RelativeToolTip": "wwwroot\\css\\Use_web\\Cart\\Order.css",
+              "ViewState": "AgIAAHEBAAAAAAAAAAAYwD4CAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-05-19T08:54:03.996Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Views\\Cart\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Cart\\Index.cshtml",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Views\\Cart\\Index.cshtml",
+              "RelativeToolTip": "Views\\Cart\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-19T05:18:28.135Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-05-16T15:03:49.501Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IOrderService.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Interfaces\\IOrderService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\IOrderService.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Services\\Interfaces\\IOrderService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\IOrderService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T14:50:21.723Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "SessionExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Helpers\\SessionExtensions.cs",
+              "RelativeDocumentMoniker": "Helpers\\SessionExtensions.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Helpers\\SessionExtensions.cs",
+              "RelativeToolTip": "Helpers\\SessionExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T15:20:27.652Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "20260515034748_InitialIdentity.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\20260515034748_InitialIdentity.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260515034748_InitialIdentity.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\20260515034748_InitialIdentity.cs",
+              "RelativeToolTip": "Migrations\\20260515034748_InitialIdentity.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAgwDIAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-15T11:26:12.974Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ApplicationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABEAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-15T11:28:01.899Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
               "Title": "Payment.css",
               "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Cart\\Payment.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\Use_web\\Cart\\Payment.css",
@@ -677,7 +678,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "_CheckOutLayoutcss.css",
               "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Use_web\\Cart\\_CheckOutLayoutcss.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\Use_web\\Cart\\_CheckOutLayoutcss.css",
@@ -686,18 +687,6 @@
               "ViewState": "AgIAADMAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2026-05-18T09:31:23.637Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Shared\\Layout.cshtml",
-              "RelativeDocumentMoniker": "Areas\\User\\Views\\Shared\\Layout.cshtml",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Views\\Shared\\Layout.cshtml",
-              "RelativeToolTip": "Areas\\User\\Views\\Shared\\Layout.cshtml",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAAAFcAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-18T07:02:36.816Z"
             },
             {
               "$type": "Document",
@@ -1288,7 +1277,7 @@
           ]
         },
         {
-          "DockedHeight": 131,
+          "DockedHeight": 82,
           "SelectedChildIndex": 2,
           "Children": [
             {
@@ -1301,7 +1290,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "20260518082336_AddProductSpecsCustom.cs",
               "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\20260518082336_AddProductSpecsCustom.cs",
               "RelativeDocumentMoniker": "Migrations\\20260518082336_AddProductSpecsCustom.cs",

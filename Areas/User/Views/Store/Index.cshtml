@@ -229,7 +229,7 @@
                 const result = await response.json();
                 // dao diện tại chỗ không load lại page 
                 if (result.success) {
-                    alert(result.message);
+                    showNotification(result.message);
                     animateCartDot(); // hiệu ứng nhấp nháy 
                     // Có thể cập nhật số lượng trên icon giỏ hàng nếu có
                     const cartCountElement = document.querySelector('.cart-count');
@@ -237,7 +237,7 @@
                         cartCountElement.innerText = result.cartCount;
                     }
                 } else {
-                    alert(result.message || 'Có lỗi xảy ra.');
+                    showNotification(result.message || 'Có lỗi xảy ra.');
                 }
             } catch (error) {
                 console.error('Error:', error);

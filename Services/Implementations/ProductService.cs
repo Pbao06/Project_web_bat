@@ -102,5 +102,18 @@ namespace Getdata1.Services.Implementations
             var dtos = _mapper.Map<IEnumerable<ProductDto>>(products);
             return (dtos, totalCount);
         }
+
+        public async Task<IEnumerable<ProductDto>> GetRelatedProductsAsync(int categoryId, int currentProductId, int count = 4)
+        {
+            var products = await _context.Products
+                .Where(p => p.CategoryId == categoryId && p.Id != currentProductId)
+                .Include(p => p.Category)
+                .Include(p => p.ProductImages)
+                .OrderBy(r => Guid.NewGuid()) // Random order
+                .Take(count)
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<ProductDto>>(products);
+        }
     }
 }

@@ -1,11 +1,12 @@
-﻿namespace Getdata1.Models.Enums
+namespace Getdata1.Models.Enums
 {
     public enum OrderStatus
     {
         Pending,
         Paid,
-        Process,
-        Completed,
+        Processing,
+        Shipped,
+        Delivered,
         Cancelled
     }
 }

@@ -1,4 +1,4 @@
-﻿using Getdata1.DTOs;
+using Getdata1.DTOs;
 using Getdata1.Helpers;
 using Getdata1.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -100,10 +100,22 @@ namespace Getdata1.Areas.User.Controllers
                 }
                 return Json(new { success = false, message = "Giỏ hàng trống." });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new { success = false, message = "Có lỗi xảy ra." });
             }
+        }
+
+        [HttpGet]
+        public IActionResult Checkout()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                // Example c) Warning Notification with Login link
+                NotificationHelper.SetNotification(TempData, "Bạn cần đăng nhập để thực hiện thanh toán.", "warning", showLoginLink: true);
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Payment", "Order");
         }
 
         [HttpPost]
@@ -124,7 +136,7 @@ namespace Getdata1.Areas.User.Controllers
                 }
                 return Json(new { success = false, message = "Giỏ hàng trống." });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new { success = false, message = "Có lỗi xảy ra." });
             }
@@ -146,17 +158,17 @@ namespace Getdata1.Areas.User.Controllers
                 return Json(new { success = false, message = "Giỏ hàng trống." });
             }
 
-            // Mock promo logic
             if (promoCode?.ToUpper() == "PBAO2026")
             {
                 cart.AppliedPromoCode = "PBAO2026";
-                cart.DiscountAmount = 23; // Fixed discount for demo
+                cart.DiscountAmount = 23; 
                 HttpContext.Session.Set(CartSessionKey, cart);
                 return Json(new { success = true, message = "Áp dụng mã giảm giá thành công!", cart = cart });
             }
 
             return Json(new { success = false, message = "Mã giảm giá không hợp lệ." });
         }
+
         [HttpGet]
         public async Task<IActionResult> Payment()
         {

@@ -23,7 +23,7 @@
         <h1>Play<br><em>Without</em><br>Limits.</h1>
         <p class="hero-sub">Professional-grade badminton gear built for players who refuse to compromise on performance.</p>
         <div class="hero-cta">
-            <button class="btn-hero-primary">Shop Collection</button>
+            <a class="btn-hero-primary" asp-area="User" asp-controller="Store" asp-action="Index">Shop Collection</a>
             <button class="btn-hero-ghost">Watch Campaign <i class='bx bx-play-circle' style="vertical-align:-2px"></i></button>
         </div>
     </div>
@@ -46,8 +46,8 @@
             <p>Weightless power. Absolute control. Our most advanced frame ever — built with aerospace-grade carbon fibre and tungsten weighting.</p>
             <div class="feature-price"><span>From</span>$230.00</div>
             <div class="feature-btns">
-                <button class="btn-white">Buy Now</button>
-                <button class="btn-outline-white">Learn More</button>
+                <a class="btn-white" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-searchTerm="Carbon X-10">Buy Now</a>
+                <a class="btn-outline-white" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-searchTerm="Carbon X-10">Learn More</a>
             </div>
         </div>
         <div class="feature-visual">
@@ -67,14 +67,14 @@
         <a asp-area="User" asp-controller="Store" asp-action="Index">All Products <i class='bx bx-right-arrow-alt'></i></a>
     </div>
     <div class="cat-grid">
-        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-baseball'></i></div><h3>Vợt cầu lông</h3><p>Attack, Defense, All-Round & more.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-football'></i></div><h3>Cầu lông</h3><p>Feather & nylon for every level.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-user'></i></div><h3>Quần áo</h3><p>Performance tees, shorts & kits.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-run'></i></div><h3>Giày</h3><p>Court grip, cushion & stability.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-briefcase'></i></div><h3>Túi / Balo</h3><p>From 2-racket to 9-racket bags.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-git-branch'></i></div><h3>Dây cước</h3><p>Tension, repulsion & durability.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-transfer-alt'></i></div><h3>Grip / Cuốn cán</h3><p>Dry, tacky & towel grips.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" href="#"><div class="tile-icon"><i class='bx bx-package'></i></div><h3>Phụ kiện</h3><p>Wristbands, covers & more.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="1"><div class="tile-icon"><i class='bx bx-baseball'></i></div><h3>Vợt cầu lông</h3><p>Attack, Defense, All-Round & more.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="2"><div class="tile-icon"><i class='bx bx-football'></i></div><h3>Cầu lông</h3><p>Feather & nylon for every level.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="3"><div class="tile-icon"><i class='bx bx-user'></i></div><h3>Quần áo</h3><p>Performance tees, shorts & kits.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="4"><div class="tile-icon"><i class='bx bx-run'></i></div><h3>Giày</h3><p>Court grip, cushion & stability.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="5"><div class="tile-icon"><i class='bx bx-briefcase'></i></div><h3>Túi / Balo</h3><p>From 2-racket to 9-racket bags.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="6"><div class="tile-icon"><i class='bx bx-git-branch'></i></div><h3>Dây cước</h3><p>Tension, repulsion & durability.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="7"><div class="tile-icon"><i class='bx bx-transfer-alt'></i></div><h3>Grip / Cuốn cán</h3><p>Dry, tacky & towel grips.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="8"><div class="tile-icon"><i class='bx bx-package'></i></div><h3>Phụ kiện</h3><p>Wristbands, covers & more.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
     </div>
 </div>
 
@@ -82,7 +82,7 @@
     <span class="section-label">Top Picks</span>
     <div class="section-head">
         <h2>Best Sellers</h2>
-        <a href="#">View All <i class='bx bx-right-arrow-alt'></i></a>
+        <a asp-area="User" asp-controller="Store" asp-action="Index">View All <i class='bx bx-right-arrow-alt'></i></a>
     </div>
     <div class="products-strip" id="bestSellers"></div>
 </div>
@@ -95,7 +95,7 @@
             <span class="banner-tag">New Season Kit</span>
             <h3>Pro Series<br>Apparel</h3>
             <p>Engineered for movement and style.</p>
-            <button class="btn-banner">Shop Apparel</button>
+            <a class="btn-banner" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="3">Shop Apparel</a>
         </div>
     </div>
     <div class="banner-card banner-footwear">
@@ -105,7 +105,7 @@
             <span class="banner-tag">AeroStep Series</span>
             <h3>Court<br>Footwear</h3>
             <p>Unmatched grip. All-day cushion.</p>
-            <button class="btn-banner">Shop Shoes</button>
+            <a class="btn-banner" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="4">Shop Shoes</a>
         </div>
     </div>
 </div>
@@ -114,7 +114,7 @@
     <span class="section-label">Just Landed</span>
     <div class="section-head">
         <h2>New Arrivals</h2>
-        <a href="#">See All New <i class='bx bx-right-arrow-alt'></i></a>
+        <a asp-area="User" asp-controller="Store" asp-action="Index">See All New <i class='bx bx-right-arrow-alt'></i></a>
     </div>
     <div class="products-strip" id="newArrivals"></div>
 </div>
@@ -188,16 +188,16 @@
                 name = p.Name,
                 price = p.Price,
                 oldPrice = (decimal?)null,
-                rating = 4.5,
-                reviews = p.Stock,
-                badge = "new",
+                rating = p.AverageRating > 0 ? p.AverageRating : 4.5,
+                reviews = p.ReviewCount > 0 ? p.ReviewCount : (p.Stock % 50 + 10),
+                badge = (DateTime.UtcNow - (p.CreatedAt ?? DateTime.UtcNow)).TotalDays < 30 ? "new" : "",
                 icon = "bx-baseball",
-                isNew = true,
+                isNew = (DateTime.UtcNow - (p.CreatedAt ?? DateTime.UtcNow)).TotalDays < 30,
                 image = p.Image,
                 cat = p.CategoryName ?? "Sản phẩm",
                 brand = p.Brand
             }) ?? Enumerable.Empty<object>()));
-       
+
         let wished = new Set();
 
         function badgeHTML(b){
@@ -209,16 +209,34 @@
 
         function cardHTML(p, idx){
             const imgHTML = p.image 
-                ? `<img src="/img/${p.image}" style="width:100%;height:100%;object-fit:cover;">` 
+                ? `<img src="/img/${p.image}" style="width:100%;height:100%;object-fit:contain;padding:16px;transition:transform .5s ease;">` 
                 : `<i class='bx ${p.icon}'></i>`;
-    
+
+            const isWished = wished.has(p.id) ? 'wished' : '';
+
             return `
-            <div class="product-card" style="animation-delay:${idx*0.06}s">
+            <div class="product-card" style="animation-delay:${idx*0.06}s" onclick="location.href='/User/Store/Details/${p.id}'">
                 <div class="card-img">
                     ${imgHTML}
-                    ...
+                    <div class="card-badges">${badgeHTML(p.badge)}</div>
+                    <button class="card-wish ${isWished}" onclick="toggleWish(event, ${p.id})">
+                        <i class='bx ${wished.has(p.id) ? 'bxs-heart' : 'bx-heart'}'></i>
+                    </button>
                 </div>
-                ...
+                <div class="card-body">
+                    <div class="card-cat">${p.cat}</div>
+                    <div class="card-name">${p.name}</div>
+                    <div class="card-footer">
+                        <div class="card-price">
+                            $${p.price.toLocaleString()}
+                            ${p.oldPrice ? `<span class="old">$${p.oldPrice.toLocaleString()}</span>` : ''}
+                        </div>
+                        <div class="card-stars">
+                            ${stars(p.rating)}
+                            <span>(${p.reviews})</span>
+                        </div>
+                    </div>
+                </div>
             </div>`;
         }
 
@@ -227,16 +245,16 @@
           if(wished.has(id)) wished.delete(id); else wished.add(id);
           renderAll();
         }
-        function addCart(id){
-          const dot=document.querySelector('.cart-dot');
-          dot.style.transform='scale(1.8)'; dot.style.background='#34c759';
-          setTimeout(()=>{dot.style.transform='';dot.style.background='var(--accent)';},400);
-        }
 
         function renderAll(){
-          const bs = [...PRODUCTS].sort((a,b)=>b.reviews-a.reviews).slice(0,4);
+          // Show top 8 best sellers in slider
+          const bs = [...PRODUCTS].sort((a,b)=>b.reviews-a.reviews).slice(0,8);
           document.getElementById('bestSellers').innerHTML = bs.map((p,i)=>cardHTML(p,i)).join('');
-          const na = PRODUCTS.filter(p=>p.isNew).slice(0,4);
+
+          // Show top 8 new arrivals in slider
+          const na = PRODUCTS.filter(p=>p.isNew).length > 0 
+            ? PRODUCTS.filter(p=>p.isNew).slice(0,8)
+            : [...PRODUCTS].reverse().slice(0,8);
           document.getElementById('newArrivals').innerHTML = na.map((p,i)=>cardHTML(p,i)).join('');
         }
 

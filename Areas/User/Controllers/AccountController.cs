@@ -1,126 +1,109 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Getdata1.Models;
 using Getdata1.Models.Enums;
 using Getdata1.ViewModels;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-using System.Net.WebSockets;
-using System.Reflection.Metadata.Ecma335;
+using Getdata1.Helpers;
 
 namespace Getdata1.Areas.User.Controllers
 {
     [Area("User")]
-
     public class AccountController : Controller
     {
-        // readonly = just use for this file cannot fix after did 
-         private readonly SignInManager<Getdata1.Models.User> _signInManager; //handle login /register
-        
-        private readonly UserManager<Getdata1.Models.User> _userManager;//handle manager user 
-        // constructor 
+        private readonly SignInManager<Getdata1.Models.User> _signInManager;
+        private readonly UserManager<Getdata1.Models.User> _userManager;
+
         public AccountController(SignInManager<Getdata1.Models.User> signInManager,
                                   UserManager<Getdata1.Models.User> userManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
         }
-         [HttpGet]
-        public IActionResult Login() => View(); // mo trang dang nhap 
 
+        [HttpGet]
+        public IActionResult Login() => View();
 
-
-         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            // flow -> check ModelStade -> check exits under Db -> ge email compare to email admin if == admin redirect to admin 
-            if(!ModelState.IsValid) return View(model);
-            // under code -> check if exist in db 
-            var user = await _signInManager.PasswordSignInAsync(model.Email,model.Password,model.RememberMe,lockoutOnFailure:false);
-            // lockoutOnFailure -> if user nhập quá nhiều sẽ bị lock 
-            if(user.Succeeded)
+            if (!ModelState.IsValid) return View(model);
+
+            var user = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            
+            if (user.Succeeded)
             {
                 var data = await _userManager.FindByEmailAsync(model.Email);
-                if(data != null && await _userManager.IsInRoleAsync(data,"Admin")) // compare if == email admin 
+                
+                // Example a) Success Notification
+                NotificationHelper.SetNotification(TempData, $"Chào mừng {data?.Email} đã quay trở lại!", "success");
+
+                if (data != null && await _userManager.IsInRoleAsync(data, "Admin"))
                 {
                     return RedirectToAction("Index", "Home", new { area = "Admin" });
-                        /// structure of RedirectToAction is 
                 }
-                // if not admin => return for Home stoe 
                 return RedirectToAction("Index", "Home", new { area = "User" });
             }
-            ModelState.AddModelError(String.Empty, "This sentences not illigal could you login again ");
+
+            // Example b) Error Notification
+            NotificationHelper.SetNotification(TempData, "Tài khoản hoặc mật khẩu không chính xác.", "error");
+            ModelState.AddModelError(string.Empty, "Tài khoản hoặc mật khẩu không chính xác.");
             return View(model);
         }
 
-
-         [HttpGet]
-         // use for open view 
+        [HttpGet]
         public IActionResult Register() => View();
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            /* 
-             * CHECK FLOW 
-             * KIỂM TRA MODELSTADE XEM NHẬP ĐỦ CHƯA 
-             * LẤY VÀ KIỂM TRA TỒN TẠI -> NẾU CHƯA CÓ MỚI CHO ĐĂNG NHẬP 
-             * TẠO NEW USER -> FILL OUT DATA VIEWMODEL VÀO -> LƯU , 
-             * CHECK SAVE THÀNH CÔNG THÌ GÁN ROLE LÀ CUSTOMER -> CHO PHÉP ĐĂNG NHẬP TRỰC TIẾP
-             * -> REDIRECT TO ACTION 
-             
-            
-             */
             try
             {
                 if (!ModelState.IsValid) return View(model);
-                // get du lieu check ton tai 
+
                 var getdata = await _userManager.FindByEmailAsync(model.Email);
                 if (getdata != null)
                 {
-                    ModelState.AddModelError("Email", " This email was exit could u log in ? ");
+                    ModelState.AddModelError("Email", "Email này đã được sử dụng.");
                     return View(model);
                 }
-                // net khong ton tai cho dang ki tiep 
-                // tạo new tài khoản mới = cách create new user, set role = customer 
+
                 var user = new Getdata1.Models.User
                 {
                     Email = model.Email,
-                    UserName=model.Email,
-                    Role=UserRole.Customer
+                    UserName = model.Email,
+                    Role = UserRole.Customer
                 };
-                // map roi save 
 
-                var save = await _userManager.CreateAsync(user, model.Password);// user ,pass phải đi kèm để nhận diện cho hàm băm password cấp cho salt riêng để băm 
+                var save = await _userManager.CreateAsync(user, model.Password);
                 
-                
-          
-       
-    
+                if (save.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, "Customer");
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    NotificationHelper.SetNotification(TempData, "Đăng ký tài khoản thành công!", "success");
+                    return RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in save.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // 8. Xử lý ngoại lệ hệ thống hoặc lỗi kết nối Database
-                ModelState.AddModelError("Email", "Đã xảy ra lỗi hệ thống trong quá trình đăng ký. Vui lòng thử lại sau.");
-                // Log lỗi ex ở đây nếu cần thiết
+                ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi hệ thống trong quá trình đăng ký.");
             }
 
             return View(model);
         }
 
-
-        // [HttpPost]
-        //[ValidateAntiForgeryToken] -> vì sử dụng thẻ a 
-
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync(); // xóa cookie user 
+            await _signInManager.SignOutAsync();
+            NotificationHelper.SetNotification(TempData, "Bạn đã đăng xuất thành công.", "success");
             return RedirectToAction("Login", "Account", new { area = "User" });
-            // gọi view -> login , controller Account , areas User 
         }
-
 
         public IActionResult Index()
         {

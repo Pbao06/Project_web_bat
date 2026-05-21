@@ -79,6 +79,9 @@ namespace Getdata1.Areas.User.Controllers
                     return NotFound();
                 }
 
+                var relatedProducts = await _productService.GetRelatedProductsAsync(product.CategoryId, product.Id, 8);
+                ViewBag.RelatedProducts = relatedProducts;
+
                 return View(product);
             }
             catch (Exception ex)

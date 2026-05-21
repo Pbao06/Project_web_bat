@@ -282,10 +282,7 @@ C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\qbaax
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\8hgwsjuxas-{0}-aqki4yt6xp-aqki4yt6xp.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\eqqnbx5tk9-{0}-0qpnutxdxk-0qpnutxdxk.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\i9qfqb2i80-{0}-ewnqb00jol-ewnqb00jol.gz
-C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\9u4jw3xv19-{0}-xtvxob5160-xtvxob5160.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\fpwigdlpq2-{0}-ovibo7988k-ovibo7988k.gz
-C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\r9hx6yr2wd-{0}-rpzl6izwpn-rpzl6izwpn.gz
-C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\2024a02bgl-{0}-t9z8po2kds-t9z8po2kds.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\syb8q8t4ss-{0}-raf1j5g1zc-raf1j5g1zc.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\toh2gf93st-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\f63hd81e4p-{0}-lp8p1xavth-lp8p1xavth.gz
@@ -362,4 +359,9 @@ C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\refint\Getdata1.
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\Getdata1.pdb
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\Getdata1.genruntimeconfig.cache
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\ref\Getdata1.dll
+C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\Getdata1.sourcelink.json
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\9u4jw3xv19-{0}-oumfdlh9l2-oumfdlh9l2.gz
+C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\r9hx6yr2wd-{0}-2r6by4oll5-2r6by4oll5.gz
+C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\2024a02bgl-{0}-flq39lzc65-flq39lzc65.gz
+C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\fel05iusbd-{0}-yz5tka6wg4-yz5tka6wg4.gz

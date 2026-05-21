@@ -34,7 +34,7 @@ namespace Getdata1.Areas.Admin.Controllers
                     RecentOrders = await _context._Orders.Include(o => o.User).OrderByDescending(o => o.OrderDate).Take(5).ToListAsync(),
                     LowStockProducts = await _context.Products.Where(p => p.Stock <= 5).ToListAsync(),
                     TotalSales = await _context._Orders
-                    .Where(o => o.Status == OrderStatus.Completed || o.Status == OrderStatus.Paid)
+                    .Where(o => o.Status == OrderStatus.Delivered || o.Status == OrderStatus.Paid)
                     .SelectMany(o => o.OrderItems) // Trải phẳng tất cả các món hàng của các đơn hàng đã lọc
                     .SumAsync(item => item.Price * item.Quantity) // Tính tổng dựa trên giá và số lượng từng món
 

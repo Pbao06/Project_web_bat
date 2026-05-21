@@ -1,12 +1,86 @@
 @model Getdata1.DTOs.ProductDto
 @{
     ViewData["Title"] = Model.Name + " - Details";
+    var relatedProducts = ViewBag.RelatedProducts as IEnumerable<Getdata1.DTOs.ProductDto> ?? new List<Getdata1.DTOs.ProductDto>();
 }
 @section Styles
 {
     <link href="~/css/Use_web/Store/Detail.css" rel="stylesheet" />
-}
+    <style>
+        /* Slider Styles */
+        .related-slider-container {
+            position: relative;
+            margin-top: 20px;
+        }
 
+        .related-slider {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+            scroll-snap-type: x mandatory;
+            padding: 10px 5px;
+        }
+
+        .related-slider::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        .related-card {
+            flex: 0 0 calc(25% - 15px);
+            min-width: 240px;
+            scroll-snap-align: start;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .slider-btn:hover {
+            background: var(--text);
+            color: #fff;
+        }
+
+        .slider-btn.prev { left: -20px; }
+        .slider-btn.next { right: -20px; }
+
+        @@media (max-width: 992px) {
+            .related-card { flex: 0 0 calc(33.33% - 14px); }
+        }
+        @@media (max-width: 768px) {
+            .related-card { flex: 0 0 calc(50% - 10px); }
+            .slider-btn { display: none; }
+        }
+        @@media (max-width: 480px) {
+            .related-card { flex: 0 0 100%; }
+        }
+
+        /* Gallery Fix */
+        .thumb.active {
+            border-color: var(--text);
+            opacity: 1;
+        }
+        .thumb {
+            opacity: 0.7;
+        }
+    </style>
+}
 
 <!-- BREADCRUMB -->
 <div class="breadcrumb">
@@ -26,7 +100,7 @@
             @if (!string.IsNullOrEmpty(Model.Image))
             {
                 var mainImagePath = Model.Image.StartsWith("/") || Model.Image.StartsWith("http") ? Model.Image : (Model.Image.StartsWith("~") ? Model.Image : "~/img/" + Model.Image);
-                <img src="@Url.Content(mainImagePath)" alt="@Model.Name" style="width: 100%; height: 100%; object-fit: contain;" />
+                <img src="@Url.Content(mainImagePath)" alt="@Model.Name" id="currentMainImg" style="width: 100%; height: 100%; object-fit: contain;" />
             }
             else
             {
@@ -40,13 +114,20 @@
         <div class="gallery-thumbs">
             @if (Model.GalleryImages != null && Model.GalleryImages.Any())
             {
-                foreach (var img in Model.GalleryImages)
+                @foreach (var img in Model.GalleryImages)
                 {
                     var thumbPath = img.StartsWith("/") || img.StartsWith("http") ? img : (img.StartsWith("~") ? img : "~/img/" + img);
                     <div class="thumb" onclick="changeMainImage(this, '@Url.Content(thumbPath)')">
                         <img src="@Url.Content(thumbPath)" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover;" />
                     </div>
                 }
+            }
+            else if (!string.IsNullOrEmpty(Model.Image))
+            {
+                var mainPath = Model.Image.StartsWith("/") || Model.Image.StartsWith("http") ? Model.Image : (Model.Image.StartsWith("~") ? Model.Image : "~/img/" + Model.Image);
+                <div class="thumb active" onclick="changeMainImage(this, '@Url.Content(mainPath)')">
+                    <img src="@Url.Content(mainPath)" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover;" />
+                </div>
             }
             else
             {
@@ -108,10 +189,10 @@
 
         <!-- CTAs -->
         <div class="cta-row">
-            <button class="btn-cart" onclick="addToCart()">
+            <button class="btn-cart" onclick="addToCart(false)" @(Model.Stock <= 0 ? "disabled" : "")>
                 <i class='bx bx-shopping-bag'></i> Thêm vào giỏ
             </button>
-            <button class="btn-buy">Mua ngay</button>
+            <button class="btn-buy" onclick="addToCart(true)" @(Model.Stock <= 0 ? "disabled" : "")>Mua ngay</button>
         </div>
 
         <!-- Perks -->
@@ -207,7 +288,7 @@
                     <div class="review-body">@review.Comment</div>
                     @if (review.IsVerified)
                     {
-                        <span class="review-tag">✅ Đã mua tại Pbao</span>
+                        <span class="review-tag">✅ Đã mua tại PBAO</span>
                     }
                     <div class="review-helpful">@review.HelpfulCount người thấy đánh giá này hữu ích</div>
                 </div>
@@ -236,7 +317,7 @@
                 <li><strong>Aerobite</strong> — Kết hợp hai loại dây, tối ưu spin và lực.</li>
             </ul>
             <h3>Lưu ý khi căng</h3>
-            <p>Nên căng vợt bởi thợ có kinh nghiệm. Pbao cung cấp dịch vụ căng dây chuyên nghiệp tại cửa hàng với giá từ $5/lần.</p>
+            <p>Nên căng vợt bởi thợ có kinh nghiệm. PBAO cung cấp dịch vụ căng dây chuyên nghiệp tại cửa hàng với giá cực ưu đãi.</p>
         </div>
     </div>
 </div>
@@ -244,57 +325,119 @@
 <!-- RELATED PRODUCTS -->
 <div class="related-section">
     <div class="section-title">Sản phẩm liên quan</div>
-    <div class="related-grid">
-        <div class="related-card">
-            <div class="related-img"><i class='bx bx-baseball'></i></div>
-            <div class="related-body">
-                <div class="related-cat">Vợt</div>
-                <div class="related-name">Pbao Carbon X-10</div>
-                <div class="related-stars">★★★★★</div>
-                <div class="related-price">$210.00</div>
-            </div>
+    <div class="related-slider-container">
+        <button class="slider-btn prev" onclick="scrollSlider(-1)"><i class='bx bx-chevron-left'></i></button>
+        <div class="related-slider" id="relatedSlider">
+            @foreach (var item in relatedProducts)
+            {
+                var itemImagePath = !string.IsNullOrEmpty(item.Image) ? (item.Image.StartsWith("/") || item.Image.StartsWith("http") ? item.Image : (item.Image.StartsWith("~") ? item.Image : "~/img/" + item.Image)) : "~/img/no-img.jfif";
+                <div class="related-card" onclick="window.location.href='/User/Store/Details/@item.Id'">
+                    <div class="related-img">
+                        <img src="@Url.Content(itemImagePath)" alt="@item.Name" style="width: 100%; height: 100%; object-fit: contain;" />
+                    </div>
+                    <div class="related-body">
+                        <div class="related-cat">@item.CategoryName</div>
+                        <div class="related-name">@item.Name</div>
+                        <div class="related-stars">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                @(i <= Math.Round(item.AverageRating) ? "★" : "☆")
+                            }
+                        </div>
+                        <div class="related-price">@item.Price.ToString("C")</div>
+                    </div>
+                </div>
+            }
         </div>
-        <div class="related-card" style="animation-delay:.06s">
-            <div class="related-img"><i class='bx bx-baseball'></i></div>
-            <div class="related-body">
-                <div class="related-cat">Vợt</div>
-                <div class="related-name">Victor Thruster K 9900</div>
-                <div class="related-stars">★★★★★</div>
-                <div class="related-price">$195.00 <span style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400;text-decoration:line-through">$220</span></div>
-            </div>
-        </div>
-        <div class="related-card" style="animation-delay:.12s">
-            <div class="related-img"><i class='bx bx-git-branch'></i></div>
-            <div class="related-body">
-                <div class="related-cat">Dây cước</div>
-                <div class="related-name">BG65 Titanium</div>
-                <div class="related-stars">★★★★★</div>
-                <div class="related-price">$12.00</div>
-            </div>
-        </div>
-        <div class="related-card" style="animation-delay:.18s">
-            <div class="related-img"><i class='bx bx-transfer-alt'></i></div>
-            <div class="related-body">
-                <div class="related-cat">Grip</div>
-                <div class="related-name">Yonex AC102EX Towel Grip</div>
-                <div class="related-stars">★★★★★</div>
-                <div class="related-price">$8.00</div>
-            </div>
-        </div>
+        <button class="slider-btn next" onclick="scrollSlider(1)"><i class='bx bx-chevron-right'></i></button>
     </div>
 </div>
 
 @section Scripts {
     <script>
         function changeMainImage(thumb, url) {
-            const mainImg = document.querySelector('#galleryMain img');
+            const mainImg = document.querySelector('#currentMainImg');
             if (mainImg) {
-                mainImg.src = url;
+                mainImg.style.opacity = '0';
+                setTimeout(() => {
+                    mainImg.src = url;
+                    mainImg.style.opacity = '1';
+                }, 200);
             }
             
             // Update active thumb
             document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
             thumb.classList.add('active');
+        }
+
+        function changeQty(delta) {
+            const qtyVal = document.getElementById('qtyVal');
+            let current = parseInt(qtyVal.innerText);
+            current += delta;
+            if (current < 1) current = 1;
+            qtyVal.innerText = current;
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+        }
+
+        function scrollSlider(direction) {
+            const slider = document.getElementById('relatedSlider');
+            const scrollAmount = slider.clientWidth * 0.8;
+            slider.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        function addToCart(isRedirect) {
+            const productId = @Model.Id;
+            const quantity = parseInt(document.getElementById('qtyVal').innerText);
+
+            fetch('/User/Cart/AddToCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `productId=${productId}&quantity=${quantity}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (isRedirect) {
+                        window.location.href = '/User/Cart';
+                    } else {
+                        showNotification(data.message);
+                        // Update cart count if you have one in layout
+                        const cartCountElem = document.querySelector('.cart-count');
+                        if (cartCountElem) cartCountElem.innerText = data.cartCount;
+                    }
+                } else {
+                    showNotification(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Có lỗi xảy ra khi thêm vào giỏ hàng.');
+            });
+        }
+
+        function toggleWish() {
+            const btn = document.getElementById('wishBtn');
+            const icon = document.getElementById('wishIcon');
+            btn.classList.toggle('wished');
+            if (btn.classList.contains('wished')) {
+                icon.classList.replace('bx-heart', 'bxs-heart');
+                icon.style.color = '#ef4444';
+            } else {
+                icon.classList.replace('bxs-heart', 'bx-heart');
+                icon.style.color = 'var(--sub)';
+            }
         }
     </script>
 }
