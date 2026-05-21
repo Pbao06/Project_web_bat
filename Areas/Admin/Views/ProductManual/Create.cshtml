@@ -1,89 +1,174 @@
 ﻿@model Getdata1.Models.Product
 @{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "New Product";
 }
-@{
-    // Layout = "~/Views/Shared/_Layout.cshtml"; Đảm bảo nó trỏ đúng về Layout bạn vừa làm
-}
-    ViewData["Title"] = "Create page";
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/product/Create_css.css" />
-    @* nhúng css vao *@
-}
 <main>
     <div class="head-title">
         <div class="left">
-            <h1>Create new product</h1>
+            <h1>New Product</h1>
             <ul class="Breakcrumb">
-                <li>
-                    <a href="#">Inventory</a>
-                </li>
+                <li><a href="#">Inventory</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>
-                    <a  href="#"> product</a>
-                </li>
-                <li><i class='bx bx-chevron-right'></i></li>
-                <li>
-                    <a class="active" href="#">add product</a>
-                </li>
+                <li><a class="active" href="#">Add Item</a></li>
             </ul>
         </div>
-
     </div>
-    @* mini box *@
-
-
 
     <div class="table-data">
         <div class="order">
             <div class="head">
-                <h3>Our Product</h3>
+                <h3>Product Specifications</h3>
             </div>
+            
             <form asp-action="Create" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px;">
+                
+                <div class="form-section-title">
+                    <h4>General Information</h4>
+                </div>
 
-                    <!-- Cột bên trái: Thông tin cơ bản -->
+                <div class="form-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
                     <div class="form-group">
-                        <label asp-for="Name">Product Name</label>
-                        <input asp-for="Name" type="text"  class="my-input" placeholder="Ví dụ: Yonex Astrox 100ZZ">
+                        <label asp-for="Name">Name</label>
+                        <input asp-for="Name" class="my-input" placeholder="e.g. Yonex Astrox 100ZZ">
 
-                        <label asp-for="Price">Price</label>
-                        <input asp-for="Price" type="number"  class="my-input" placeholder="Nhập giá bán...">
+                        <label asp-for="Price">Price (₫)</label>
+                        <input asp-for="Price" class="my-input" placeholder="0">
 
                         <label asp-for="Brand">Brand</label>
-                        <input asp-for="Brand" class="my-input">
-                        <label asp-for="CategoryId">Danh mục</label>
-                        <select asp-for="CategoryId" asp-items="@(ViewData["Category"]) as SelectList" class="my-input">
-                            <option value="">Chọn danh mục</option>
+                        <input asp-for="Brand" class="my-input" placeholder="e.g. Yonex">
+                        
+                        <label asp-for="CategoryId">Category</label>
+                        <select asp-for="CategoryId" id="CategoryId" asp-items="@(ViewData["Category"] as SelectList)" class="my-input">
+                            <option value="">Select Category</option>
                         </select>
                     </div>
 
-
-                    <!-- Cột bên phải: Hình ảnh & Mô tả -->
                     <div class="form-group">
-                        <label asp-for="Stock">Stock Quantity</label>
-                        <input asp-for="Stock" type="number"  class="my-input" value="0">
+                        <label asp-for="Stock">Inventory Level</label>
+                        <input asp-for="Stock" class="my-input" value="0">
 
-                        <label asp-for="ImageFile" >Product Main Image</label>
-                        <input asp-for="ImageFile" type="file"  class="my-input" style="cursor:pointer">
-                        <!-- EXTRA GALLERY IMAGES (New) -->
-                        <label>Product Gallery (Select multiple)</label>
-                        <input asp-for="GalleryFiles" type="file" class="my-input" style="cursor:pointer" multiple>
+                        <label asp-for="ImageFile">Cover Image</label>
+                        <input asp-for="ImageFile" type="file" class="my-input">
+                        
+                        <label>Gallery Images</label>
+                        <input asp-for="GalleryFiles" type="file" class="my-input" multiple>
 
-                        <label asp-for="Description" >Description</label>
-                        <textarea asp-for="Description"  class="my-input" rows="4"></textarea>
+                        <label asp-for="Description">Description</label>
+                        <textarea asp-for="Description" class="my-input" rows="4"></textarea>
                     </div>
                 </div>
 
-                <div class="form-footer" style="padding: 20px; border-top: 1px solid var(--grey);">
-                    <button type="submit" class="btn-save-product" style="border: none; cursor: pointer;">
-                        <i class='bx bxs-save'></i>
-                        <span class="text">Save Product</span>
+                <div id="specs-container">
+                    <div class="form-section-title">
+                        <h4>Technical Details</h4>
+                    </div>
+
+                    <div id="racket-specs" class="spec-section" style="display: none; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 24px;">
+                        <div class="form-group">
+                            <label asp-for="Stiffness">Stiffness</label>
+                            <input asp-for="Stiffness" class="my-input" placeholder="e.g. Cứng, Trung bình">
+                            <small class="form-text">Phân tách bằng dấu phẩy nếu có nhiều loại</small>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Weight">Weight/Grip</label>
+                            <input asp-for="Weight" class="my-input" placeholder="e.g. 3U, 4U">
+                            <small class="form-text">Phân tách bằng dấu phẩy nếu có nhiều loại</small>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BalancePoint">Balance Point</label>
+                            <input asp-for="BalancePoint" class="my-input">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RecommendedTension">Tension</label>
+                            <input asp-for="RecommendedTension" class="my-input">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="GripSize">Grip</label>
+                            <input asp-for="GripSize" class="my-input" placeholder="e.g. G5, G6">
+                            <small class="form-text">Phân tách bằng dấu phẩy nếu có nhiều loại</small>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Length">Length</label>
+                            <input asp-for="Length" class="my-input">
+                        </div>
+                    </div>
+
+                    <div id="shoe-specs" class="spec-section" style="display: none; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 24px;">
+                        <div class="form-group">
+                            <label asp-for="Size">Size</label>
+                            <input asp-for="Size" class="my-input" placeholder="e.g. 39, 40, 41">
+                            <small class="form-text">Phân tách bằng dấu phẩy nếu có nhiều size</small>
+                        </div>
+                    </div>
+
+                    <div id="shuttle-specs" class="spec-section" style="display: none; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 24px;">
+                        <div class="form-group">
+                            <label asp-for="Speed">Speed</label>
+                            <input asp-for="Speed" class="my-input" placeholder="e.g. 76, 77">
+                            <small class="form-text">Phân tách bằng dấu phẩy nếu có nhiều loại</small>
+                        </div>
+                    </div>
+
+                    <div id="general-specs" class="spec-section" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 24px;">
+                        <div class="form-group">
+                            <label asp-for="Color">Color</label>
+                            <input asp-for="Color" class="my-input" placeholder="e.g. Red, Blue, Black">
+                            <small class="form-text">Phân tách bằng dấu phẩy nếu có nhiều màu</small>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Material">Material</label>
+                            <input asp-for="Material" class="my-input">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Origin">Origin</label>
+                            <input asp-for="Origin" class="my-input">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Warranty">Warranty</label>
+                            <input asp-for="Warranty" class="my-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="btn-save-product">
+                        <i class='bx bx-check'></i>
+                        <span>Publish Product</span>
                     </button>
-                    <a asp-action="Index" class="btn-cancel" style="margin-left: 10px; color: var(--dark-grey);">Cancel</a>
+                    <a asp-action="Index" class="btn-cancel">Discard Changes</a>
                 </div>
             </form>
         </div>
     </div>
 </main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categorySelect = document.getElementById('CategoryId');
+            
+            function updateFields() {
+                const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+                const categoryText = selectedOption ? selectedOption.text.toLowerCase() : '';
+                
+                document.getElementById('racket-specs').style.display = 'none';
+                document.getElementById('shoe-specs').style.display = 'none';
+                document.getElementById('shuttle-specs').style.display = 'none';
+                
+                if (categoryText.includes('racket') || categoryText.includes('vợt')) {
+                    document.getElementById('racket-specs').style.display = 'grid';
+                } else if (categoryText.includes('shoe') || categoryText.includes('giày')) {
+                    document.getElementById('shoe-specs').style.display = 'grid';
+                } else if (categoryText.includes('shuttle') || categoryText.includes('cầu')) {
+                    document.getElementById('shuttle-specs').style.display = 'grid';
+                }
+            }
+
+            categorySelect.addEventListener('change', updateFields);
+            updateFields();
+        });
+    </script>
+}

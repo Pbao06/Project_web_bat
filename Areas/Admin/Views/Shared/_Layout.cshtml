@@ -1,123 +1,123 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Các thẻ meta, link CSS của bạn -->
-    <link rel="stylesheet" href="~/css/Style.css">
-    <link rel="stylesheet" href="~/css/Layout.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Pbao Admin</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Custom Admin Styles -->
+    <link rel="stylesheet" href="~/css/AdminCustom.css">
 
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <!-- 1. PHẦN KHUNG CHUNG: SIDEBAR -->
     @using Microsoft.AspNetCore.Mvc.Rendering
     @{
-        // Hàm helper để kiểm tra controller hiện tại có khớp không
         string IsActive(string controller)
         {
             var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
             return string.Equals(controller, currentController, StringComparison.OrdinalIgnoreCase) ? "active" : "";
         }
     }
+
+    <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="#" class="brand" style="color: var(--dark);">
-            <i class='bx bxs-wink-smile'></i>
-            <span class="text">
-                Pbao
-            </span>
+        <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="brand">
+            <i class='bx bx-trophy'></i>
+            <span>Pbao Admin</span>
         </a>
-        <ul class="side-menu top">
+        
+        <ul class="side-menu">
             <li class="@IsActive("Home")">
-                <a asp-controller="Home" asp-action="Index">
-                    <i class='bx bxs-dashboard'></i>
-                    <span class="text">Dashboard</span>
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class='bx bx-grid-alt'></i>
+                    <span>Dashboard</span>
                 </a>
             </li>
             <li class="@IsActive("ProductManual")">
-                <a asp-controller="ProductManual" asp-action="Index">
-                    <i class='bx bxs-shopping-bag-alt'></i>
-                    <span class="text">Inventory</span>
+                <a asp-area="Admin" asp-controller="ProductManual" asp-action="Index">
+                    <i class='bx bx-package'></i>
+                    <span>Inventory</span>
                 </a>
             </li>
             <li class="@IsActive("Order")">
-                <a asp-controller="Order" asp-action="Index">
-                    <i class='bx bx-cart-alt'></i>
-                    <span class="text">Order</span>
+                <a asp-area="Admin" asp-controller="Order" asp-action="Index">
+                    <i class='bx bx-shopping-bag'></i>
+                    <span>Orders</span>
                 </a>
             </li>
-           
             <li class="@IsActive("Customer")">
-                <a asp-controller="Customer"  asp-action="Index">
-                    <i class='bx bxs-group'></i>
-                    <span class="text">Customer</span>
-                </a>
-            </li>
-            <li >
-                <a asp-area="User" asp-controller="Store" asp-action="Index">
-                    <i class='bx bxs-registered'></i>
-                    <span class="text">Back to web</span>
+                <a asp-area="Admin" asp-controller="Customer" asp-action="Index">
+                    <i class='bx bx-user-circle'></i>
+                    <span>Customers</span>
                 </a>
             </li>
         </ul>
-        <ul class="side-menu ">
+
+        <ul class="side-menu">
             <li>
-                <a href="#">
-                    <i class='bx bxs-cog'></i>
-                    <span class="text">Settings</span>
+                <a asp-area="User" asp-controller="Home" asp-action="Index">
+                    <i class='bx bx-globe'></i>
+                    <span>View Store</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="logout">
-                    <i class='bx bxs-log-out-circle'></i>
-                    <span class="text">Log out</span>
+                <a href="#">
+                    <i class='bx bx-cog'></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="User" asp-controller="Account" asp-action="Logout" class="logout">
+                    <i class='bx bx-log-out'></i>
+                    <span>Logout</span>
                 </a>
             </li>
         </ul>
     </section>
+
+    <!-- CONTENT -->
     <section id="content">
-        <!-- 2. PHẦN KHUNG CHUNG: NAVBAR -->
+        <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu'></i>
-            <a href="#" class="nav-link">Categories</a>
+            
             <form action="#">
                 <div class="form-input">
-                    <input type="search" class="" placeholder="Search...">
-                    <button type="submit" class="search-btn">
-                        <i class='bx bx-search'></i>
-                    </button>
+                    <input type="search" placeholder="Search anything...">
+                    <button type="submit"><i class='bx bx-search'></i></button>
                 </div>
             </form>
+
             <a href="#" class="notification">
                 <i class='bx bx-bell'></i>
                 <span class="num">8</span>
             </a>
+            
             <a href="#" class="profile">
-                <img src="~/img/1bfa3f73-66d5-4a3c-8cb5-2ffa81f336d8.jpg" alt="">
+                <img src="~/img/1bfa3f73-66d5-4a3c-8cb5-2ffa81f336d8.jpg" alt="Profile">
             </a>
-
         </nav>
 
-
-
-
-
-
-        <!-- 3. ĐÂY LÀ CHỖ QUAN TRỌNG NHẤT -->
+        <!-- MAIN -->
         @RenderBody()
-        <!-- Lệnh này sẽ tự động hút nội dung từ trang Product hoặc Dashboard vào đây -->
-
     </section>
 
-    <!-- 4. PHẦN KHUNG CHUNG: SCRIPTS -->
+    <!-- SCRIPTS -->
     <script src="~/js/Admin_script.js"></script>
-    <!-- Dòng này để các trang con tự nhét JS riêng của nó vào đây -->
     @await RenderSectionAsync("Scripts", required: false)
+    
     <script>
-            document.addEventListener('DOMContentLoaded', function() {
-            initSidebar();
-            initNavbar();
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof initSidebar === 'function') initSidebar();
+            if (typeof initNavbar === 'function') initNavbar();
         });
-
     </script>
 </body>
 </html>

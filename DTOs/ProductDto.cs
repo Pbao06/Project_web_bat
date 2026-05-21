@@ -25,6 +25,8 @@ namespace Getdata1.DTOs
         public string? RecommendedTension { get; set; }
         public string? IncludedString { get; set; }
         public string? GripSize { get; set; }
+        public string? Size { get; set; }
+        public string? Speed { get; set; }
         public string? Origin { get; set; }
         public string? Warranty { get; set; }
 

@@ -32,6 +32,7 @@ namespace Getdata1.Areas.Admin.Controllers
                 {
                     Name = o.UserName,
                     PasswordHash = o.PasswordHash,
+                    Role = o.Role.ToString(),
                     OrderCount = _context._Orders.Count(u => u.UserId == o.Id),
                     TotalSpent = _context._Orders.Where(u => u.UserId == o.Id).SelectMany(o => o.OrderItems).Sum(item => (decimal?)(item.Price * item.Quantity)) ?? 0,
                     // cause TotalPrice notmap in oject so we have to -> calculate base join real o

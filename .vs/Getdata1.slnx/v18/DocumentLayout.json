@@ -313,6 +313,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\ViewModels\\RegisteViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ViewModels\\RegisteViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|c:\\users\\os\\onedrive\\desktop\\asp.net\\getdata1\\migrations\\20260521073138_addsizeandspeedtoproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA8F62AF-3A5F-6506-FAD5-6DAB2615CAE2}|Getdata1.csproj|solutionrelative:migrations\\20260521073138_addsizeandspeedtoproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -321,7 +325,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 790,
+          "DockedHeight": 458,
           "SelectedChildIndex": 7,
           "Children": [
             {
@@ -395,7 +399,7 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAAAGIAAAA4AAAAAAAAAA==",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAQwGIAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-14T13:42:50.436Z",
               "EditorCaption": ""
@@ -1277,8 +1281,8 @@
           ]
         },
         {
-          "DockedHeight": 82,
-          "SelectedChildIndex": 2,
+          "DockedHeight": 415,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -1287,6 +1291,18 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 78,
+              "Title": "20260521073138_AddSizeAndSpeedToProduct.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\20260521073138_AddSizeAndSpeedToProduct.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260521073138_AddSizeAndSpeedToProduct.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Migrations\\20260521073138_AddSizeAndSpeedToProduct.cs",
+              "RelativeToolTip": "Migrations\\20260521073138_AddSizeAndSpeedToProduct.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-21T07:31:39.201Z"
             },
             {
               "$type": "Document",
@@ -1300,6 +1316,10 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-18T08:23:37.137Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
             },
             {
               "$type": "Bookmark",

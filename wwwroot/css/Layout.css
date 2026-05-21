@@ -1,15 +1,16 @@
-﻿/* sidebar */
+/* sidebar */
 #sidebar {
     position: fixed; /* co dinh */
     top: 0;
     left: 0;
-    width: 280px;
+    width: 260px;
     height: 100vh;
     background: var(--light);
     z-index: 1000;
-    font-family: var(--lato);
-    transition: 0.3s ease-in-out;
+    font-family: var(--poppins);
+    transition: 0.3s ease;
     overflow-x: hidden;
+    border-right: 0.5px solid var(--border);
 }
 
     #sidebar.hide {
@@ -17,163 +18,134 @@
     }
 
     #sidebar .brand {
-        font-size: 24px;
-        font-weight: 700;
-        height: 56px;
+        font-size: 20px;
+        font-weight: 800;
+        height: 64px;
         display: flex;
         align-items: center;
+        font-family: var(--lato);
+        color: var(--dark);
+        letter-spacing: -1px;
+        padding: 0 20px;
     }
 
         #sidebar .brand .bx {
-            min-width: 60px;
+            min-width: 40px;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
+            font-size: 24px;
         }
 
     #sidebar .side-menu {
         width: 100%;
-        margin-top: 48px;
+        margin-top: 24px;
     }
 
         #sidebar .side-menu li {
-            height: 48px;
+            height: 44px;
             background: transparent;
-            margin-left: 6px;
-            border-radius: 48px 0 0 48px;
-            padding: 4px;
+            margin: 4px 12px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
         }
 
             #sidebar .side-menu li.active {
-                background: var(--grey);
-                position: relative;
+                background: var(--bg2);
             }
 
             #sidebar .side-menu li a.logout {
                 color: var(--red);
             }
 
-            #sidebar .side-menu li.active::before {
-                content: '';
-                position: absolute;
-                width: 40px;
-                height: 40px;
-                /* background: var(--blue); */
-                border-radius: 50%;
-                top: -40px;
-                right: 0;
-                z-index: -1;
-                box-shadow: 20px 20px 0 var(--grey);
-            }
-
+            /* Bo phan cong ken truoc do */
+            #sidebar .side-menu li.active::before,
             #sidebar .side-menu li.active::after {
-                content: '';
-                position: absolute;
-                width: 40px;
-                height: 40px;
-                /* background: var(--blue); */
-                border-radius: 50%;
-                bottom: -40px;
-                right: 0;
-                z-index: -1;
-                box-shadow: 20px -20px 0 var(--grey);
+                display: none;
             }
 
             #sidebar .side-menu li a {
                 width: 100%;
                 height: 100%;
-                background: var(--light);
                 display: flex;
                 align-items: center;
-                border-radius: 48px;
-                font-size: 16px;
-                color: var(--dark);
+                border-radius: 10px;
+                font-size: 14px;
+                font-weight: 500;
+                color: var(--dark-grey);
                 white-space: nowrap;
                 overflow-x: hidden;
+                transition: all 0.2s ease;
             }
 
             #sidebar .side-menu li.active a {
                 color: var(--blue);
+                font-weight: 600;
             }
 
     #sidebar.hide .side-menu li a {
-        width: calc(48px - (4px * 2));
-        transition: 0.3 ease;
+        width: 100%;
     }
 
     #sidebar .side-menu.top li a:hover {
-        color: var(--blue);
+        color: var(--dark);
+        background: var(--bg2);
     }
 
     #sidebar .side-menu li a .text {
-        margin-left: 21px;
+        margin-left: 12px;
     }
 
     #sidebar .side-menu li a .bx {
-        min-width: calc(60px - ((4px + 6px)*2));
+        min-width: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
-        /* them */
-        /* padding-right:6px;
-    padding-left: 10px; */
+        font-size: 20px;
     }
 
 /*  content */
 #content {
     position: relative;
-    width: calc(100% - 280px);
-    left: 280px; /* đây là distance của sidebar */
+    width: calc(100% - 260px);
+    left: 260px; /* đây là distance của sidebar */
     transition: all 0.3s ease;
 }
 
-#sidebar.hide ~ #content,
-#sidebar-container:has(.hide) ~ #content {
+#sidebar.hide ~ #content {
     width: calc(100% - 60px);
     left: 60px;
 }
 /* navbar */
 #content nav {
     display: flex;
-    height: 56px;
-    background: var(--light);
+    height: 64px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 0 24px;
     align-items: center;
-    /* justify-content: flex-start; */
     grid-gap: 24px;
-    /* gap:24px; */
-    font-family: var(--lato);
+    font-family: var(--poppins);
     position: sticky;
     left: 0;
     top: 0;
     z-index: 1000;
+    border-bottom: 0.5px solid var(--border);
 }
 
-    /* cai nay la giup boder goc giua navbar va sidebar  */
-    /* #content nav::before
-{
-    content: '';
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    bottom:-40px ;
-    border-radius: 50%;
-    left: 0;
-    box-shadow: -20px -20px var(--light);
-
-} */
     #content nav a {
         color: var(--dark);
     }
 
     #content nav .bx.bx-menu {
         cursor: pointer;
+        font-size: 24px;
     }
 
     #content nav .nav-link {
-        font-size: 16px;
-        font-weight: 600;
-        letter-spacing: 1px;
-        transition: .3 ease;
+        font-size: 14px;
+        font-weight: 500;
+        transition: .3s ease;
     }
 
         #content nav .nav-link:hover {
@@ -188,7 +160,7 @@
 
         #content nav form .form-input {
             display: flex;
-            height: 36px;
+            height: 38px;
             align-items: center;
         }
 
@@ -196,24 +168,25 @@
                 flex-grow: 1;
                 padding: 0 16px;
                 height: 100%;
-                border: none;
-                background: var(--grey);
-                border-radius: 36px 0 0 36px;
+                border: 0.5px solid var(--border);
+                background: var(--bg2);
+                border-radius: 20px 0 0 20px;
                 outline: none;
+                font-size: 13px;
             }
 
             #content nav form .form-input button {
-                width: 36px;
+                width: 40px;
                 height: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background: var(--blue);
+                background: var(--dark);
                 color: var(--light);
                 font-size: 18px;
                 border: none;
                 outline: none;
-                border-radius: 0 36px 36px 0;
+                border-radius: 0 20px 20px 0;
                 cursor: pointer;
             }
 
@@ -225,16 +198,15 @@
 
         #content nav .notification .num {
             position: absolute;
-            top: -6px;
-            right: -6px;
-            width: 20px;
-            height: 20px;
+            top: -4px;
+            right: -4px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            border: 2px solid var(--light);
             background: var(--red);
             color: var(--light);
             font-weight: 700;
-            font-size: 12px;
+            font-size: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -245,15 +217,15 @@
         height: 36px;
         object-fit: cover;
         border-radius: 50%;
+        border: 0.5px solid var(--border);
     }
 
 /* Main */
 #content main {
     width: 100%;
-    padding: 36px 24px;
+    padding: 32px 24px;
     font-family: var(--poppins);
-    max-height: calc(100vh- 56px);
-    overflow-y: auto;
+    min-height: calc(100vh - 64px);
 }
 
     #content main .head-title {
@@ -262,23 +234,27 @@
         justify-content: space-between;
         grid-gap: 16px;
         flex-wrap: wrap;
+        margin-bottom: 24px;
     }
 
         #content main .head-title .left h1 {
-            font-size: 36px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-family: var(--lato);
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
             color: var(--dark);
         }
 
         #content main .head-title .Breakcrumb {
             display: flex;
             align-items: center;
-            grid-gap: 16px;
+            grid-gap: 8px;
+            margin-top: 4px;
         }
 
             #content main .head-title .Breakcrumb li {
                 color: var(--dark-grey);
+                font-size: 13px;
             }
 
                 #content main .head-title .Breakcrumb li a {
@@ -292,45 +268,50 @@
                     }
 
         #content main .head-title .btn-download {
-            background: var(--blue);
+            background: var(--dark);
             color: var(--light);
-            height: 36px;
-            padding: 0 16px;
+            height: 38px;
+            padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 36px;
+            border-radius: 20px;
             grid-gap: 10px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
         }
 
     #content main .box-info {
         display: grid;
         grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
-        grid-gap: 24px;
-        margin-top: 36px;
+        grid-gap: 20px;
+        margin-top: 24px;
         justify-content: space-between;
     }
 
         #content main .box-info li {
             background: var(--light);
-            padding: 24px;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: var(--card-r);
             display: flex;
-            /* justify-content: center; */
             align-items: center;
-            grid-gap: 24px;
+            grid-gap: 20px;
+            border: 0.5px solid var(--border);
+            transition: transform 0.2s ease;
+        }
+        #content main .box-info li:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
             #content main .box-info li .bx {
-                height: 80px;
-                width: 80px;
+                height: 56px;
+                width: 56px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                /* background: var(--grey); */
-                border-radius: 10px;
-                font-size: 36px;
+                border-radius: 12px;
+                font-size: 24px;
             }
 
             #content main .box-info li:nth-child(1) .bx {
@@ -349,8 +330,14 @@
             }
 
             #content main .box-info li h3 {
-                font-size: 24px;
-                font-size: 600;
+                font-family: var(--lato);
+                font-size: 22px;
+                font-weight: 800;
+                letter-spacing: -0.5px;
+            }
+            #content main .box-info li p {
+                font-size: 13px;
+                color: var(--dark-grey);
             }
 
     #content main .table-data {
@@ -362,10 +349,10 @@
     }
 
         #content main .table-data > div {
-            border-radius: 20px;
+            border-radius: var(--card-r);
             background: var(--light);
             padding: 24px;
-            overflow-x: auto;
+            border: 0.5px solid var(--border);
         }
 
         #content main .table-data .head {
@@ -373,18 +360,19 @@
             align-items: center;
             grid-gap: 16px;
             margin-bottom: 24px;
-            min-width: 420px;
         }
 
             #content main .table-data .head h3 {
                 margin-right: auto;
-                font-size: 24px;
-                font-weight: 500;
+                font-family: var(--lato);
+                font-size: 18px;
+                font-weight: 800;
                 color: var(--dark);
             }
 
             #content main .table-data .head .bx {
                 cursor: pointer;
+                color: var(--dark-grey);
             }
 
         #content main .table-data .order {
@@ -395,58 +383,64 @@
             #content main .table-data .order table {
                 width: 100%;
                 border-collapse: collapse;
-                min-width: 420px;
             }
 
                 #content main .table-data .order table th {
                     font-weight: 600;
-                    font-size: 13px;
+                    font-size: 12px;
                     padding-bottom: 12px;
                     text-align: left;
-                    border-bottom: 1px solid var(--grey);
+                    color: var(--dark-grey);
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    border-bottom: 0.5px solid var(--border);
                 }
 
                 #content main .table-data .order table td {
-                    padding: 16px 0;
+                    padding: 12px 0;
+                    font-size: 14px;
                 }
 
                 #content main .table-data .order table tr td:first-child {
                     display: flex;
                     align-items: center;
                     grid-gap: 12px;
-                    padding-left: 6px;
                 }
 
                 #content main .table-data .order table td img {
-                    height: 36px;
-                    width: 36px;
+                    height: 32px;
+                    width: 32px;
                     border-radius: 50%;
                     object-fit: cover;
                 }
 
+                #content main .table-data .order table tbody tr {
+                    border-bottom: 0.5px solid var(--bg2);
+                }
                 #content main .table-data .order table tbody tr:hover {
-                    background: var(--grey);
-                    cursor: pointer;
+                    background: var(--bg2);
                 }
 
                 #content main .table-data .order table tr td span.status {
-                    font-size: 10px;
-                    padding: 6px 16px;
-                    color: var(--light);
+                    font-size: 11px;
+                    padding: 4px 12px;
+                    font-weight: 600;
                     border-radius: 20px;
-                    background: var(--grey);
                 }
 
                 #content main .table-data .order table tr td span.complete {
-                    background: var(--blue);
+                    background: var(--light-blue);
+                    color: var(--blue);
                 }
 
                 #content main .table-data .order table tr td span.process {
-                    background: var(--yellow);
+                    background: var(--light-yellow);
+                    color: var(--yellow);
                 }
 
                 #content main .table-data .order table tr td span.pending {
-                    background: var(--orange);
+                    background: var(--light-orange);
+                    color: var(--orange);
                 }
 
 
@@ -454,28 +448,23 @@
 /*               todolist*/
         #content main .table-data .todo {
             flex-grow: 1;
-            overflow-x: hidden; /* override the auto from parent */
             flex-basis: 300px;
         }
 
     #content main .todo .todo-list {
         width: 100%;
-        min-width: unset;
     }
-        #content main .todo .todo-list .head
-        {
-            min-width: unset;
-        }
 
         #content main .todo .todo-list li {
             width: 100%;
-            margin-bottom: 16px;
-            background: var(--grey);
+            margin-bottom: 12px;
+            background: var(--bg2);
             padding: 14px 16px;
-            border-radius: 4px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 13px;
         }
 
             #content main .todo .todo-list li:last-child {
@@ -484,17 +473,10 @@
 
             #content main .todo .todo-list li .bx {
                 cursor: pointer;
+                font-size: 18px;
             }
 
-            #content main .todo .todo-list li.complete {
-/*                border-left: 10px solid var(--blue);*/
-            }
-
-            #content main .todo .todo-list li.not-completed {
-/*                border-left: 10px solid var(--orange);*/
-            }
-/*
-for take off alert css*/
+/* for take off alert css*/
 #content main .todo .todo-list li.removing {
     animation: fadeOut 0.3s ease forwards;
 }
@@ -511,61 +493,26 @@ for take off alert css*/
 /* MAIN */
 
 
-
-
 /* Reponsive sidebar */
 @media screen and (max-width:768px) {
+    #sidebar {
+        width: 200px;
+    }
     #content {
         width: calc(100% - 60px);
-        left: 280px;
-        transition: .3s ease;
-    }
-
-    #sidebar {
-        width: calc(100% - 280px);
-        left: 200px;
-    }
-
-    #content nav .nav-link {
-        display: none;
-        /* bỏ categories phần input */
+        left: 60px;
     }
 }
 
 @media screen and (max-width:576px) {
-    #content nav .nav-link {
-        display: none;
-        /* bỏ categories phần input */
-    }
-
     #content nav form .form-input input {
         display: none;
-        /*  bỏ input nếu màn hình bé quá  */
     }
 
     #content nav form .form-input button {
         width: auto;
         height: auto;
         background: transparent;
-        border-radius: none;
         color: var(--dark);
-    }
-
-    #content nav form.show .form-input input {
-        display: block;
-        width: 100%;
-    }
-
-    #content nav form.show .form-input button {
-        width: 36px;
-        height: 100%;
-        border-radius: 0 36px 36px 0;
-        background: var(--red);
-        color: var(--light);
-    }
-
-    #content nav form.show ~ .notification,
-    #content nav form.show ~ .profile {
-        display: none;
     }
 }

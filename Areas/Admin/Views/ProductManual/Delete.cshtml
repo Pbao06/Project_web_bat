@@ -1,130 +1,264 @@
 ﻿@model Getdata1.Models.Product
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 
-<title>@(ViewData["Title"] ?? "Default Title")</title>
-
+@{
+    ViewData["Title"] = "Delete Product";
+}
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/product/Delete_css.css" />
-    @* nhúng css vao *@
+    <style>
+        .delete-card {
+            background: var(--bg);
+            border-radius: var(--card-r);
+            border: 0.5px solid var(--border);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 0;
+            position: relative;
+        }
+
+        .delete-warning-banner {
+            grid-column: span 2;
+            background: #fff0f0;
+            color: #ff3b30;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            border-bottom: 0.5px solid #ffcccc;
+        }
+
+        .delete-image-side {
+            background: var(--bg2);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-right: 0.5px solid var(--border);
+            opacity: 0.8;
+        }
+
+        .main-img-container {
+            width: 100%;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+
+        .main-img-container img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .delete-info-side {
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-header {
+            margin-bottom: 32px;
+        }
+
+        .brand-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--bg3);
+            color: var(--sub);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .product-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .delete-prompt {
+            font-size: 15px;
+            color: var(--sub);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .summary-box {
+            background: var(--bg2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 0.5px solid var(--border);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .summary-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .delete-actions {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-top: 32px;
+            border-top: 0.5px solid var(--border);
+        }
+
+        .btn-confirm-delete {
+            background: #ff3b30;
+            color: #fff;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-confirm-delete:hover {
+            background: #d70015;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.2);
+        }
+
+        .btn-cancel-link {
+            color: var(--sub);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-cancel-link:hover {
+            color: var(--text);
+        }
+
+        @@media (max-width: 1024px) {
+            .delete-card {
+                grid-template-columns: 1fr;
+            }
+            .delete-image-side {
+                border-right: none;
+                border-bottom: 0.5px solid var(--border);
+            }
+            .delete-warning-banner {
+                grid-column: span 1;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .delete-info-side {
+                padding: 32px 24px;
+            }
+        }
+    </style>
 }
 
 <main>
     <div class="head-title">
         <div class="left">
-            <h1>Delete</h1>
+            <h1>Delete Product</h1>
             <ul class="Breakcrumb">
-                <li>
-                    <a href="#">Inventory</a>
-                </li>
+                <li><a asp-action="Index">Inventory</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>
-                    <a class="active" href="#">Delete</a>
-                </li>
+                <li><a class="active">Confirm Deletion</a></li>
             </ul>
         </div>
-        <!-- above is title  -->
-        <div class="table-data">
-            <div class="order">
-                <div class="head">
-                    <h3>Are you sure to delete this</h3>
-                </div>
+    </div>
 
-
-                <form asp-action="Delete" method="post">
-                <input type="hidden" asp-for="Id" />
-
-    <div class="product-detail-container">
-        <div class="detail-content">
-            @* nay la delete *@
-            <!-- CỘT TRÁI: HÌNH ẢNH -->
-            <div class="image-section">
-                <div class="image-main-preview">
-                                    @if (!string.IsNullOrEmpty(Model.Image))
-                                    {
-                                        <img src="@Model.Image" alt="Product" id="img-display" class="glass-image">
-                                        // vi tao file la luu sang /img/ roi nen ko can/img/@model.img
-                                    }
-                                    else
-                                    {
-                                        <img src="~/img/no-img.jfif" alt="Product" id="img-display" class="glass-image">
-                                    }
-                                 </div>
-                              <div class="image-thumbnails">
-
-                                    @if (Model.ProductImages != null && Model.ProductImages.Any())
-                                    {
-                                        @foreach (var galleryImg in Model.ProductImages)
-                                        {
-                                            <!-- Thumbnails của các ảnh con trong Gallery -->
-                                            <div class="thumb-item" onclick="changeImage('@galleryImg.Url', this)">
-                                                <img src="@galleryImg.Url">
-                                            </div>
-                                        }
-                                    }
-                                   
-                             </div>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        
+        <div class="delete-card">
+            <div class="delete-warning-banner">
+                <i class='bx bx-error-circle'></i>
+                <span>This action cannot be undone. Are you sure you want to delete this product?</span>
             </div>
 
-            <!-- CỘT PHẢI: THÔNG TIN -->
-            <div class="info-section">
+            <!-- IMAGE SIDE -->
+            <div class="delete-image-side">
+                <div class="main-img-container">
+                    <img src="@(string.IsNullOrEmpty(Model.Image) ? "/img/no-img.jfif" : Model.Image)" alt="@Model.Name">
+                </div>
+            </div>
+
+            <!-- INFO SIDE -->
+            <div class="delete-info-side">
                 <div class="info-header">
-                    <span class="delete-warning">Confirm Deletion</span>
+                    @if (!string.IsNullOrEmpty(Model.Brand))
+                    {
+                        <span class="brand-tag">@Model.Brand</span>
+                    }
                     <h1 class="product-name">@Model.Name</h1>
-                                    <p class="product-price">$@Model.Price.ToString("#,##0") ₫</p>
                 </div>
 
-                <div class="info-body">
-                    <div class="detail-group">
-                        <label>Description</label>
-                        <p class="description-text">@Model.Description</p>
-                    </div>
+                <p class="delete-prompt">
+                    Deleting this product will remove it permanently from the inventory. 
+                    Please confirm that you want to proceed.
+                </p>
 
-                    <div class="detail-grid">
-                        <div class="detail-group">
-                            <label>Brand</label>
-                            <span class="badge">@Model.Brand</span>
-                        </div>
-                        <div class="detail-group">
-                            <label>Stock Quantity</label>
-                            <span class="stock-count">@Model.Stock units available</span>
-                        </div>
+                <div class="summary-box">
+                    <div class="summary-item">
+                        <span class="summary-label">SKU</span>
+                        <span class="summary-value">PROD-@Model.Id.ToString("D5")</span>
                     </div>
-
-                    <div class="detail-group">
-                        <label>SKU</label>
-                        <span class="text-muted">PROD-@Model.Id.ToString("D5")</span>
+                    <div class="summary-item">
+                        <span class="summary-label">Price</span>
+                        <span class="summary-value">@Model.Price.ToString("#,##0") ₫</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Current Stock</span>
+                        <span class="summary-value">@Model.Stock Units</span>
                     </div>
                 </div>
 
-                <div class="info-footer">
-                    <button type="submit" class="btn-delete">
-                        <i class='bx bxs-trash'></i> Delete Product
+                <div class="delete-actions">
+                    <button type="submit" class="btn-confirm-delete">
+                        <i class='bx bx-trash'></i> Delete Permanently
                     </button>
-                    <a asp-action="Index" class="btn-back">
-                        <i class='bx bx-arrow-back'></i> Cancel
+                    <a asp-action="Index" class="btn-cancel-link">
+                        Cancel and Go Back
                     </a>
                 </div>
             </div>
         </div>
-    </div>
-</form>
-           
-                <script>
-                    // giup load anh sau khi chon anh moi
-                                    // Hàm xử lý đổi ảnh chính và hiệu ứng active
-                    function changeImage(url, element) {
-                        // Đổi ảnh to ở trên
-                        document.getElementById('img-display').src = url;
-
-                        // Xử lý border cho ảnh nhỏ đang được chọn
-                        document.querySelectorAll('.thumb-item').forEach(item => {
-                            item.classList.remove('active');
-                        });
-                        element.classList.add('active');
-                    }
-                </script>
-            </div>
+    </form>
 </main>

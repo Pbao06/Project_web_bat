@@ -4,66 +4,56 @@
     ViewData["Title"] = "Dashboard";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/Layout.css" />
-    <link rel="stylesheet" href="~/css/order/Order_index.css" />
-}
 <main>
-   
-    @* mini box *@
     <div class="head-title">
         <div class="left">
             <h1>Dashboard</h1>
             <ul class="Breakcrumb">
-                <li>
-                    <a href="#">Dashboard</a>
-                </li>
+                <li><a href="#">Admin</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>
-                    <a class="active" href="#">Home</a>
-                </li>
+                <li><a class="active" href="#">Overview</a></li>
             </ul>
         </div>
         <a href="#" class="btn-download">
-            <!-- <i class='bx bxs-download'></i> -->
-            <span class="text">Download PDF</span>
+            <span class="text">Export Report</span>
         </a>
     </div>
+
     <ul class="box-info">
         <li>
-            <i class='bx bxs-check-circle'></i>
+            <i class='bx bx-shopping-bag'></i>
             <span class="text">
                 <h3>@Model.TotalOrders</h3>
-                <p>New Order</p>
+                <p>New Orders</p>
             </span>
         </li>
         <li>
-            <i class='bx bxs-battery-low'></i>
+            <i class='bx bx-error-circle'></i>
             <span class="text">
                 <h3>@Model.LowStockProducts.Count</h3>
-                <p>Low products</p>
+                <p>Low Stock</p>
             </span>
         </li>
         <li>
-            <i class='bx bx-dollar'></i>
+            <i class='bx bx-dollar-circle'></i>
             <span class="text">
                 <h3>@Model.TotalSales.ToString("#,##0") ₫</h3>
-                <p>Total Sales</p>
+                <p>Total Revenue</p>
             </span>
         </li>
     </ul>
+
     <div class="table-data">
         <div class="order">
             <div class="head">
-                <h3>Recent Orders</h3>
+                <h3>Recent Transactions</h3>
                 <i class="bx bx-filter"></i>
-                <i class="bx bx-search"></i>
             </div>
             <table>
                 <thead>
                     <tr>
-                        <th>User</th>
-                        <th>Date Order</th>
+                        <th>Customer</th>
+                        <th>Date</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -72,80 +62,76 @@
                     {
                         <tr>
                             <td>
-                                <img src="~/img/d6133b65-446a-49d6-aa89-f4c26c050fd4.jpg" alt="@order.User?.UserName">
-                                <p>@order.User.UserName</p>
+                                <div style="display: flex; align-items: center;">
+                                    <img src="~/img/no-img.jfif" alt="@order.User?.UserName">
+                                    <p>@order.User.UserName</p>
+                                </div>
                             </td>
-                            <td>@order.OrderDate.ToString("dd-MM-yyyy")</td>
-                            <td><span class= "status @(order.Status.ToString().ToLower())">@order.Status.ToString()</span></td>
+                            <td>@order.OrderDate.ToString("MMM dd, yyyy")</td>
+                            <td><span class="status @(order.Status.ToString().ToLower())">@order.Status.ToString()</span></td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-        @* todolist *@
+
         <div class="todo">
             <div class="head">
-                <h3>Need to do</h3>
-                @* h3 above was set margin right auto  *@
-                
+                <h3>Action Items</h3>
             </div>
             <ul class="todo-list" id="todo-list">
                 @foreach (var product in Model.LowStockProducts)
                 {
-                    <li class="not-completed">
-                        <p>⚠ <strong>@product.Name</strong> — only @product.Stock left</p>
+                    <li>
+                        <p><strong>@product.Name</strong> is low on stock (@product.Stock remaining)</p>
                         <i class="bx bx-check done-btn"></i>
                     </li>
                 }
 
                 @if (Model.PendingOrders > 0)
                 {
-                    <li class="not-completed">
-                        <p>🕐 <strong>@Model.PendingOrders orders</strong> pending — review now</p>
+                    <li>
+                        <p>You have <strong>@Model.PendingOrders</strong> pending orders to review</p>
                         <i class="bx bx-check done-btn"></i>
                     </li>
                 }
-
-                @* @foreach (var product in Model.MissingImageProducts)
-                {
-                    <li class="not-completed">
-                        <p>🖼 <strong>@product.Name</strong> — missing image</p>
-                        <i class="bx bx-check done-btn"></i>
-                    </li>
-                } *@
             </ul>
 
-            <div class="todo-empty" id="todo-empty" style="display:none;">
-                <p>🎉 All done! Nothing left to action.</p>
+            <div id="todo-empty" style="display:none; text-align: center; padding: 20px; color: var(--muted); font-size: 13px;">
+                <i class='bx bx-check-double' style="font-size: 24px; display: block; margin-bottom: 8px;"></i>
+                <p>All tasks completed</p>
             </div>
         </div>
     </div>
 </main>
+
 @section Scripts {
     <script>
-               document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
             const list = document.getElementById('todo-list');
-            if (!list) return; // stop if not on dashboard
+            const empty = document.getElementById('todo-empty');
+            
+            function checkEmpty() {
+                if (list && list.children.length === 0) {
+                    empty.style.display = 'block';
+                }
+            }
 
             checkEmpty();
 
             document.querySelectorAll('.done-btn').forEach(btn => {
                 btn.addEventListener('click', function () {
                     const li = this.closest('li');
-                    li.classList.add('removing');
-                    li.addEventListener('animationend', () => {
+                    li.style.opacity = '0';
+                    li.style.transform = 'translateX(20px)';
+                    li.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
                         li.remove();
                         checkEmpty();
-                    });
+                    }, 300);
                 });
             });
-
-            function checkEmpty() {
-                const empty = document.getElementById('todo-empty');
-                if (list.children.length === 0) {
-                    empty.style.display = 'block';
-                }
-            }
         });
     </script>
 }

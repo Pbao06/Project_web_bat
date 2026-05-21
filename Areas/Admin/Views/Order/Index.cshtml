@@ -1,34 +1,17 @@
 ﻿@model Getdata1.Areas.Admin.ViewModels.OrderPageVM
-
 @{
-    // ViewData["Title"] = "Order page";
-    // Layout = "~/Views/Shared/_Layout.cshtml"; Đảm bảo nó trỏ đúng về Layout bạn vừa làm
-}
-<title>@(ViewData["Title"] ?? "Default Title")</title>
-
-@section Styles {
-    @* nhúng css vao *@
-    <link rel="stylesheet" href="~/css/Layout.css" />
-    <link rel="stylesheet" href="~/css/order/Order_index.css" />
-    <link rel="stylesheet" href="~/css/Paginationcss.css" />
-    
-
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Orders";
 }
 
 <main>
-
-@* mini box *@
     <div class="head-title">
         <div class="left">
-            <h1>Order</h1>
+            <h1>Orders</h1>
             <ul class="Breakcrumb">
-                <li>
-                    <a href="#">Order</a>
-                </li>
+                <li><a href="#">Admin</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>
-                    <a class="active" href="#">Orders</a>
-                </li>
+                <li><a class="active" href="#">Order History</a></li>
             </ul>
         </div>
     </div>
@@ -36,12 +19,12 @@
     <div class="table-data">
         <div class="order">
             <div class="head">
-                <h3>Recent Orders </h3>
-                <div class="filter-wrapper">
-                    <i class="bx bx-filter" onclick="toggleFilter()"></i>
-                    <div class="filter-dropdown" id="filterDropdown" style="display:none">
+                <h3>Transactions</h3>
+                <div class="filter-wrapper" style="position: relative;">
+                    <i class="bx bx-filter" onclick="toggleFilter()" style="font-size: 20px; cursor: pointer;"></i>
+                    <div id="filterDropdown" style="display:none; position: absolute; right: 0; top: 30px; background: #fff; border: 0.5px solid var(--border); border-radius: 12px; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); z-index: 100;">
                         <form method="get" asp-action="Index" asp-controller="Order">
-                            <select name="status" onchange="this.form.submit()">
+                            <select name="status" onchange="this.form.submit()" style="border: none; outline: none; font-size: 13px; background: transparent; cursor: pointer;">
                                 <option value="">All Orders</option>
                                 <option value="Pending" selected="@(ViewBag.Status == "Pending")">Pending</option>
                                 <option value="Paid" selected="@(ViewBag.Status == "Paid")">Paid</option>
@@ -54,66 +37,50 @@
             <table>
                 <thead>
                     <tr>
-                    
-                                <th>User</th>
-                                @* <th></th> *@
-                                <th>Date Order</th>
-                                <th>Total Price</th>
-                                <th>Status</th>
-                                <th>Action</th>
-     
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach(var order in Model.Orders)
                     {
                       <tr>
+                            <td>@order.UserName</td>
+                            <td>@order.OrderDate.ToString("MMM dd, yyyy HH:mm")</td>
+                            <td>@order.TotalPrice.ToString("#,##0") ₫</td>
+                            <td>
+                                <span class="status @order.Status.ToString().ToLower()">
+                                    @order.Status
+                                </span>
+                            </td>
+                            <td class="btn-Edit-Delete-Detail">
+                                <a asp-action="Detail" asp-route-id="@order.OrderId"><i class='bx bx-show'></i></a>
+                                @if(order.Status == Getdata1.Models.Enums.OrderStatus.Pending)
+                                {
+                                    <a asp-action="UpdateStatus" asp-route-id="@order.OrderId" asp-route-status="Paid"
+                                       onclick="return confirm('Approve this order?')">
+                                        <i class='bx bx-check-circle'></i>
+                                    </a>
 
-                      
-                            <td>
-                                @order.UserName;
-                            </td>
-                            <td>
-                                @order.OrderDate.ToString("dd/MM/yyyy HH:mm")
-                            </td>
-                            <td>
-                                @order.TotalPrice.ToString("#,##0") ₫
-                            </td>
-                             <td>
-                                 <span class="status @order.Status.ToString().ToLower()">
-                                        @order.Status
-                                 </span>
-                              
-                            </td>
-                            <td class="btn-Detail">
-                                 <a asp-action="Detail" asp-route-id="@order.OrderId"><i class='bx bxs-show'></i></a>
-                                  @if(order.Status == Getdata1.Models.Enums.OrderStatus.Pending)
-                                    {
-                                        <a asp-action="UpdateStatus" asp-route-id="@order.OrderId" asp-route-status="Paid"
-                                           onclick="return confirm('Approve this order?')">
-                                            <i class='bx bx-check'></i>
-                                        </a>
-
-                                        <a asp-action="UpdateStatus" asp-route-id="@order.OrderId" asp-route-status="Cancelled"
-                                           onclick="return confirm('Cancel this order?')">
-                                            <i class='bx bx-x'></i>
-                                        </a>
-                                    }
+                                    <a asp-action="UpdateStatus" asp-route-id="@order.OrderId" asp-route-status="Cancelled"
+                                       onclick="return confirm('Cancel this order?')">
+                                        <i class='bx bx-x-circle'></i>
+                                    </a>
+                                }
                             </td>
                       </tr>
                     }
                 </tbody>
             </table>
 
-            @* pagination *@
-            @* bottom of order Index.cshtml *@
             @await Html.PartialAsync("paginationOrder", Model)
-          
-
         </div>
-      
     </div>
 </main>
+
 @section Scripts {
     <script>
         function toggleFilter() {
@@ -121,7 +88,6 @@
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
         }
 
-        // close when click outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.filter-wrapper')) {
                 document.getElementById('filterDropdown').style.display = 'none';

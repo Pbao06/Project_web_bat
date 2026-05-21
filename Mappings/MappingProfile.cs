@@ -12,7 +12,7 @@ namespace Getdata1.Mappings
             CreateMap<Product, ProductDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : null))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
-                .ForMember(dest => dest.GalleryImages, opt => opt.MapFrom(src => src.ProductImages != null ? src.ProductImages.Select(pi => pi.Url).ToList() : new List<string>()))
+                .ForMember(dest => dest.GalleryImages, opt => opt.MapFrom(src => src.ProductImages != null ? src.ProductImages.Select(pi => pi.Url).Where(u => u != null).Cast<string>().ToList() : new List<string>()))
                 .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.ProductReviews));
 
             // ProductReview Mapping

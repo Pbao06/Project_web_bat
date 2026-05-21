@@ -1,130 +1,325 @@
 ﻿@model Getdata1.Models.Product
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-<title>@(ViewData["Title"] ?? "Default Title")</title>
+
+@{
+    ViewData["Title"] = "Product Details";
+}
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/product/Detail_css.css" />
-    @* nhúng css vao *@
+    <style>
+        .detail-card {
+            background: var(--bg);
+            border-radius: var(--card-r);
+            border: 0.5px solid var(--border);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 0;
+        }
+
+        .detail-image-side {
+            background: var(--bg2);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-right: 0.5px solid var(--border);
+        }
+
+        .main-img-container {
+            width: 100%;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            margin-bottom: 24px;
+        }
+
+        .main-img-container img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-img-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-grid {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gallery-item {
+            width: 64px;
+            height: 64px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            overflow: hidden;
+            cursor: pointer;
+            background: #fff;
+            transition: all 0.2s;
+        }
+
+        .gallery-item.active {
+            border-color: var(--accent);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-info-side {
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-header {
+            margin-bottom: 32px;
+        }
+
+        .brand-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--bg3);
+            color: var(--sub);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .product-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--sub);
+            margin-bottom: 32px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+            padding: 24px;
+            background: var(--bg2);
+            border-radius: 12px;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .spec-label {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .spec-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .detail-actions {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-top: 32px;
+            border-top: 0.5px solid var(--border);
+        }
+
+        .btn-edit-main {
+            background: var(--text);
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-edit-main:hover {
+            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .btn-back-link {
+            color: var(--sub);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-back-link:hover {
+            color: var(--text);
+        }
+
+        @@media (max-width: 1024px) {
+            .detail-card {
+                grid-template-columns: 1fr;
+            }
+            .detail-image-side {
+                border-right: none;
+                border-bottom: 0.5px solid var(--border);
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .detail-info-side {
+                padding: 32px 24px;
+            }
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+            .product-name {
+                font-size: 24px;
+            }
+        }
+    </style>
 }
 
 <main>
     <div class="head-title">
         <div class="left">
-            <h1>Detail Product</h1>
+            <h1>Product Details</h1>
             <ul class="Breakcrumb">
-                <li>
-                    <a href="#">Inventory</a>
-                </li>
+                <li><a asp-action="Index">Inventory</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>
-                    <a class="active" href="#">Detail</a>
-                </li>
+                <li><a class="active">@Model.Name</a></li>
             </ul>
         </div>
-        <!-- above is title  -->
-        <div class="table-data">
-            <div class="order">
-                <div class="head">
-                    <h3>Detail Product</h3>
-                </div>
-           
-                <div class="product-detail-container">
-                    <div class="detail-content">
-                        <!-- CỘT TRÁI: HÌNH ẢNH -->
-                        <div class="image-section">
-                            <div class="image-main-preview">
-                                @if (!string.IsNullOrEmpty(Model.Image))
-                                {
-                                    <img src="@Model.Image" alt="Product" id="img-display" class="glass-image">
-                                }
-                                else
-                                {
-                                    <img src="~/img/no-img.jfif" alt="Product" id="img-display" class="glass-image">
-                                }
-                            </div>
-                            <!-- Giả lập các ảnh nhỏ bên dưới như trong ảnh mẫu -->
-                            <div class="image-thumbnails">
-                                @if (!string.IsNullOrEmpty(Model.Image))
-                                {
-                                    <!-- Ảnh phụ 1 (Lấy chính ảnh từ Model để làm thumbnail đầu tiên) -->
-                                    <div class="thumb-item active" onclick="changeImage(this)">
-                                        <img src="@Model.Image"> 
-                                        @* khong bo /img/ vao anh vi da luu dia chi /img/ san cho img va garrlery img r  *@
-                                    </div>
-                                }
+    </div>
 
-                                @if (Model.ProductImages != null && Model.ProductImages.Any())
-                                {
-                                    @foreach (var galleryImg in Model.ProductImages)
-                                    {
-                                        <!-- Thumbnails của các ảnh con trong Gallery -->
-                                        <div class="thumb-item" onclick="changeImage('@galleryImg.Url', this)">
-                                            <img src="@galleryImg.Url">
-                                        </div>
-                                    }
-                                }
-                              
-                            </div>
-                        </div>
-
-                        <!-- CỘT PHẢI: THÔNG TIN CHI TIẾT -->
-                        <div class="info-section">
-                            <div class="info-header">
-                                <h1 class="product-name">@Model.Name</h1>
-                                <p class="product-price">$@Model.Price.ToString("#,##0") ₫ </p>
-                            </div>
-
-                            <div class="info-body">
-                                <div class="detail-group">
-                                    <label>Description</label>
-                                    <p class="description-text">@Model.Description</p>
-                                </div>
-
-                                <div class="detail-grid">
-                                    <div class="detail-group">
-                                        <label>Brand</label>
-                                        <span class="badge">@Model.Brand</span>
-                                    </div>
-                                    <div class="detail-group">
-                                        <label>Stock Quantity</label>
-                                        <span class="stock-count">@Model.Stock units available</span>
-                                    </div>
-                                </div>
-
-                                <div class="detail-group">
-                                    <label>SKU</label>
-                                    <span class="text-muted">PROD-@Model.Id.ToString("D5")</span>
-                                </div>
-                            </div>
-
-                            <div class="info-footer">
-                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-edit">
-                                    <i class='bx bxs-edit'></i> Edit Product
-                                </a>
-                                <a asp-action="Index" class="btn-back">
-                                    <i class='bx bx-arrow-back'></i> Back to Inventory
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <script>
-                    // giup load anh sau khi chon anh moi
-                                    // Hàm xử lý đổi ảnh chính và hiệu ứng active
-                    function changeImage(url, element) {
-                        // Đổi ảnh to ở trên
-                        document.getElementById('img-display').src = url;
-
-                        // Xử lý border cho ảnh nhỏ đang được chọn
-                        document.querySelectorAll('.thumb-item').forEach(item => {
-                            item.classList.remove('active');
-                        });
-                        element.classList.add('active');
-                    }
-                </script>
+    <div class="detail-card">
+        <!-- IMAGE SIDE -->
+        <div class="detail-image-side">
+            <div class="main-img-container">
+                <img src="@(string.IsNullOrEmpty(Model.Image) ? "/img/no-img.jfif" : Model.Image)" id="mainDisplayImg" alt="@Model.Name">
             </div>
+            
+            <div class="gallery-grid">
+                @if (!string.IsNullOrEmpty(Model.Image))
+                {
+                    <div class="gallery-item active" onclick="updatePreview('@Model.Image', this)">
+                        <img src="@Model.Image" alt="Main image">
+                    </div>
+                }
+                @if (Model.ProductImages != null)
+                {
+                    foreach (var galleryImg in Model.ProductImages)
+                    {
+                        <div class="gallery-item" onclick="updatePreview('@galleryImg.Url', this)">
+                            <img src="@galleryImg.Url" alt="Gallery image">
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- INFO SIDE -->
+        <div class="detail-info-side">
+            <div class="info-header">
+                @if (!string.IsNullOrEmpty(Model.Brand))
+                {
+                    <span class="brand-tag">@Model.Brand</span>
+                }
+                <h1 class="product-name">@Model.Name</h1>
+                <p class="product-price">@Model.Price.ToString("#,##0") ₫</p>
+            </div>
+
+            <div class="info-body">
+                <span class="section-label">Description</span>
+                <p class="description">@(string.IsNullOrEmpty(Model.Description) ? "No description available." : Model.Description)</p>
+
+                <span class="section-label">Technical Specifications</span>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-label">SKU</span>
+                        <span class="spec-value">PROD-@Model.Id.ToString("D5")</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Stock Status</span>
+                        <span class="spec-value">@Model.Stock Units</span>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.Stiffness)) { <div class="spec-item"><span class="spec-label">Stiffness</span><span class="spec-value">@Model.Stiffness</span></div> }
+                    @if (!string.IsNullOrEmpty(Model.Weight)) { <div class="spec-item"><span class="spec-label">Weight/Grip</span><span class="spec-value">@Model.Weight</span></div> }
+                    @if (!string.IsNullOrEmpty(Model.BalancePoint)) { <div class="spec-item"><span class="spec-label">Balance Point</span><span class="spec-value">@Model.BalancePoint</span></div> }
+                    @if (!string.IsNullOrEmpty(Model.Material)) { <div class="spec-item"><span class="spec-label">Material</span><span class="spec-value">@Model.Material</span></div> }
+                    @if (!string.IsNullOrEmpty(Model.RecommendedTension)) { <div class="spec-item"><span class="spec-label">Rec. Tension</span><span class="spec-value">@Model.RecommendedTension</span></div> }
+                    @if (!string.IsNullOrEmpty(Model.Size)) { <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">@Model.Size</span></div> }
+                    @if (!string.IsNullOrEmpty(Model.Speed)) { <div class="spec-item"><span class="spec-label">Speed</span><span class="spec-value">@Model.Speed</span></div> }
+                    @if (!string.IsNullOrEmpty(Model.Color)) { <div class="spec-item"><span class="spec-label">Color</span><span class="spec-value">@Model.Color</span></div> }
+                </div>
+            </div>
+
+            <div class="detail-actions">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-edit-main">
+                    <i class='bx bxs-edit'></i> Edit Product
+                </a>
+                <a asp-action="Index" class="btn-back-link">
+                    <i class='bx bx-arrow-back'></i> Back to Inventory
+                </a>
+            </div>
+        </div>
+    </div>
 </main>
+
+@section Scripts {
+    <script>
+        function updatePreview(url, el) {
+            document.getElementById('mainDisplayImg').src = url;
+            document.querySelectorAll('.gallery-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+        }
+    </script>
+}

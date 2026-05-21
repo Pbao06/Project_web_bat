@@ -129,6 +129,7 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\css\AdminCustom.css
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Customer\Customercss.css
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Dashboard_home\Dashboard_homecss.css
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Layout.css
@@ -149,6 +150,7 @@ C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Use_web\Cart\Payment.c
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Use_web\Cart\_CheckOutLayoutcss.css
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Use_web\Home\home.css
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Use_web\Login\login.css
+C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Use_web\Notification.css
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Use_web\Store\Detail.css
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Use_web\Store\store.css
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Use_web\Style.css
@@ -214,4 +216,4 @@ C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\lib\jquery\dist\jquery.sli
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\lib\jquery\dist\jquery.slim.min.js
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\lib\jquery\LICENSE.txt
-C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\Use_web\Notification.css
+C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\wwwroot\css\AdminCustom.css

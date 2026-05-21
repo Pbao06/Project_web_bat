@@ -29,7 +29,7 @@ namespace Getdata1.Areas.User.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(int productId, int quantity = 1)
+        public async Task<IActionResult> AddToCart(int productId, int quantity = 1, string? variant = null)
         {
             try
             {
@@ -40,7 +40,12 @@ namespace Getdata1.Areas.User.Controllers
                 }
 
                 var cart = HttpContext.Session.Get<CartDto>(CartSessionKey) ?? new CartDto();
-                var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+                
+                // If variant is not provided from UI, we still try to provide some default info
+                string finalVariant = variant ?? (!string.IsNullOrEmpty(product.Color) ? $"{product.Color} / {product.Weight}" : product.Weight ?? "");
+
+                // Find existing item with SAME product ID AND SAME variant
+                var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == productId && i.VariantInfo == finalVariant);
 
                 if (existingItem != null)
                 {
@@ -53,7 +58,7 @@ namespace Getdata1.Areas.User.Controllers
                         ProductId = product.Id,
                         ProductName = product.Name,
                         CategoryName = product.CategoryName ?? "Sản phẩm",
-                        VariantInfo = !string.IsNullOrEmpty(product.Color) ? $"{product.Color} / {product.Weight}" : product.Weight,
+                        VariantInfo = finalVariant,
                         Price = product.Price,
                         Image = product.Image,
                         Quantity = quantity

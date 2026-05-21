@@ -1,206 +1,144 @@
-﻿    
-@model Getdata1.Areas.Admin.ViewModels.ProductFilterVM
+﻿@model Getdata1.Areas.Admin.ViewModels.ProductFilterVM
 @{
-    // vi productfilter chua ca list product nen ta ko can Ienumberable
-}
-@{
-    
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-}
-<title>@(ViewData["Title"] ?? "Default Title")</title>
-@section Styles {
-    <link rel="stylesheet" href="~/css/product/Product_index.css" />
-    <link rel="stylesheet" href="~/css/pagination.css" />
+    ViewData["Title"] = "Inventory";
 }
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <script>
-        alert('@TempData["SuccessMessage"]');
-    </script>
-}
 <main>
     <div class="head-title">
         <div class="left">
-            <h1>Product</h1>
+            <h1>Inventory</h1>
             <ul class="Breakcrumb"> 
-                <li>
-                    <a asp-action="Index">Inventory</a>
-                </li>
+                <li><a asp-action="Index">Admin</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>
-                    <a class="active" href="#">List product</a>
-                </li>
+                <li><a class="active" href="#">Products</a></li>
             </ul>
         </div>
-        <a asp-action="Create"  class="btn-download">
-            <i class='bx bx-add-to-queue'></i>
-            <span class="text">Create new product</span>
+        <a asp-action="Create" class="btn-download">
+            <i class='bx bx-plus'></i>
+            <span>Add Product</span>
         </a>
     </div>
 
-
-
-    @* mini box *@
     <ul class="box-info">
         <li>
-            <i class='bx bxs-check-circle'></i>
+            <i class='bx bx-package'></i>
             <span class="text">
                 <h3>@ViewBag.TotalProducts</h3>
-                <p>Total products</p>
+                <p>Total Items</p>
             </span>
         </li>
         <li>
-            <i class='bx bxs-battery-low'></i>
+            <i class='bx bx-trending-up'></i>
             <span class="text">
                 <h3>3</h3>
-                <p>Product Sold</p>
+                <p>Trending</p>
             </span>
         </li>
     </ul>
 
-
-
     <div class="table-data">
         <div class="order">
             <div class="head">
-                <h3>Our Product</h3>
-                @* <i class="bx bx-filter"></i>
-                <i class="bx bx-search"></i> *@
+                <h3>Product List</h3>
             </div>
-            @* section filter *@
-   <form method="get" asp-action="Index" asp-controller="ProductManual" class="filter-card">
-  <div class="filter-content">
-    
-    <!-- Row 1: Định danh -->
-    <div class="filter-row">
-      <div class="filter-group search-box">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a0aec0" stroke-width="2.5">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        <input type="text" asp-for="Name" value="@Model.Name" placeholder="Search product name..." />
-      </div>
 
-      <div class="filter-group select-box">
-        <span class="filter-icon">📁</span>
-                            <select name="CategoryId"
-                                    asp-for="CategoryId"
-                                    asp-items="@(ViewBag.Category as SelectList)"
-                                    class="minimal-select">
+            <form method="get" asp-action="Index" asp-controller="ProductManual" class="filter-card">
+                <div class="filter-content">
+                    <div class="filter-row">
+                        <div class="filter-group search-box">
+                            <i class='bx bx-search'></i>
+                            <input type="text" asp-for="Name" placeholder="Search by name..." onchange="this.form.submit()" />
+                        </div>
+
+                        <div class="filter-group select-box">
+                            <select asp-for="CategoryId" asp-items="@(ViewBag.Category as SelectList)" onchange="this.form.submit()">
                                 <option value="">All Categories</option>
                             </select>
-      </div>
-    </div>
+                        </div>
+                        
+                        <div class="filter-actions">
+                            <a asp-action="Index" class="btn-reset">Reset</a>
+                            <button type="submit" class="btn-primary">Filter</button>
+                        </div>
+                    </div>
 
-    <!-- Row 2: Thông số & Trạng thái -->
-    <div class="filter-row">
-      <div class="filter-group range-container">
-        <span class="filter-tag">Price</span>
-        <div class="range-inputs">
-          <input type="number" asp-for="MinPrice" value="@Model.MinPrice" placeholder="Min" />
-          <span class="range-divider"></span>
-          <input type="number" asp-for="MaxPrice" value="@Model.MaxPrice" placeholder="Max" />
-        </div>
-      </div>
+                    <div class="filter-row">
+                        <div class="filter-group range-container">
+                            <span class="filter-tag">Price</span>
+                            <div class="range-inputs">
+                                <input type="number" asp-for="MinPrice" placeholder="Min" onchange="this.form.submit()" />
+                                <span class="range-divider"></span>
+                                <input type="number" asp-for="MaxPrice" placeholder="Max" onchange="this.form.submit()" />
+                            </div>
+                        </div>
 
-      <div class="filter-group range-container">
-        <span class="filter-tag">Stock</span>
-        <div class="range-inputs">
-          <input type="number" name="MinStock" value="@Model.MinStock" placeholder="Min" />
-          <span class="range-divider"></span>
-          <input type="number" name="MaxStock" value="@Model.MaxStock" placeholder="Max" />
-        </div>
-      </div>
-
-      <!-- Dự phòng cho trạng thái sản phẩm sau này -->
-      <div class="filter-group select-box">
-        <span class="filter-icon">⚡</span>
-        <select name="Status">
-          <option value="">All Status</option>
-          <option value="1">In Stock</option>
-          <option value="0">Out of Stock</option>
-        </select>
-      </div>
-
-      <!-- Nút bấm đẩy về cuối hàng 2 -->
-      <div class="filter-actions">
-        <a asp-action="Index" asp-controller="ProductManual" class="btn-reset">Reset</a>
-        <button type="submit" class="btn-primary">Apply Filter</button>
-        @* after submit they'll send data to index-> controller *@
-      </div>
-    </div>
-
-  </div>
-  @* form below just display *@
-</form>
+                        <div class="filter-group range-container">
+                            <span class="filter-tag">Stock</span>
+                            <div class="range-inputs">
+                                <input type="number" name="MinStock" value="@Model.MinStock" placeholder="Min" onchange="this.form.submit()" />
+                                <span class="range-divider"></span>
+                                <input type="number" name="MaxStock" value="@Model.MaxStock" placeholder="Max" onchange="this.form.submit()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
            
-            @* filter *@
             <table>
                 <thead>
                     <tr>
-                        <th>
-                            Image
-                        </th>
-                        <th>
-                            Tên
-                        </th>
-                        <th>
-                           Giá
-                        </th>
-                        <th>
-                           Thương hiệu
-                        </th>
-                        <th>
-                            Tồn kho
-                        </th>
-                        <th>
-                            Action
-                        </th>
-                      
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Brand</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Products) {
-                <tr>
-                  <td>
-                                @if (!string.IsNullOrEmpty(item.Image))
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center;">
+                                    @if (!string.IsNullOrEmpty(item.Image))
+                                    {
+                                        <img src="@item.Image" alt="@item.Name" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/img/no-img.jfif" alt="Default" />
+                                    }
+                                    <p>@item.Name</p>
+                                </div>
+                            </td>
+                            <td>@item.Price.ToString("#,##0") ₫</td>
+                            <td>@item.Brand</td>
+                            <td>@item.Stock</td>
+                            <td>
+                                @if (item.Stock > 10)
                                 {
-                                    <!-- Ưu tiên số 1: Ảnh chính của sản phẩm -->
-                                    <img src="@item.Image" alt="Main" class="product-img-thumb" />
+                                    <span class="status instock">In Stock</span>
                                 }
-                                else if (item.ProductImages != null && item.ProductImages.Any())
+                                else if (item.Stock > 0)
                                 {
-                                    <!-- Ưu tiên số 2: Nếu không có ảnh chính, lấy ảnh đầu tiên trong Gallery -->
-                                    <img src="@item.ProductImages.First().Url" alt="Gallery First" class="product-img-thumb" />
+                                    <span class="status lowstock">Low Stock</span>
                                 }
                                 else
                                 {
-                                    <!-- Ưu tiên số 3: Ảnh mặc định nếu trắng tay -->
-                                    <img src="~/img/no-img.jfif" alt="Default" class="product-img-thumb" />
+                                    <span class="status outstock">Out of Stock</span>
                                 }
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                       @item.Price.ToString("#,##0") ₫
-                </td>
-                <td>
-                    @item.Brand
-                </td>
-                 <td>
-                    @item.Stock
-                </td>
-                            <td class="btn-Edit-Delete-Detail">
-                                <a asp-action="Edit" asp-route-id="@item.Id"><i class='bx bxs-edit-alt'></i></a>
-                                <a asp-action="Detail" asp-route-id="@item.Id"><i class='bx bxs-show'></i></a>
-                                <a asp-action="Delete" asp-route-id="@item.Id"><i class='bx bxs-trash'></i></a>
                             </td>
-                         
-            </tr>
-                 }
+                            <td class="btn-Edit-Delete-Detail">
+                                <a asp-action="Edit" asp-route-id="@item.Id"><i class='bx bx-edit-alt'></i></a>
+                                <a asp-action="Detail" asp-route-id="@item.Id"><i class='bx bx-show'></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.Id"><i class='bx bx-trash'></i></a>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
-            @* pagination *@
+
             @{
                 var pagination = new Getdata1.Models.PaginationVM
                 {
@@ -212,7 +150,9 @@
                         { "Name", Model.Name ?? "" },
                         { "CategoryId", Model.CategoryId?.ToString() ?? "" },
                         { "MinPrice", Model.MinPrice?.ToString() ?? "" },
-                        { "MaxPrice", Model.MaxPrice?.ToString() ?? "" }
+                        { "MaxPrice", Model.MaxPrice?.ToString() ?? "" },
+                        { "MinStock", Model.MinStock?.ToString() ?? "" },
+                        { "MaxStock", Model.MaxStock?.ToString() ?? "" }
                     }
                 };
             }

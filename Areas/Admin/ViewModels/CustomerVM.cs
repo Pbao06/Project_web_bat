@@ -9,6 +9,7 @@ namespace Getdata1.Areas.Admin.ViewModels
         public int OrderCount { get; set; }
         public decimal TotalSpent { get; set; }
         public string Status { get; set; }
+        public string Role { get; set; }
 
     }
     public class CustomerIndexVM

@@ -1,0 +1,70 @@
+@using System.Text.Json
+
+<div id="toast-container"></div>
+
+<!-- Existing Cart Notification (Keep for compatibility) -->
+<div id="cart-notification">
+    <i class='bx bx-check-circle' style="font-size: 24px; color: #10b981;"></i>
+    <span id="notif-message">Đã thêm vào giỏ hàng!</span>
+</div>
+
+@if (TempData["Notification"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const data = @Html.Raw(TempData["Notification"]);
+            showToast(data.Message, data.Type, data.ShowLoginLink);
+        });
+    </script>
+}
+
+<script>
+    function showToast(message, type = 'success', showLogin = false) {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = `toast-item ${type}`;
+
+        let icon = 'bx-check-circle';
+        if (type === 'error') icon = 'bx-x-circle';
+        if (type === 'warning') icon = 'bx-error-circle';
+
+        let html = `
+            <div class="toast-content">
+                <i class='bx ${icon} toast-icon'></i>
+                <span class="toast-message">${message}</span>
+            </div>
+        `;
+
+        if (showLogin) {
+            html += `<a href="/Account/Login" class="toast-login-btn">Đăng nhập</a>`;
+        }
+
+        html += `<span class="toast-close" onclick="this.parentElement.classList.add('hide'); setTimeout(() => this.parentElement.remove(), 400)">×</span>`;
+
+        toast.innerHTML = html;
+        container.appendChild(toast);
+
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 400);
+            }
+        }, 5000);
+    }
+
+    // Global notification function
+    function showNotification(message) {
+        const notif = document.getElementById('cart-notification');
+        const msg = document.getElementById('notif-message');
+        if (notif && msg) {
+            msg.innerText = message;
+            notif.classList.add('show');
+            setTimeout(() => {
+                notif.classList.remove('show');
+            }, 3000);
+        }
+    }
+</script>

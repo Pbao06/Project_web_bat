@@ -399,10 +399,11 @@
                 h.style.color = 'var(--success)';
                 setTimeout(() => h.style.color = 'var(--muted)', 600);
             } else {
-                alert(result.message);
+                showToast(result.message, 'error');
             }
         } catch (error) {
             console.error('Error adding to cart:', error);
+            showToast('Có lỗi xảy ra khi thêm vào giỏ hàng.', 'error');
         }
     }
 
@@ -423,6 +424,10 @@
         const btnCheckout = document.querySelector('.btn-checkout');
         if (btnCheckout) {
             btnCheckout.onclick = function() {
+                if (!currentCart || currentCart.totalItems === 0) {
+                    showToast('Bạn không có sản phẩm nào để thanh toán', 'warning');
+                    return;
+                }
                 window.location.href = '/User/Cart/Payment';
             };
         }

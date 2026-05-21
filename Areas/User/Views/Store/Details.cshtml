@@ -158,19 +158,78 @@
 
         <div class="divider"></div>
 
-        <!-- Specs summary -->
-        @if (!string.IsNullOrEmpty(Model.Stiffness))
-        {
-            <p class="spec-label">Độ cứng cán: <strong>@Model.Stiffness</strong></p>
-        }
-        @if (!string.IsNullOrEmpty(Model.Weight))
-        {
-            <p class="spec-label">Trọng lượng: <strong>@Model.Weight</strong></p>
-        }
-        @if (!string.IsNullOrEmpty(Model.Color))
-        {
-            <p class="spec-label">Màu sắc: <strong>@Model.Color</strong></p>
-        }
+        <!-- Selectable Specs -->
+        <div id="variant-selectors">
+            @if (!string.IsNullOrEmpty(Model.Color))
+            {
+                var colors = Model.Color.Split(',').Select(s => s.Trim()).ToList();
+                <div class="spec-group">
+                    <p class="spec-label">Màu sắc:</p>
+                    <div class="spec-pills" data-attribute="Color">
+                        @foreach (var color in colors)
+                        {
+                            <div class="spec-pill @(colors.First() == color ? "active" : "")" onclick="selectOption(this, 'Color')">@color</div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.Stiffness))
+            {
+                var options = Model.Stiffness.Split(',').Select(s => s.Trim()).ToList();
+                <div class="spec-group">
+                    <p class="spec-label">Độ cứng cán:</p>
+                    <div class="spec-pills" data-attribute="Stiffness">
+                        @foreach (var opt in options)
+                        {
+                            <div class="spec-pill @(options.First() == opt ? "active" : "")" onclick="selectOption(this, 'Stiffness')">@opt</div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.Weight))
+            {
+                var options = Model.Weight.Split(',').Select(s => s.Trim()).ToList();
+                <div class="spec-group">
+                    <p class="spec-label">Trọng lượng:</p>
+                    <div class="spec-pills" data-attribute="Weight">
+                        @foreach (var opt in options)
+                        {
+                            <div class="spec-pill @(options.First() == opt ? "active" : "")" onclick="selectOption(this, 'Weight')">@opt</div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.GripSize))
+            {
+                var options = Model.GripSize.Split(',').Select(s => s.Trim()).ToList();
+                <div class="spec-group">
+                    <p class="spec-label">Kích thước cán:</p>
+                    <div class="spec-pills" data-attribute="GripSize">
+                        @foreach (var opt in options)
+                        {
+                            <div class="spec-pill @(options.First() == opt ? "active" : "")" onclick="selectOption(this, 'GripSize')">@opt</div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.Size))
+            {
+                var options = Model.Size.Split(',').Select(s => s.Trim()).ToList();
+                <div class="spec-group">
+                    <p class="spec-label">Kích thước:</p>
+                    <div class="spec-pills" data-attribute="Size">
+                        @foreach (var opt in options)
+                        {
+                            <div class="spec-pill @(options.First() == opt ? "active" : "")" onclick="selectOption(this, 'Size')">@opt</div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
 
         <div class="divider"></div>
 
@@ -226,17 +285,17 @@
         <table class="specs-table">
             <tr><td>Thương hiệu</td><td>@Model.Brand</td></tr>
             <tr><td>Dòng sản phẩm</td><td>@Model.CategoryName</td></tr>
-            <tr><td>Loại cán</td><td>@Model.Stiffness</td></tr>
-            <tr><td>Trọng lượng</td><td>@Model.Weight</td></tr>
-            <tr><td>Điểm cân bằng</td><td>@Model.BalancePoint</td></tr>
-            <tr><td>Chiều dài</td><td>@Model.Length</td></tr>
-            <tr><td>Vật liệu khung</td><td>@Model.Material</td></tr>
-            <tr><td>Độ căng dây khuyến nghị</td><td>@Model.RecommendedTension</td></tr>
-            <tr><td>Dây kèm theo</td><td>@Model.IncludedString</td></tr>
-            <tr><td>Grip size</td><td>@Model.GripSize</td></tr>
-            <tr><td>Màu sắc</td><td>@Model.Color</td></tr>
-            <tr><td>Xuất xứ</td><td>@Model.Origin</td></tr>
-            <tr><td>Bảo hành</td><td>@Model.Warranty</td></tr>
+            @if(!string.IsNullOrEmpty(Model.Stiffness)){<tr><td>Loại cán</td><td>@Model.Stiffness</td></tr>}
+            @if(!string.IsNullOrEmpty(Model.Weight)){<tr><td>Trọng lượng</td><td>@Model.Weight</td></tr>}
+            @if(!string.IsNullOrEmpty(Model.BalancePoint)){<tr><td>Điểm cân bằng</td><td>@Model.BalancePoint</td></tr>}
+            @if(!string.IsNullOrEmpty(Model.Length)){<tr><td>Chiều dài</td><td>@Model.Length</td></tr>}
+            @if(!string.IsNullOrEmpty(Model.Material)){<tr><td>Vật liệu khung</td><td>@Model.Material</td></tr>}
+            @if(!string.IsNullOrEmpty(Model.RecommendedTension)){<tr><td>Độ căng dây khuyến nghị</td><td>@Model.RecommendedTension</td></tr>}
+            @if(!string.IsNullOrEmpty(Model.IncludedString)){<tr><td>Dây kèm theo</td><td>@Model.IncludedString</td></tr>}
+            @if(!string.IsNullOrEmpty(Model.GripSize)){<tr><td>Grip size</td><td>@Model.GripSize</td></tr>}
+            @if(!string.IsNullOrEmpty(Model.Color)){<tr><td>Màu sắc</td><td>@Model.Color</td></tr>}
+            @if(!string.IsNullOrEmpty(Model.Origin)){<tr><td>Xuất xứ</td><td>@Model.Origin</td></tr>}
+            @if(!string.IsNullOrEmpty(Model.Warranty)){<tr><td>Bảo hành</td><td>@Model.Warranty</td></tr>}
         </table>
     </div>
 
@@ -355,6 +414,15 @@
 
 @section Scripts {
     <script>
+        function selectOption(el, attribute) {
+            // Find the container for this attribute
+            const container = el.closest('.spec-pills');
+            // Remove active class from all pills in this container
+            container.querySelectorAll('.spec-pill').forEach(p => p.classList.remove('active'));
+            // Add active class to clicked pill
+            el.classList.add('active');
+        }
+
         function changeMainImage(thumb, url) {
             const mainImg = document.querySelector('#currentMainImg');
             if (mainImg) {
@@ -399,12 +467,23 @@
             const productId = @Model.Id;
             const quantity = parseInt(document.getElementById('qtyVal').innerText);
 
+            // Collect selected variants
+            let selectedVariants = [];
+            document.querySelectorAll('.spec-pills').forEach(container => {
+                const attr = container.getAttribute('data-attribute');
+                const activePill = container.querySelector('.spec-pill.active');
+                if (activePill) {
+                    selectedVariants.push(`${attr}: ${activePill.innerText.trim()}`);
+                }
+            });
+            const variantInfo = selectedVariants.join(' | ');
+
             fetch('/User/Cart/AddToCart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `productId=${productId}&quantity=${quantity}`
+                body: `productId=${productId}&quantity=${quantity}&variant=${encodeURIComponent(variantInfo)}`
             })
             .then(response => response.json())
             .then(data => {

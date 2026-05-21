@@ -7,6 +7,12 @@
 @section Styles
 {
     <link href="~/css/Use_web/Cart/Payment.css" rel="stylesheet" />
+    <style>
+        .field-input.field-err {
+            border-color: #ff3b30 !important;
+            background-color: #fff9f9 !important;
+        }
+    </style>
 }
 <div class="checkout-wrap">
 
@@ -485,10 +491,36 @@
         }
 
         async function placeOrder() {
+            // Collect data
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const city = document.getElementById('city').value;
+            const district = document.getElementById('district').value;
+
             // Validation basic
-            const email = document.getElementById('email').value;
+            if (!firstName || !lastName || !email || !phone || !address) {
+                showToast('Vui lòng điền đầy đủ thông tin bắt buộc.', 'warning');
+                
+                // Highlight fields
+                if (!firstName) document.getElementById('firstName').classList.add('field-err');
+                if (!lastName) document.getElementById('lastName').classList.add('field-err');
+                if (!email) document.getElementById('email').classList.add('field-err');
+                if (!phone) document.getElementById('phone').classList.add('field-err');
+                if (!address) document.getElementById('address').classList.add('field-err');
+                
+                setTimeout(() => {
+                    document.querySelectorAll('.field-input').forEach(el => el.classList.remove('field-err'));
+                }, 3000);
+                
+                return;
+            }
+
             if (!email.includes('@@')) {
-                document.querySelector('.field-error').style.display = 'block';
+                showToast('Email không hợp lệ.', 'error');
+                document.getElementById('email').focus();
                 return;
             }
 
@@ -497,18 +529,17 @@
             btn.innerHTML = '<i class="bx bx-loader-alt" style="animation:spin .7s linear infinite"></i> Đang xử lý...';
             btn.disabled = true;
 
-            // Collect data
             const checkoutData = {
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
+                firstName: firstName,
+                lastName: lastName,
                 email: email,
-                phone: document.getElementById('phone').value,
-                address: document.getElementById('address').value,
-                address2: document.getElementById('address2').value,
-                city: document.getElementById('city').value,
-                district: document.getElementById('district').value,
-                zipCode: document.getElementById('zip').value,
-                notes: document.getElementById('notes').value,
+                phone: phone,
+                address: address,
+                address2: document.getElementById('address2').value.trim(),
+                city: city,
+                district: district,
+                zipCode: document.getElementById('zip').value.trim(),
+                notes: document.getElementById('notes').value.trim(),
                 shippingMethod: selectedShipping,
                 paymentMethod: document.querySelector('.pay-tab.active').textContent.trim(),
                 promoCode: currentCart?.appliedPromoCode
@@ -527,6 +558,7 @@
                 const result = await response.json();
                 
                 if (result.success) {
+                    showToast('Đặt hàng thành công!', 'success');
                     document.getElementById('confirmOrderNum').textContent = '#PBAO-SUCCESS';
                     document.getElementById('confirmOverlay').classList.add('show');
                     
@@ -536,13 +568,13 @@
                 } else {
                     btn.innerHTML = originalContent;
                     btn.disabled = false;
-                    alert(result.message || 'Có lỗi xảy ra khi đặt hàng.');
+                    showToast(result.message || 'Có lỗi xảy ra khi đặt hàng.', 'error');
                 }
             } catch (error) {
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
                 console.error('Error:', error);
-                alert('Có lỗi xảy ra khi kết nối máy chủ.');
+                showToast('Có lỗi xảy ra khi kết nối máy chủ.', 'error');
             }
         }
 

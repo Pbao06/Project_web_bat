@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] — Pbao</title>
 
     <link rel="stylesheet" href="~/css/Use_web/Cart/_CheckOutLayoutcss.css">
+    <link rel="stylesheet" href="~/css/Use_web/Notification.css" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     @RenderSection("Styles", required: false)
@@ -71,6 +72,8 @@
     <main>
         @RenderBody()
     </main>
+
+    @await Html.PartialAsync("_Notification")
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
