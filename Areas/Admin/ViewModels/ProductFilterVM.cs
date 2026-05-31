@@ -12,6 +12,7 @@ namespace Getdata1.Areas.Admin.ViewModels
         public int? MinStock { get; set; }
         public int? MaxStock { get; set; }
         // filter 
+        public string? Status { get; set; }
         // result list — holds the filtered products
         // 👇 PART 2 — product list to display
 

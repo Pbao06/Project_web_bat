@@ -58,3 +58,18 @@ function initNavbar() {
         }
     });
 }
+
+// --- 3. LOGIC CHO FILTER DROPDOWN ---
+function toggleFilter() {
+    var dropdown = document.getElementById('filterDropdown');
+    if (dropdown) {
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.filter-wrapper')) {
+        var dropdown = document.getElementById('filterDropdown');
+        if (dropdown) dropdown.style.display = 'none';
+    }
+});

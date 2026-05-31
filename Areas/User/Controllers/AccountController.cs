@@ -10,6 +10,7 @@ namespace Getdata1.Areas.User.Controllers
     [Area("User")]
     public class AccountController : Controller
     {
+        
         private readonly SignInManager<Getdata1.Models.User> _signInManager;
         private readonly UserManager<Getdata1.Models.User> _userManager;
 
@@ -26,9 +27,13 @@ namespace Getdata1.Areas.User.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+                NotificationHelper.SetNotification(TempData, "Vui lòng nhập đầy đủ thông tin đăng nhập.", "error");
+                return View(model);
+            }
 
-            var user = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var user = await _signInManager.PasswordSignInAsync(model.Email,model.Password,model.RememberMe,lockoutOnFailure:false);
             
             if (user.Succeeded)
             {
@@ -36,17 +41,20 @@ namespace Getdata1.Areas.User.Controllers
                 
                 // Example a) Success Notification
                 NotificationHelper.SetNotification(TempData, $"Chào mừng {data?.Email} đã quay trở lại!", "success");
-
-                if (data != null && await _userManager.IsInRoleAsync(data, "Admin"))
+                if(data!=null && await _userManager.IsInRoleAsync(data,"Admin"))
                 {
-                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                   return  RedirectToAction("Index", "Home", new { area = "Admin" });
                 }
-                return RedirectToAction("Index", "Home", new { area = "User" });
+                return  RedirectToAction("Index", "Home", new { area = "User" });
+
+              
             }
 
             // Example b) Error Notification
             NotificationHelper.SetNotification(TempData, "Tài khoản hoặc mật khẩu không chính xác.", "error");
             ModelState.AddModelError(string.Empty, "Tài khoản hoặc mật khẩu không chính xác.");
+            ModelState.AddModelError("Email", "");
+            ModelState.AddModelError("Password", "");
             return View(model);
         }
 
@@ -59,11 +67,16 @@ namespace Getdata1.Areas.User.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) return View(model);
+                if (!ModelState.IsValid)
+                {
+                    NotificationHelper.SetNotification(TempData, "Vui lòng nhập đầy đủ thông tin đăng ký.", "error");
+                    return View(model);
+                }
 
                 var getdata = await _userManager.FindByEmailAsync(model.Email);
                 if (getdata != null)
                 {
+                    NotificationHelper.SetNotification(TempData, "Email này đã được sử dụng.", "error");
                     ModelState.AddModelError("Email", "Email này đã được sử dụng.");
                     return View(model);
                 }
@@ -85,13 +98,25 @@ namespace Getdata1.Areas.User.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
+                bool hasPasswordError = false;
                 foreach (var error in save.Errors)
                 {
+                    if (error.Code.Contains("Password")) hasPasswordError = true;
                     ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                if (hasPasswordError)
+                {
+                    NotificationHelper.SetNotification(TempData, "Mật khẩu không đủ mạnh.", "error");
+                }
+                else
+                {
+                    NotificationHelper.SetNotification(TempData, "Đăng ký không thành công. Vui lòng kiểm tra lại.", "error");
                 }
             }
             catch (Exception)
             {
+                NotificationHelper.SetNotification(TempData, "Đã xảy ra lỗi hệ thống.", "error");
                 ModelState.AddModelError(string.Empty, "Đã xảy ra lỗi hệ thống trong quá trình đăng ký.");
             }
 

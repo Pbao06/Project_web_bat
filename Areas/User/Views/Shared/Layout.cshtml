@@ -8,11 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - Pbao Performance</title>
 
-    <link rel="stylesheet" href="~/Customer/assets/css/home.css">
     <link rel="stylesheet" href="~/css/Use_web/Style.css" />
     <link rel="stylesheet" href="~/css/Use_web/Notification.css" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -26,7 +25,7 @@
                 <input type="text" placeholder="Tìm kiếm vợt, giày, phụ kiện..." id="search-input">
                 <button id="close-search"><i class='bx bx-x'></i></button>
             </div>
-            <div class="search-quick-links">
+            <div class="search-quick-links" id="search-quick-links">
                 <span class="quick-label">Quick Links</span>
                 <ul>
                     <li><a href="#"><i class='bx bx-right-arrow-alt'></i> Vợt cầu lông</a></li>
@@ -34,6 +33,9 @@
                     <li><a href="#"><i class='bx bx-right-arrow-alt'></i> Phụ kiện cầu lông</a></li>
                     <li><a href="#"><i class='bx bx-right-arrow-alt'></i> Quần áo thể thao</a></li>
                 </ul>
+            </div>
+            <div class="search-results" id="search-results" style="display: none;">
+                <!-- Results will be injected here -->
             </div>
         </div>
     </div>
@@ -44,8 +46,8 @@
                 <a asp-area="User" asp-controller="Home" asp-action="Index">Home</a>
                 <a asp-area="User" asp-controller="Store" asp-action="Index">Store</a>
                 
-                <a href="#">Apparel</a>
-                <a href="#">Footwear</a>
+                <a asp-area="User" asp-controller="Home"  asp-action="ContactUs">Contact us</a>
+                <a asp-area=User" asp-controller="Home" asp-action="News">News</a>
             </div>
             <div class="nav-actions">
                 <i class='bx bx-search' id="open-search"></i>
@@ -54,28 +56,50 @@
                     <i class='bx bx-user' id="user-icon"></i>
                     <!-- USER DROPDOWN -->
                     <div class="user-dropdown" id="user-dropdown">
-                        <div class="dropdown-section">
-                            <span class="user-hello">Xin chào, <b>@User.Identity.Name</b></span>
-                            <a asp-area="User" asp-controller="Account" asp-action="Index"><i class='bx bx-user-circle'></i> Tài khoản của tôi</a>
-                            <a asp-area="User" asp-controller="Order" asp-action="Index"><i class='bx bx-package'></i> Đơn hàng</a>
-                            <a href="#"><i class='bx bx-heart'></i> Wishlist</a>
-                        </div>
-                        
-                        @if (User.IsInRole("Admin"))
-                        {
+                        @if(User.Identity.IsAuthenticated)
+                            {
+                                // đã login
                             <div class="dropdown-section">
-                                <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="admin-link">
-                                    <i class='bx bx-shield-quarter'></i> Trang Quản Trị (Admin)
+                                <span class="user-hello">Xin chào, <b>@User.Identity.Name</b></span>
+                                <a asp-area="User" asp-controller="Profile" asp-action="MyAccount"><i class='bx bx-user-circle'></i> Tài khoản của tôi</a>
+                                <a asp-area="User" asp-controller="Order" asp-action="Index"><i class='bx bx-package'></i> Đơn hàng</a>
+                                <a asp-area="User" asp-controller="Store" asp-action="Liked"><i class='bx bx-heart'></i> Wishlist</a>
+                            </div>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="dropdown-section">
+                                    <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="admin-link">
+                                        <i class='bx bx-shield-quarter'></i> Trang Quản Trị (Admin)
+                                    </a>
+                                </div>
+                            }
+
+                            <div class="dropdown-section">
+                                @* <a href="#"><i class='bx bx-cog'></i> Cài đặt</a> bỏ vì ko cần thiết *@ 
+                                <a asp-area="User" asp-controller="Account" asp-action="Logout" class="logout-link">
+                                    <i class='bx bx-log-out'></i> Đăng xuất
                                 </a>
                             </div>
-                        }
+                            }
+                            else// chưa login nè 
+                            {
+                            @* ---------- TRẠNG THÁI: CHƯA ĐĂNG NHẬP ---------- *@
+                            <div class="dropdown-section">
+                                <span class="user-hello">Xin chào, <b>Khách</b></span>
 
-                        <div class="dropdown-section">
-                            <a href="#"><i class='bx bx-cog'></i> Cài đặt</a>
-                            <a asp-area="User" asp-controller="Account" asp-action="Logout" class="logout-link">
-                                <i class='bx bx-log-out'></i> Đăng xuất
-                            </a>
-                        </div>
+                                <a href="javascript:void(0)" onclick="requireLogin()"><i class='bx bx-user-circle'></i> Tài khoản của tôi</a>
+                                <a href="javascript:void(0)" onclick="requireLogin()"><i class='bx bx-package'></i> Đơn hàng</a>
+                                <a href="javascript:void(0)" onclick="requireLogin()"><i class='bx bx-heart'></i> Wishlist</a>
+                            </div>
+
+                            <div class="dropdown-section">
+                                <a asp-area="User" asp-controller="Account" asp-action="Login" class="login-link" style="color: var(--accent);">
+                                    <i class='bx bx-log-in'></i> Đăng nhập
+                                </a>
+                            </div>
+                            }
+
                     </div>
                 </div>
 
@@ -83,13 +107,40 @@
                     <a asp-area="User" asp-controller="Cart" asp-action="Index" style="color: inherit; text-decoration: none;">
                         <i class='bx bx-shopping-bag'></i>
                     </a>
-                    <div class="cart-dot"></div>
+                    <span id="cart-count" class="cart-badge">0</span>
                 </div>
             </div>
         </div>
     </nav>
 
     <style>
+        /* ── CART BADGE ── */
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            border: 1.5px solid #fff;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .cart-badge.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
         /* ── SEARCH OVERLAY STYLES ── */
         .search-overlay {
             position: fixed;
@@ -192,6 +243,76 @@
             transform: translateX(5px);
         }
 
+        /* ── SEARCH RESULTS STYLES ── */
+        .search-results {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .search-group-label {
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .search-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            color: var(--text);
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .search-item:hover {
+            background: #f5f5f7;
+        }
+
+        .search-item img {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: #f0f0f2;
+        }
+
+        .search-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-item-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .search-item-price {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .search-see-all {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 8px;
+            border-top: 1px solid var(--border);
+            margin-top: 8px;
+        }
+
+        .search-see-all:hover {
+            text-decoration: underline;
+        }
+
         /* ── USER DROPDOWN STYLES ── */
         .user-wrap {
             position: relative;
@@ -277,31 +398,10 @@
         .logout-link {
             color: var(--new) !important;
         }
-
-        /* ── NOTIFICATION STYLES ── */
-        #cart-notification {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: var(--text);
-            color: #fff;
-            padding: 16px 24px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 9999;
-            transform: translateX(120%);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        #cart-notification.show {
-            transform: translateX(0);
-        }
     </style>
 
     @await Html.PartialAsync("_Notification")
+    @await Html.PartialAsync("_GlobalModal")
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -310,6 +410,82 @@
             const closeSearch = document.getElementById('close-search');
             const searchOverlay = document.getElementById('search-overlay');
             const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            const quickLinks = document.getElementById('search-quick-links');
+
+            let searchTimeout = null;
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.trim();
+
+                    if (query.length > 1) {
+                        clearTimeout(searchTimeout);
+                        searchTimeout = setTimeout(() => {
+                            fetchSearchResults(query);
+                        }, 300);
+                    } else {
+                        searchResults.style.display = 'none';
+                        quickLinks.style.display = 'block';
+                    }
+                });
+            }
+
+            async function fetchSearchResults(query) {
+                try {
+                    const response = await fetch(`/User/Store/Search?query=${encodeURIComponent(query)}`);
+                    const data = await response.json();
+                    renderSearchResults(data);
+                } catch (error) {
+                    console.error('Error fetching search results:', error);
+                }
+            }
+
+            function renderSearchResults(data) {
+                const { products, searchTerm } = data;
+                
+                if (products.length === 0) {
+                    searchResults.innerHTML = `<div class="search-group-label">Không tìm thấy kết quả nào cho "${searchTerm}"</div>`;
+                } else {
+                    let html = `<div class="search-group-label">Sản phẩm gợi ý</div>`;
+                    
+                    products.forEach(p => {
+                        const price = p.price.toLocaleString('vi-VN') + ' đ';
+                        
+                        // Xử lý đường dẫn ảnh linh hoạt giống như trong Index.cshtml
+                        let imageUrl = '/img/no-img.jfif'; // Mặc định
+                        if (p.image) {
+                            if (p.image.startsWith('/') || p.image.startsWith('http')) {
+                                imageUrl = p.image;
+                            } else {
+                                imageUrl = `/img/${p.image}`;
+                            }
+                        }
+                        
+                        html += `
+                            <a href="/User/Store/Details/${p.id}" class="search-item">
+                                <img src="${imageUrl}" alt="${p.name}" onerror="this.src='/img/no-img.jfif'; this.onerror=null;">
+                                <div class="search-item-info">
+                                    <span class="search-item-name">${p.name}</span>
+                                    <span class="search-item-price">${price}</span>
+                                </div>
+                            </a>
+                        `;
+                    });
+
+                    html += `
+                        <a href="/User/Store/Index?searchTerm=${encodeURIComponent(searchTerm)}" class="search-see-all">
+                            <i class='bx bx-search'></i>
+                            Xem tất cả kết quả cho "${searchTerm}"
+                        </a>
+                    `;
+
+                    searchResults.innerHTML = html;
+                }
+
+                quickLinks.style.display = 'none';
+                searchResults.style.display = 'flex';
+            }
 
             if (openSearch) {
                 openSearch.addEventListener('click', () => {
@@ -351,7 +527,39 @@
                     document.body.style.overflow = '';
                 }
             });
+
+            // --- Initial Cart Count ---
+            updateCartBadge();
         });
+
+        async function updateCartBadge() {
+            try {
+                const response = await fetch('/User/Cart/GetCart');
+                const cart = await response.json();
+                const count = cart.items ? cart.items.reduce((sum, item) => sum + item.quantity, 0) : 0;
+                
+                const badge = document.getElementById('cart-count');
+                if (badge) {
+                    const oldCount = parseInt(badge.innerText);
+                    badge.innerText = count;
+                    
+                    if (count > 0) {
+                        badge.classList.add('show');
+                        // Add animation if count increased
+                        if (count > oldCount) {
+                            badge.style.transform = 'scale(1.4)';
+                            setTimeout(() => {
+                                badge.style.transform = '';
+                            }, 300);
+                        }
+                    } else {
+                        badge.classList.remove('show');
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching cart:', error);
+            }
+        }
     </script>
 
     @RenderBody()   
@@ -362,12 +570,12 @@
                 <div>
                     <h4>Shop</h4>
                     <ul>
-                        <li><a href="#">Rackets</a></li>
-                        <li><a href="#">Shuttlecocks</a></li>
-                        <li><a href="#">Apparel</a></li>
-                        <li><a href="#">Footwear</a></li>
-                        <li><a href="#">Bags</a></li>
-                        <li><a href="#">Accessories</a></li>
+                        <li><a asp-area="User" asp-controller="Store" asp-action="Index" asp-route-searchTerm="vợt">Vợt cầu lông</a></li>
+                        <li><a asp-area="User" asp-controller="Store" asp-action="Index" asp-route-searchTerm="cầu">Quả cầu lông</a></li>
+                        <li><a asp-area="User" asp-controller="Store" asp-action="Index" asp-route-searchTerm="áo">Quần áo</a></li>
+                        <li><a asp-area="User" asp-controller="Store" asp-action="Index" asp-route-searchTerm="giày">Giày cầu lông</a></li>
+                        <li><a asp-area="User" asp-controller="Store" asp-action="Index" asp-route-searchTerm="túi">Túi / Balo</a></li>
+                        <li><a asp-area="User" asp-controller="Store" asp-action="Index" asp-route-searchTerm="phụ kiện">Phụ kiện</a></li>
                     </ul>
                 </div>
                 <div>
@@ -408,7 +616,24 @@
             </div>
         </div>
     </footer>
-
+    <script src="~/js/site.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+   
+        function requireLogin() {
+            showGlobalModal({
+                title: 'Yêu cầu đăng nhập',
+                content: 'Bạn cần đăng nhập tài khoản để xem thông tin này. Chuyển đến trang đăng nhập ngay?',
+                confirmText: 'Đăng nhập',
+                cancelText: 'Hủy',
+                onConfirm: function() {
+                    // Đẩy sang trang Login (sửa lại đường dẫn nếu file route của ông khác nhé)
+                    window.location.href = '/User/Account/Login';
+                }
+            });
+        }
+    </script>
+  
+
 </body>
 </html>

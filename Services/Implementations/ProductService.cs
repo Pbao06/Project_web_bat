@@ -18,7 +18,7 @@ namespace Getdata1.Services.Implementations
         }
             
         public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
-        {
+        {       
             var products = await _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.ProductImages)
@@ -28,12 +28,9 @@ namespace Getdata1.Services.Implementations
 
         public async Task<ProductDto?> GetProductByIdAsync(int id)
         {
-            var product = await _context.Products
-                .Include(p => p.Category)
-                .Include(p => p.ProductImages)
-                .Include(p => p.ProductReviews)
-                .FirstOrDefaultAsync(p => p.Id == id);
-            return _mapper.Map<ProductDto>(product);
+            var product = await _context.Products.Include(p => p.ProductImages).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            // vì qua để lấy sản phẩm vào sesssion nên ở đây không cần join vào productReview cho nó lâu 
+            return _mapper.Map<ProductDto>(product); // tự động map thông tin qua Product DTO mà ko cần viết thủ công 
         }
 
         public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
@@ -55,17 +52,23 @@ namespace Getdata1.Services.Implementations
         }
 
         public async Task<(IEnumerable<ProductDto> Products, int TotalCount)> GetFilteredProductsAsync(
-            int? categoryId, string? searchTerm, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize)
+            int? categoryId, string? searchTerm, string? brand, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize)
         {
             var query = _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.ProductImages)
-                .AsQueryable();
+                .AsQueryable();// đây là cần thiết cho 1 thông tin sản phẩm 
 
             // Filter by Category
             if (categoryId.HasValue)
             {
                 query = query.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            // Filter by Brand
+            if (!string.IsNullOrWhiteSpace(brand))
+            {
+                query = query.Where(p => p.Brand != null && p.Brand.ToLower() == brand.ToLower());
             }
 
             // Filter by Search Term
@@ -99,7 +102,7 @@ namespace Getdata1.Services.Implementations
                 .Take(pageSize)
                 .ToListAsync();
 
-            var dtos = _mapper.Map<IEnumerable<ProductDto>>(products);
+            var dtos = _mapper.Map<IEnumerable<ProductDto>>(products); // trả về product -> DTO 
             return (dtos, totalCount);
         }
 
@@ -111,6 +114,43 @@ namespace Getdata1.Services.Implementations
                 .Include(p => p.ProductImages)
                 .OrderBy(r => Guid.NewGuid()) // Random order
                 .Take(count)
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<ProductDto>>(products);
+        }
+        public async Task<List<ProductDto>> GetWistlistByUserIdAsync(int userId)
+        {
+            // lấy danh sách product ra từ favorites của user truyền vào parameter
+            var favoriteProducts = await _context.Favorites
+                .Where(f => f.UserId == userId)
+                .Include(f => f.Product).ThenInclude(p => p.ProductImages)
+                .Include(f => f.Product).ThenInclude(p => p.Category)
+                .Select(f => f.Product)
+                .ToListAsync();
+            return _mapper.Map<List<ProductDto>>(favoriteProducts);
+
+        }
+        public async Task<bool> ClearAllFavoriteAsync(int userId)
+        {
+            // tìm tất cả sản phẩm của user
+            var AllUserFavorite = await _context.Favorites.Where(f => f.UserId == userId).ToListAsync(); // lấy tất cả sản phẩm trong Favorite của user
+            if(AllUserFavorite.Any())
+            {
+                _context.Favorites.RemoveRange(AllUserFavorite);
+                await _context.SaveChangesAsync(); // lưu về db 
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<IEnumerable<ProductDto>> SearchQuickAsync(string query, int limit = 5)
+        {
+            if (string.IsNullOrWhiteSpace(query)) return Enumerable.Empty<ProductDto>();
+
+            var products = await _context.Products
+                .Where(p => p.Name.Contains(query) || (p.Brand != null && p.Brand.Contains(query)))
+                .Include(p => p.ProductImages)
+                .Take(limit)
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<ProductDto>>(products);

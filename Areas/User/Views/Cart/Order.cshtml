@@ -43,7 +43,9 @@
                     @foreach (var item in Model.Items)
                     {
                         <div class="order-item">
-                            <div class="oi-thumb"><i class='bx bx-baseball'></i></div>
+                            <div class="oi-thumb">
+                                <img src="@Url.Content(string.IsNullOrEmpty(item.Image) ? "~/img/no-img.jfif" : (item.Image.StartsWith("/") ? item.Image : "~/img/" + item.Image))" alt="@item.ProductName" style="width:100%; height:100%; object-fit:cover; border-radius:10px;" />
+                            </div>
                             <div class="oi-meta">
                                 <div class="oi-cat">@item.CategoryName</div>
                                 <div class="oi-name">@item.ProductName</div>
@@ -52,7 +54,7 @@
                                 </div> *@
                             </div>
                             <div class="oi-price-wrap">
-                                <div class="oi-price">$@item.Price.ToString("N2")</div>
+                                <div class="oi-price">@item.Price.ToString("N0") đ</div>
                                 <div class="oi-qty">x@item.Quantity</div>
                             </div>
                         </div>
@@ -107,13 +109,13 @@
                 <div class="summary-rows">
                     <div class="sr">
                         <span>Tạm tính</span>
-                        <span class="val">$@Model.SubTotal.ToString("N2")</span>
+                        <span class="val">@Model.SubTotal.ToString("N0") đ</span>
                     </div>
                     @if (Model.DiscountAmount > 0)
                     {
                         <div class="sr discount">
                             <span>Giảm giá (@Model.PromoCode)</span>
-                            <span class="val">-$@Model.DiscountAmount.ToString("N2")</span>
+                            <span class="val">-@Model.DiscountAmount.ToString("N0") đ</span>
                         </div>
                     }
                     <div class="sr">
@@ -124,12 +126,12 @@
                         }
                         else
                         {
-                            <span class="val">$@Model.ShippingFee.ToString("N2")</span>
+                            <span class="val">@Model.ShippingFee.ToString("N0") đ</span>
                         }
                     </div>
                     <div class="sr total">
                         <span>Tổng cộng</span>
-                        <span class="val">$@((Model.SubTotal - Model.DiscountAmount + Model.ShippingFee).ToString("N2"))</span>
+                        <span class="val">@((Model.SubTotal - Model.DiscountAmount + Model.ShippingFee).ToString("N0")) đ</span>
                     </div>
                 </div>
 

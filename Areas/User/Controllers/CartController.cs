@@ -1,4 +1,5 @@
 using Getdata1.DTOs;
+using Getdata1.Models;
 using Getdata1.Helpers;
 using Getdata1.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace Getdata1.Areas.User.Controllers
     public class CartController : Controller
     {
         private readonly IProductService _productService;
-        private const string CartSessionKey = "UserCart";
+        private const string CartSessionKey = "UserCart"; // định nghĩa kho đồ mà user mua 
 
         public CartController(IProductService productService)
         {
@@ -24,30 +25,63 @@ namespace Getdata1.Areas.User.Controllers
         [HttpGet]
         public IActionResult GetCart()
         {
-            var cart = HttpContext.Session.Get<CartDto>(CartSessionKey) ?? new CartDto();
+            // SESSION DÙNG ĐỂ => LƯU TẠM THÔNG TIN GIỎ HÀNG
+            var cart = HttpContext.Session.Get<CartDto>(CartSessionKey) ?? new CartDto(); // gọi sesion lên 
+            // new CartDto nếu session rỗng tự fđọng tạo 
             return Json(cart);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetSuggestedProducts()
+        {
+            try
+            {
+                var products = await _productService.GetAllProductsAsync();
+                // Lấy ngẫu nhiên khoảng 4 sản phẩm để gợi ý
+                var suggested = products.OrderBy(r => Guid.NewGuid()).Take(4).ToList();
+                return Json(suggested);
+            }
+            catch (Exception)
+            {
+                return Json(new List<ProductDto>());
+            }
+        }
+
+        private string GetfinalVariant(ProductDto product,string? ProvidedVariant )
+        {
+            if (!string.IsNullOrWhiteSpace(ProvidedVariant)) return ProvidedVariant;
+            var attributes = new List<string>
+            {
+                /// đây là những thứ mà khách hàng chọn 
+                product.Color,product.Weight
+                ,product.Size,product.Length,
+            };
+            return string.Join(" / ", attributes.Where(a => !string.IsNullOrWhiteSpace(a)));
+        }
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> AddToCart(int productId, int quantity = 1, string? variant = null)
         {
             try
             {
-                var product = await _productService.GetProductByIdAsync(productId);
+                var product = await _productService.GetProductByIdAsync(productId); // lấy c9 xác sp từ db check
                 if (product == null)
                 {
                     return Json(new { success = false, message = "Sản phẩm không tồn tại." });
                 }
 
                 var cart = HttpContext.Session.Get<CartDto>(CartSessionKey) ?? new CartDto();
-                
+
                 // If variant is not provided from UI, we still try to provide some default info
                 string finalVariant = variant ?? (!string.IsNullOrEmpty(product.Color) ? $"{product.Color} / {product.Weight}" : product.Weight ?? "");
 
-                // Find existing item with SAME product ID AND SAME variant
+                // Find existing item with SAME product ID AND SAME variant( variant là về màu sắc , weight , thông tin bé bé để phân biệt 2 món khác nhau tuy cùng loại)
                 var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == productId && i.VariantInfo == finalVariant);
 
-                if (existingItem != null)
+                if (existingItem != null) // check đảm bảo rằng -> sản phẩn tồn tại 
                 {
                     existingItem.Quantity += quantity;
                 }
@@ -58,15 +92,49 @@ namespace Getdata1.Areas.User.Controllers
                         ProductId = product.Id,
                         ProductName = product.Name,
                         CategoryName = product.CategoryName ?? "Sản phẩm",
-                        VariantInfo = finalVariant,
+                        VariantInfo = finalVariant,// tìm mò đúng thông tin chi tiết sp về size ,weight , .. 
                         Price = product.Price,
                         Image = product.Image,
                         Quantity = quantity
                     });
                 }
 
-                HttpContext.Session.Set(CartSessionKey, cart);
-                    
+
+                HttpContext.Session.Set(CartSessionKey, cart); // save lại cho vào cart user
+                //check thông tin sp tồn tại
+                // check xem giỏ hàng đã tồn tại chưa nếu chưa thì create
+                // tìm variant của chúng, -> trong giỏ hàng , -> check thg đó xem nó tồn tại trong giỏ chưa nếu có r thì +quantity
+                // nếu chưa có thì tạo new cartItem DTO rồi lưu vào giỏ(session)
+                //var product = await _productService.GetProductByIdAsync(productId);
+                //if (product == null)
+                //{
+                //    return Json(new { success = false, message = " Sản phẩm không tồn tại" });
+                //}
+                //var cart = HttpContext.Session.Get<CartDto>(CartSessionKey) ?? new CartDto();
+                //// tìm chi tiết sản phẩm biến variant 
+                //var finalVariant = GetfinalVariant(product, variant);
+                //var existing = cart.Items.FirstOrDefault(p => p.ProductId == productId && p.VariantInfo == finalVariant);
+
+                //if (existing != null) // nếu sản phẩm đã có trong giỏ session
+                //{
+                //    existing.Quantity+= quantity;
+                //}    
+                //else
+                //{
+                //    // tạo new cartItem
+                //    cart.Items.Add(new CartItemDto
+                //    {
+                //        ProductId=productId,
+                //        ProductName=product.Name,
+                //        VariantInfo = finalVariant,
+                //        CategoryName= product.CategoryName,
+                //        Price=product.Price,
+                //        Quantity=quantity,
+                //        Image=product.Image, 
+                //    });
+                //} 
+                //HttpContext.Session.Set(CartSessionKey, cart); // lưu tất cả vào session 
+
                 return Json(new { 
                     success = true, 
                     message = $"Đã thêm {product.Name} vào giỏ hàng!",
@@ -99,7 +167,8 @@ namespace Getdata1.Areas.User.Controllers
                         {
                             item.Quantity = quantity;
                         }
-                        HttpContext.Session.Set(CartSessionKey, cart);
+
+                        HttpContext.Session.Set(CartSessionKey, cart); // save lại cho vào giỏ user
                     }
                     return Json(new { success = true, cart = cart });
                 }
@@ -114,7 +183,7 @@ namespace Getdata1.Areas.User.Controllers
         [HttpGet]
         public IActionResult Checkout()
         {
-            if (!User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated) // nếu ko có account 
             {
                 // Example c) Warning Notification with Login link
                 NotificationHelper.SetNotification(TempData, "Bạn cần đăng nhập để thực hiện thanh toán.", "warning", showLoginLink: true);
@@ -128,14 +197,14 @@ namespace Getdata1.Areas.User.Controllers
         {
             try
             {
-                var cart = HttpContext.Session.Get<CartDto>(CartSessionKey);
+                var cart = HttpContext.Session.Get<CartDto>(CartSessionKey); // lấy giỏ hàng 
                 if (cart != null)
                 {
                     var item = cart.Items.FirstOrDefault(i => i.ProductId == productId);
                     if (item != null)
                     {
                         cart.Items.Remove(item);
-                        HttpContext.Session.Set(CartSessionKey, cart);
+                        HttpContext.Session.Set(CartSessionKey, cart); // lưu vào session 
                     }
                     return Json(new { success = true, cart = cart });
                 }
@@ -166,7 +235,7 @@ namespace Getdata1.Areas.User.Controllers
             if (promoCode?.ToUpper() == "PBAO2026")
             {
                 cart.AppliedPromoCode = "PBAO2026";
-                cart.DiscountAmount = 23; 
+                cart.DiscountAmount = 50000; 
                 HttpContext.Session.Set(CartSessionKey, cart);
                 return Json(new { success = true, message = "Áp dụng mã giảm giá thành công!", cart = cart });
             }

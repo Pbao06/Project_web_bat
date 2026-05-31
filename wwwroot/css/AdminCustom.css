@@ -48,7 +48,7 @@ body {
 }
 
 #sidebar .brand {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-size: 18px;
     font-weight: 800;
     height: 64px;
@@ -214,8 +214,11 @@ body {
     font-size: 18px;
 }
 
-#content nav .notification {
+#content nav .notification-dropdown {
     margin-left: auto;
+}
+
+#content nav .notification {
     position: relative;
     color: var(--sub);
     font-size: 20px;
@@ -239,13 +242,31 @@ body {
     border: 2px solid #fff;
 }
 
-#content nav .profile img {
+#content nav .profile {
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+#content nav .profile .avatar-initials {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    object-fit: cover;
-    margin-left: 20px;
-    border: 0.5px solid var(--border);
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#content nav .profile:hover .avatar-initials {
+    transform: scale(1.1);
+    background: var(--accent-hover);
 }
 
 /* ── MAIN CONTENT ── */
@@ -254,11 +275,20 @@ main {
 }
 
 .head-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
     margin-bottom: 32px;
 }
 
+.head-title .left {
+    flex: 1;
+}
+
 .head-title h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-size: 32px;
     font-weight: 800;
     letter-spacing: -1px;
@@ -290,6 +320,8 @@ main {
 .btn-download {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    gap: 8px;
     background: var(--text);
     color: #fff;
     padding: 8px 20px;
@@ -300,8 +332,8 @@ main {
     transition: background 0.2s;
 }
 
-.btn-download:hover {
-    background: #333;
+.btn-download i {
+    font-size: 18px;
 }
 
 /* ── DASHBOARD BOXES ── */
@@ -344,7 +376,7 @@ main {
 .box-info li:nth-child(3) .bx { background: #eafff0; color: #34c759; }
 
 .box-info li h3 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-size: 22px;
     font-weight: 700;
 }
@@ -388,7 +420,7 @@ main {
 }
 
 .table-data .head h3 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-size: 18px;
     font-weight: 700;
 }
@@ -741,7 +773,7 @@ textarea.my-input {
 }
 
 .form-section-title h4 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-size: 16px;
     font-weight: 700;
     color: var(--text);

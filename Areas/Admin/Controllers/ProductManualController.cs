@@ -1,6 +1,7 @@
 ﻿using Getdata1.Areas.Admin.ViewModels;
 using Getdata1.Data;
 using Getdata1.Models;
+using Getdata1.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,23 @@ namespace Getdata1.Areas.Admin.Controllers
                     query = query.Where(p => p.Stock <= filter.MaxStock);
                 }
 
+                // New: Apply Status Filter
+                if (!string.IsNullOrEmpty(filter.Status))
+                {
+                    switch (filter.Status.ToLower())
+                    {
+                        case "instock":
+                            query = query.Where(p => p.Stock > 10);
+                            break;
+                        case "lowstock":
+                            query = query.Where(p => p.Stock > 0 && p.Stock <= 10);
+                            break;
+                        case "outstock":
+                            query = query.Where(p => p.Stock == 0);
+                            break;
+                    }
+                }
+
                 // 3. Execution & Pagination
                 // Use CountAsync to keep the whole method truly asynchronous
                 int totalItems = await query.CountAsync();
@@ -73,7 +91,8 @@ namespace Getdata1.Areas.Admin.Controllers
                 filter.CurrentPage = page;
                 filter.TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-                // 5. Fill ViewBag (The fix for your "InvalidOperation" bug)
+                // 5. Fill ViewBag 
+                ViewBag.TotalProducts = totalItems;
                 var categories = await _context.Categories.ToListAsync();
                 ViewBag.Category = new SelectList(categories, "Id", "Name",  filter.CategoryId);
 
@@ -134,6 +153,7 @@ namespace Getdata1.Areas.Admin.Controllers
                     await _context.SaveChangesAsync(); // Lưu tất cả ảnh vào SQL
                 }
              
+                NotificationHelper.SetNotification(TempData, "Thêm sản phẩm mới thành công!", "success");
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -225,12 +245,13 @@ namespace Getdata1.Areas.Admin.Controllers
                         await _context.SaveChangesAsync();
                     }
 
-                    TempData["SuccessMessage"] = "Cập nhật sản phẩm thành công!";
+                    NotificationHelper.SetNotification(TempData, "Cập nhật sản phẩm thành công!", "success");
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", "Lỗi: " + ex.Message);
+                    NotificationHelper.SetNotification(TempData, "Có lỗi xảy ra khi cập nhật sản phẩm.", "error");
                 }
             }
             
@@ -262,9 +283,9 @@ namespace Getdata1.Areas.Admin.Controllers
             if(sp!=null)
             {
                 _context.Products.Remove(sp);
-
             }    
             await _context.SaveChangesAsync();
+            NotificationHelper.SetNotification(TempData, "Xóa sản phẩm thành công!", "success");
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]

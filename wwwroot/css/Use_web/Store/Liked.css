@@ -1,0 +1,330 @@
+﻿/* PAGE HEADER */
+.page-header {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 80px 24px 0;
+}
+
+    .page-header .label {
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .page-header h1 {
+        font-family: 'Archivo', sans-serif;
+        font-size: 52px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        line-height: 1;
+        margin-bottom: 6px;
+    }
+
+    .page-header .sub {
+        font-size: 15px;
+        color: var(--sub);
+    }
+
+/* TOOLBAR */
+.toolbar {
+    max-width: 1080px;
+    margin: 28px auto 0;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.5px solid var(--border);
+    padding-bottom: 16px;
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.result-count {
+    font-size: 13px;
+    color: var(--sub);
+}
+
+.clear-btn {
+    font-size: 12px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+    transition: color .2s;
+}
+
+    .clear-btn:hover {
+        color: #e03;
+    }
+
+.filter-select {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 28px 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--bg);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2386868b'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+    .filter-select:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+
+/* GRID */
+.products-wrap {
+    max-width: 1080px;
+    margin: 24px auto 0;
+    padding: 0 24px 80px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+/* CARD */
+.product-card {
+    background: var(--bg2);
+    border-radius: var(--card-r);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .3s ease, box-shadow .3s ease;
+    animation: fadeUp .4s ease both;
+    position: relative;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.09);
+}
+
+.card-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg2);
+}
+
+.img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .img-placeholder i {
+        font-size: 52px;
+        color: var(--muted);
+    }
+
+.card-badges {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.badge-new {
+    background: #fff0e6;
+    color: var(--new);
+}
+
+.badge-sale {
+    background: #e6f5ec;
+    color: var(--sale);
+}
+
+.badge-hot {
+    background: #fff;
+    color: #1d1d1f;
+}
+
+/* wish (remove) button */
+.card-wish {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background .2s;
+    border: none;
+}
+
+    .card-wish:hover {
+        background: #fff;
+    }
+
+    .card-wish i {
+        font-size: 15px;
+        color: #e03;
+    }
+
+.card-body {
+    padding: 14px 16px 18px;
+}
+
+.card-cat {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.card-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+    line-height: 1.3;
+}
+
+.card-desc {
+    font-size: 12px;
+    color: var(--sub);
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-price {
+    font-family: 'Archivo',sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+    .card-price .old {
+        font-size: 12px;
+        color: var(--muted);
+        text-decoration: line-through;
+        font-family: 'DM Sans',sans-serif;
+        font-weight: 400;
+        margin-left: 4px;
+    }
+
+.card-stars {
+    font-size: 11px;
+    color: #f5a623;
+    letter-spacing: 0.5px;
+}
+
+    .card-stars span {
+        color: var(--muted);
+        font-size: 10px;
+        margin-left: 2px;
+    }
+
+.add-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--text);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, transform .15s;
+    flex-shrink: 0;
+}
+
+    .add-btn:hover {
+        background: #333;
+        transform: scale(1.1);
+    }
+
+/* EMPTY STATE */
+.empty-state {
+    padding: 100px 20px;
+    text-align: center;
+    color: var(--sub);
+}
+
+    .empty-state i {
+        font-size: 48px;
+        margin-bottom: 12px;
+        display: block;
+        color: var(--muted);
+    }
+
+    .empty-state p {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    .empty-state a {
+        display: inline-block;
+        padding: 9px 22px;
+        border-radius: 20px;
+        background: var(--text);
+        color: #fff;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        transition: opacity .2s;
+    }
+
+        .empty-state a:hover {
+            opacity: .85;
+        }

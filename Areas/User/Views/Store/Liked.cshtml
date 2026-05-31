@@ -1,0 +1,203 @@
+﻿@model Getdata1.ViewModels.LikeVM
+@{
+    ViewData["Title"] = "Store Liked— Pbao Performance";
+    Layout = "~/Areas/User/Views/Shared/Layout.cshtml"; // Sử dụng layout chung của hệ thống
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pagination.css" />
+    <link href="~/css/Use_web/Store/Liked.css" rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+}
+
+<div class="page-header">
+    <p class="label">Của tôi</p>
+    <h1>Wishlist.</h1>
+    <p class="sub">Những sản phẩm bạn đã thích.</p>
+</div>
+
+<form id="filterForm" asp-area="User" asp-action="Liked" method="get">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <span class="result-count" id="resultCount">@(Model.Products?.Count() ?? 0) sản phẩm</span>
+            @if (Model.Products != null && Model.Products.Any())
+            {
+                <button type="button" class="clear-btn" id="clearBtn" onclick="clearAllWishes()">Xóa tất cả</button>
+            }
+        </div>
+
+        <select name="sortBy" class="filter-select" id="sortSelect" onchange="this.form.submit()">
+            <option value="">Mặc định</option>
+            <option value="price_asc" selected="@(Model.SortBy == "price_asc")">Giá: Thấp → Cao</option>
+            <option value="price_desc" selected="@(Model.SortBy == "price_desc")">Giá: Cao → Thấp</option>
+            <option value="latest" selected="@(Model.SortBy == "latest")">Mới nhất</option>
+        </select>
+    </div>
+</form>
+
+<div class="products-wrap">
+    <div class="product-grid" id="productGrid">
+        @if (Model.Products != null && Model.Products.Any()) // nếu có sản phẩm 
+        {
+            @foreach (var product in Model.Products)
+            {
+                string productIcon = "bx-baseball"; // Icon mặc định, có thể viết switch case như trang Index nếu muốn
+
+                <div class="product-card" data-id="@product.Id" style="cursor: pointer;" onclick="location.href='@Url.Action("Details", "Store", new { area = "User", id = product.Id })'">
+                    <div class="card-img">
+                        <div class="img-placeholder">
+                            @if (!string.IsNullOrEmpty(product.Image))
+                            {
+                                var imagePath = product.Image.StartsWith("/") ? "~" + product.Image : "~/img/" + product.Image;
+                                <img src="@Url.Content(imagePath)" alt="@product.Name" style="width: 100%; height: 100%; object-fit: contain;" />
+                            }
+                            else
+                            {
+                                <i class='bx @productIcon'></i>
+                            }
+                        </div>
+
+                        <div class="card-badges">
+                            @if (Model.SortBy == "latest")
+                            {
+                                <span class="badge badge-new">New</span>
+                            }
+                        </div>
+
+                        <button type="button" class="card-wish wished" onclick="removeWish(event, this, @product.Id)" title="Bỏ thích">
+                            <i class='bx bxs-heart'></i>
+                        </button>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="card-cat">@product.Brand</p>
+                        <p class="card-name">@product.Name</p>
+
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-price">
+                                    @product.Price.ToString("N0") đ
+                                </div>
+                                <div class="card-stars">
+                                    ★★★★☆ <span style="font-size: 11px; color: var(--muted); font-weight: 400;">(88)</span>
+                                </div>
+                            </div>
+                            
+                            @* <button type="button" class="add-btn" onclick="event.stopPropagation(); addToCart(@product.Id, this)">
+                                <i class='bx bx-plus'></i>
+                            </button> *@
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="empty-state" style="grid-column:1/-1">
+                <i class='bx bx-heart'></i>
+                <p>Bạn chưa thích sản phẩm nào.</p>
+                <a href="@Url.Action("Index", "Store", new { area = "User" })" style="text-decoration: none; color: var(--accent);">Khám phá Store</a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Xóa một sản phẩm yêu thích
+        async function removeWish(e, btn, productId) {
+            e.stopPropagation(); // Ngăn click lan ra thẻ cha (tránh bị nhảy vào trang Details)
+
+            // Gọi API (Fetch) lên Controller để xóa khỏi DB thật
+            try {
+                // Sửa lại đường dẫn API này cho khớp với Action của bạn
+                const response = await fetch(`/User/Store/RemoveWish/${productId}`, {
+                    method: 'POST'
+                });
+
+                // Nếu Controller xử lý thành công
+                if (response.ok) {
+                    // Xóa luôn thẻ div.product-card chứa nút này khỏi màn hình (rất mượt)
+                    const card = btn.closest('.product-card');
+                    card.style.opacity = '0';
+                    setTimeout(() => {
+                        card.remove();
+                        updateCount(); // Cập nhật lại số lượng sản phẩm
+                    }, 300);
+                } else {
+                    alert('Lỗi: Không thể bỏ thích!');
+                }
+            } catch (error) {
+                console.error("Lỗi xóa wish:", error);
+            }
+        }
+
+        // Xóa tất cả yêu thích
+        async function clearAllWishes() {
+              showGlobalModal({
+            title: 'Xác nhận xóa tất cả',
+            content: `Bạn có chắc chắn muốn xóa <strong>toàn bộ sản phẩm</strong> khỏi wishlist không? Hành động này không thể hoàn tác.`,
+            confirmText: 'Xóa sạch',
+            cancelText: 'Hủy',
+            onConfirm: async function() { // nếu bấ, xác nhận xóa thì hàm này xử lý 
+                // Không cần animation lằng nhằng ở đây, đâm thẳng lên Server luôn
+                try {
+                    // Gọi API Controller ông sắp viết (
+                    const response = await fetch('/User/Store/ClearAllWishes', {
+                        method: 'POST'
+                    });
+
+                    if (response.ok) {
+                        // Nếu ông có hàm showToast từ trang giỏ hàng thì tận dụng luôn cho ngầu
+                        if (typeof showToast === 'function') {
+                            showToast('Đã dọn sạch danh sách yêu thích.', 'success');
+                        }
+
+                        // Delay nhẹ nửa giây cho user thấy cái thông báo Toast rồi mới F5
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+                    } else {
+                        if (typeof showToast === 'function') {
+                            showToast('Có lỗi xảy ra khi xóa.', 'error');
+                        } else {
+                            alert('Có lỗi xảy ra khi xóa!');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error clearing wishlist:', error);
+                    alert('Lỗi hệ thống khi kết nối tới Server!');
+                }
+            }
+        });
+        }
+
+        // Cập nhật lại con số hiển thị số lượng sản phẩm sau khi xóa
+        function updateCount() {
+            const countEl = document.getElementById('resultCount');
+            const remainingCards = document.querySelectorAll('.product-card').length;
+            countEl.textContent = remainingCards + ' sản phẩm';
+
+            // Nếu xóa hết sạch thì load lại trang để hiện cái empty-state
+            if(remainingCards === 0) {
+                window.location.reload();
+            }
+        }
+
+        // Hiệu ứng Add to Cart
+        function addToCart(id, btn) {
+            // Logic thêm giỏ hàng của bạn (có thể gọi Fetch ở đây)
+
+            btn.innerHTML = "<i class='bx bx-check'></i>";
+            btn.style.background = '#34c759';
+            btn.style.color = '#fff';
+
+            setTimeout(() => {
+                btn.innerHTML = "<i class='bx bx-plus'></i>";
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 800);
+        }
+    </script>
+}

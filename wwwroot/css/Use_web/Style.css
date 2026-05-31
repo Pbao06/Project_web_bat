@@ -52,7 +52,7 @@ nav {
 }
 
 .logo {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-weight: 800;
     font-size: 18px;
     text-decoration: none;
@@ -129,7 +129,7 @@ nav {
 }
 
     .section-head h2 {
-        font-family: 'Syne',sans-serif;
+        font-family: 'Archivo',sans-serif;
         font-size: 34px;
         font-weight: 800;
         letter-spacing: -1px;
@@ -299,7 +299,7 @@ nav {
 }
 
 .card-price {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 15px;
     font-weight: 700;
 }
@@ -342,6 +342,87 @@ nav {
         background: #333;
         transform: scale(1.12);
     }
+
+/* ──────────────────────────────────────
+   GLOBAL SLIDER STYLES
+────────────────────────────────────── */
+.slider-container {
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+    padding: 0 10px; /* Thêm padding nhẹ để tránh clipping khi slider sát mép */
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+    font-size: 20px;
+    color: var(--text);
+    opacity: 1;
+    visibility: visible;
+    padding: 0;
+}
+
+.slider-btn.prev { left: -21px; }
+.slider-btn.next { right: -21px; }
+
+.slider-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) scale(0.8);
+}
+
+.slider-btn:not(.hidden):hover {
+    background: var(--text);
+    color: #fff;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border-color: var(--text);
+}
+
+/* Shared Slider Class */
+.standard-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 18px;
+    padding: 10px 4px 30px;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    scroll-snap-type: x mandatory;
+}
+
+.standard-slider::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.standard-slider > * {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+}
+
+@media (max-width: 1120px) {
+    .slider-btn.prev { left: 0; }
+    .slider-btn.next { right: 0; }
+}
+
+@media (max-width: 768px) {
+    .slider-btn { display: none; }
+}
 
 /* ──────────────────────────────────────
    FOOTER

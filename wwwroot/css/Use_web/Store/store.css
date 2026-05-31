@@ -10,7 +10,7 @@
 }
 
     .store-header h1 {
-        font-family: 'Syne', sans-serif;
+        font-family: 'Archivo', sans-serif;
         font-size: 48px;
         font-weight: 800;
         letter-spacing: -1.5px;
@@ -26,28 +26,38 @@
 /* ── CATEGORY PILL TABS ── */
 .cat-scroll-wrap {
     position: sticky;
-    top: 48px;
-    z-index: 50;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    top: 48px; /* Stick right under the nav */
+    z-index: 100;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border-bottom: 0.5px solid var(--border);
     padding: 0 24px;
+    margin-bottom: 12px;
 }
 
 .cat-scroll {
     max-width: 1080px;
     margin: 0 auto;
     display: flex;
-    gap: 6px;
+    gap: 8px;
     overflow-x: auto;
-    padding: 10px 0;
+    padding: 14px 0;
     scrollbar-width: none;
+    scroll-behavior: smooth;
 }
 
     .cat-scroll::-webkit-scrollbar {
         display: none;
     }
+
+@media (min-width: 768px) {
+    .cat-scroll {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        justify-content: flex-start;
+    }
+}
 
 .cat-pill {
     display: inline-flex;
@@ -199,7 +209,7 @@
     }
 
     .promo-text h2 {
-        font-family: 'Syne',sans-serif;
+        font-family: 'Archivo',sans-serif;
         font-size: 24px;
         font-weight: 800;
         color: #fff;
@@ -237,6 +247,8 @@
     max-width: 1080px;
     margin: 24px auto 0;
     padding: 0 24px 80px;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-grid {
@@ -244,6 +256,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
     transition: all .3s;
+    min-height: 200px;
 }
 
     .product-grid.list-view {
@@ -415,7 +428,7 @@
 }
 
 .card-price {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 17px;
     font-weight: 700;
 }

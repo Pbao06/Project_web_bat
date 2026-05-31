@@ -37,7 +37,7 @@
                         <tr>
                             <td>
                                 <div style="display: flex; align-items: center;">
-                                    <img src="~/img/no-img.jfif" alt="@cus.Name" style="width: 32px; height: 32px; border-radius: 50%; margin-right: 12px;">
+                                    @* <img src="~/img/no-img.jfif" alt="@cus.Name" style="width: 32px; height: 32px; border-radius: 50%; margin-right: 12px;"> *@
                                     <p>@cus.Name</p>
                                 </div>
                             </td>
@@ -45,7 +45,7 @@
                                 <span class="status @cus.Role.ToLower()">@cus.Role</span>
                             </td>
                             <td>@cus.OrderCount</td>
-                            <td>@cus.TotalSpent.ToString("#,##0") ₫</td>
+                            <td>@cus.TotalSpent.ToString("#,##0") đ</td>
                             <td>
                                 <span class="status @cus.Status.ToString().ToLower()">
                                     @cus.Status

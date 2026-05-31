@@ -50,7 +50,7 @@
 }
 
 .success-hero h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-size: 34px;
     font-weight: 800;
     letter-spacing: -1.5px;
@@ -76,7 +76,7 @@
     font-size: 12px;
     color: var(--sub);
     margin-top: 18px;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-weight: 600;
     letter-spacing: .5px;
 }
@@ -130,7 +130,7 @@
     }
 
 .card-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-size: 14px;
     font-weight: 800;
     letter-spacing: -.2px;
@@ -201,6 +201,13 @@
     font-size: 22px;
     color: var(--muted);
     flex-shrink: 0;
+    overflow: hidden;
+}
+
+.oi-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .oi-cat {
@@ -237,7 +244,7 @@
 }
 
 .oi-price {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-weight: 700;
     font-size: 14px;
     margin-bottom: 2px;
@@ -362,7 +369,7 @@
     }
 
     .summary-header h3 {
-        font-family: 'Syne', sans-serif;
+        font-family: 'Archivo', sans-serif;
         font-size: 14px;
         font-weight: 800;
     }
@@ -402,7 +409,7 @@
     }
 
         .sr.total .val {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Archivo', sans-serif;
             font-size: 20px;
             font-weight: 800;
         }
@@ -441,7 +448,7 @@
 }
 
 .est-date {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-size: 15px;
     font-weight: 800;
     letter-spacing: -.3px;

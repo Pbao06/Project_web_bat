@@ -7,70 +7,6 @@
 {
     <link href="~/css/Use_web/Store/Detail.css" rel="stylesheet" />
     <style>
-        /* Slider Styles */
-        .related-slider-container {
-            position: relative;
-            margin-top: 20px;
-        }
-
-        .related-slider {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
-            scroll-snap-type: x mandatory;
-            padding: 10px 5px;
-        }
-
-        .related-slider::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
-        }
-
-        .related-card {
-            flex: 0 0 calc(25% - 15px);
-            min-width: 240px;
-            scroll-snap-align: start;
-        }
-
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #fff;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: all 0.2s;
-        }
-
-        .slider-btn:hover {
-            background: var(--text);
-            color: #fff;
-        }
-
-        .slider-btn.prev { left: -20px; }
-        .slider-btn.next { right: -20px; }
-
-        @@media (max-width: 992px) {
-            .related-card { flex: 0 0 calc(33.33% - 14px); }
-        }
-        @@media (max-width: 768px) {
-            .related-card { flex: 0 0 calc(50% - 10px); }
-            .slider-btn { display: none; }
-        }
-        @@media (max-width: 480px) {
-            .related-card { flex: 0 0 100%; }
-        }
-
         /* Gallery Fix */
         .thumb.active {
             border-color: var(--text);
@@ -78,6 +14,47 @@
         }
         .thumb {
             opacity: 0.7;
+        }
+
+        /* Reviews Slider Styles */
+        .reviews-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 16px;
+            padding: 10px 4px 20px;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .reviews-slider::-webkit-scrollbar {
+            display: none;
+        }
+        .reviews-slider .review-card {
+            flex: 0 0 320px;
+            padding: 24px;
+            background: var(--bg2);
+            border-radius: 16px;
+            border-bottom: none;
+        }
+        @@media (max-width: 480px) {
+            .reviews-slider .review-card { flex: 0 0 280px; }
+        }
+
+        /* Related Slider Fix */
+        .related-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 16px;
+            padding: 10px 4px 20px;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .related-slider::-webkit-scrollbar {
+            display: none;
+        }
+        .related-card {
+            flex: 0 0 260px;
         }
     </style>
 }
@@ -107,8 +84,8 @@
                 <i class='bx bx-baseball gallery-main-icon' id="mainIcon"></i>
             }
             <div class="gallery-badge">New</div>
-            <button class="gallery-wish" id="wishBtn" onclick="toggleWish()">
-                <i class='bx bx-heart' id="wishIcon"></i>
+            <button class="gallery-wish @(Model.IsLiked ? "wished" : "")" data-id="@Model.Id" onclick="toggleWish(event, this)">
+                <i class='bx @(Model.IsLiked ? "bxs-heart" : "bx-heart")'></i>
             </button>
         </div>
         <div class="gallery-thumbs">
@@ -152,9 +129,9 @@
         </div>
 
         <div class="info-price">
-            <span class="price-current">@Model.Price.ToString("C")</span>
+            <span class="price-current">@Model.Price.ToString("N0") đ</span>
         </div>
-        <p class="info-tax">Đã bao gồm thuế. Miễn phí vận chuyển đơn từ $100.</p>
+        <p class="info-tax">Đã bao gồm thuế. Miễn phí vận chuyển đơn từ 1.500.000 đ.</p>
 
         <div class="divider"></div>
 
@@ -256,7 +233,7 @@
 
         <!-- Perks -->
         <div class="perks">
-            <div class="perk"><i class='bx bx-package'></i> Miễn phí vận chuyển đơn từ $100</div>
+            <div class="perk"><i class='bx bx-package'></i> Miễn phí vận chuyển đơn từ 1.500.000 đ</div>
             <div class="perk"><i class='bx bx-revision'></i> Đổi trả trong 30 ngày nếu lỗi nhà sản xuất</div>
             <div class="perk"><i class='bx bx-shield-quarter'></i> Bảo hành chính hãng 12 tháng</div>
             <div class="perk"><i class='bx bx-credit-card'></i> Thanh toán an toàn — Visa, MoMo, ZaloPay</div>
@@ -327,31 +304,37 @@
 
         @if (Model.Reviews != null && Model.Reviews.Any())
         {
-            foreach (var review in Model.Reviews)
-            {
-                <div class="review-card">
-                    <div class="review-top">
-                        <div class="review-avatar">@(review.UserName?.Substring(0, 1).ToUpper() ?? "U")</div>
-                        <div>
-                            <div class="review-name">@review.UserName</div>
-                            <div class="review-date">@review.CreatedAt.ToString("dd MMMM, yyyy")</div>
-                        </div>
-                        <div class="review-stars" style="margin-left:auto">
-                            @for (int i = 1; i <= 5; i++)
-                            {
-                                @(i <= review.Rating ? "★" : "☆")
-                            }
-                        </div>
-                    </div>
-                    <div class="review-title">@review.Title</div>
-                    <div class="review-body">@review.Comment</div>
-                    @if (review.IsVerified)
+            <div class="slider-container">
+                <button class="slider-btn prev" onclick="scrollSlider('reviewsSlider', -1)"><i class='bx bx-chevron-left'></i></button>
+                <div class="reviews-slider standard-slider" id="reviewsSlider">
+                    @foreach (var review in Model.Reviews)
                     {
-                        <span class="review-tag">✅ Đã mua tại PBAO</span>
+                        <div class="review-card">
+                            <div class="review-top">
+                                <div class="review-avatar">@(review.UserName?.Substring(0, 1).ToUpper() ?? "U")</div>
+                                <div>
+                                    <div class="review-name">@review.UserName</div>
+                                    <div class="review-date">@review.CreatedAt.ToString("dd MMMM, yyyy")</div>
+                                </div>
+                                <div class="review-stars" style="margin-left:auto">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        @(i <= review.Rating ? "★" : "☆")
+                                    }
+                                </div>
+                            </div>
+                            <div class="review-title">@review.Title</div>
+                            <div class="review-body">@review.Comment</div>
+                            @if (review.IsVerified)
+                            {
+                                <span class="review-tag">✅ Đã mua tại PBAO</span>
+                            }
+                            <div class="review-helpful">@review.HelpfulCount người thấy đánh giá này hữu ích</div>
+                        </div>
                     }
-                    <div class="review-helpful">@review.HelpfulCount người thấy đánh giá này hữu ích</div>
                 </div>
-            }
+                <button class="slider-btn next" onclick="scrollSlider('reviewsSlider', 1)"><i class='bx bx-chevron-right'></i></button>
+            </div>
         }
         else
         {
@@ -384,9 +367,9 @@
 <!-- RELATED PRODUCTS -->
 <div class="related-section">
     <div class="section-title">Sản phẩm liên quan</div>
-    <div class="related-slider-container">
-        <button class="slider-btn prev" onclick="scrollSlider(-1)"><i class='bx bx-chevron-left'></i></button>
-        <div class="related-slider" id="relatedSlider">
+    <div class="slider-container">
+        <button class="slider-btn prev" onclick="scrollSlider('relatedSlider', -1)"><i class='bx bx-chevron-left'></i></button>
+        <div class="related-slider standard-slider" id="relatedSlider">
             @foreach (var item in relatedProducts)
             {
                 var itemImagePath = !string.IsNullOrEmpty(item.Image) ? (item.Image.StartsWith("/") || item.Image.StartsWith("http") ? item.Image : (item.Image.StartsWith("~") ? item.Image : "~/img/" + item.Image)) : "~/img/no-img.jfif";
@@ -403,17 +386,25 @@
                                 @(i <= Math.Round(item.AverageRating) ? "★" : "☆")
                             }
                         </div>
-                        <div class="related-price">@item.Price.ToString("C")</div>
+                        <div class="related-price">@item.Price.ToString("N0") đ</div>
                     </div>
                 </div>
             }
         </div>
-        <button class="slider-btn next" onclick="scrollSlider(1)"><i class='bx bx-chevron-right'></i></button>
+        <button class="slider-btn next" onclick="scrollSlider('relatedSlider', 1)"><i class='bx bx-chevron-right'></i></button>
     </div>
 </div>
 
 @section Scripts {
+    <script src="~/js/favorite.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if(typeof updateSliderButtons === 'function'){
+                updateSliderButtons('reviewsSlider');
+                updateSliderButtons('relatedSlider');
+            }
+        });
+
         function selectOption(el, attribute) {
             // Find the container for this attribute
             const container = el.closest('.spec-pills');
@@ -454,15 +445,6 @@
             document.getElementById(`tab-${tabId}`).classList.add('active');
         }
 
-        function scrollSlider(direction) {
-            const slider = document.getElementById('relatedSlider');
-            const scrollAmount = slider.clientWidth * 0.8;
-            slider.scrollBy({
-                left: direction * scrollAmount,
-                behavior: 'smooth'
-            });
-        }
-
         function addToCart(isRedirect) {
             const productId = @Model.Id;
             const quantity = parseInt(document.getElementById('qtyVal').innerText);
@@ -491,32 +473,32 @@
                     if (isRedirect) {
                         window.location.href = '/User/Cart';
                     } else {
-                        showNotification(data.message);
-                        // Update cart count if you have one in layout
-                        const cartCountElem = document.querySelector('.cart-count');
-                        if (cartCountElem) cartCountElem.innerText = data.cartCount;
+                        // showNotification(data.message);
+                        if (typeof showToast === 'function') {
+                            showToast(data.message, 'success');
+                        }
+                        
+                        // Update cart badge in layout
+                        const cartBadge = document.getElementById('cart-count');
+                        if (cartBadge) {
+                            cartBadge.innerText = data.cartCount;
+                            if (data.cartCount > 0) {
+                                cartBadge.classList.add('show');
+                            }
+                        }
                     }
                 } else {
-                    showNotification(data.message);
+                    if (typeof showToast === 'function') {
+                        showToast(data.message, 'error');
+                    }
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                showNotification('Có lỗi xảy ra khi thêm vào giỏ hàng.');
+                if (typeof showToast === 'function') {
+                    showToast('Có lỗi xảy ra khi thêm vào giỏ hàng.', 'error');
+                }
             });
-        }
-
-        function toggleWish() {
-            const btn = document.getElementById('wishBtn');
-            const icon = document.getElementById('wishIcon');
-            btn.classList.toggle('wished');
-            if (btn.classList.contains('wished')) {
-                icon.classList.replace('bx-heart', 'bxs-heart');
-                icon.style.color = '#ef4444';
-            } else {
-                icon.classList.replace('bxs-heart', 'bx-heart');
-                icon.style.color = 'var(--sub)';
-            }
         }
     </script>
 }

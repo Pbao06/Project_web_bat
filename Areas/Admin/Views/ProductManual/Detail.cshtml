@@ -1,314 +1,286 @@
-﻿@model Getdata1.Models.Product
+@model Getdata1.Models.Product
 
 @{
-    ViewData["Title"] = "Product Details";
+    ViewData["Title"] = "Product Details - " + Model.Name;
 }
 
 @section Styles {
+    <link href="~/css/Use_web/Store/Detail.css" rel="stylesheet" />
     <style>
-        .detail-card {
-            background: var(--bg);
-            border-radius: var(--card-r);
-            border: 0.5px solid var(--border);
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 0;
+        /* Override some User styles for Admin context */
+        .product-layout {
+            max-width: 100%; /* Take more space in Admin */
+            margin-top: 0;
+            padding: 0;
         }
 
-        .detail-image-side {
-            background: var(--bg2);
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-right: 0.5px solid var(--border);
-        }
-
-        .main-img-container {
-            width: 100%;
-            aspect-ratio: 1/1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        .breadcrumb {
+            max-width: 100%;
+            padding: 0;
             margin-bottom: 24px;
         }
 
-        .main-img-container img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .gallery {
+            top: 20px;
         }
 
-        .main-img-container:hover img {
-            transform: scale(1.05);
+        .tabs-section {
+            max-width: 100%;
+            padding: 0;
+            margin-top: 40px;
         }
 
-        .gallery-grid {
+        /* Admin specific additions */
+        .admin-actions {
             display: flex;
             gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
         }
 
-        .gallery-item {
-            width: 64px;
-            height: 64px;
-            border-radius: 8px;
-            border: 2px solid transparent;
-            overflow: hidden;
-            cursor: pointer;
-            background: #fff;
-            transition: all 0.2s;
-        }
-
-        .gallery-item.active {
-            border-color: var(--accent);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .detail-info-side {
-            padding: 48px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .info-header {
-            margin-bottom: 32px;
-        }
-
-        .brand-tag {
-            display: inline-block;
-            padding: 4px 12px;
-            background: var(--bg3);
-            color: var(--sub);
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
-        }
-
-        .product-name {
-            font-family: 'Syne', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 8px;
-            color: var(--text);
-        }
-
-        .product-price {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 24px;
-        }
-
-        .section-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .description {
-            font-size: 15px;
-            line-height: 1.6;
-            color: var(--sub);
-            margin-bottom: 32px;
-        }
-
-        .specs-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 40px;
-            padding: 24px;
-            background: var(--bg2);
+        .btn-admin {
+            padding: 12px 24px;
             border-radius: 12px;
-        }
-
-        .spec-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .spec-label {
-            font-size: 11px;
-            color: var(--muted);
-            font-weight: 600;
-        }
-
-        .spec-value {
             font-size: 14px;
             font-weight: 600;
-            color: var(--text);
-        }
-
-        .detail-actions {
-            margin-top: auto;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding-top: 32px;
-            border-top: 0.5px solid var(--border);
-        }
-
-        .btn-edit-main {
-            background: var(--text);
-            color: #fff;
-            padding: 12px 32px;
-            border-radius: 24px;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
             transition: all 0.2s;
         }
 
-        .btn-edit-main:hover {
+        .btn-admin-edit {
+            background: var(--text);
+            color: #fff;
+        }
+
+        .btn-admin-edit:hover {
             background: #333;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            color: #fff;
         }
 
-        .btn-back-link {
-            color: var(--sub);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .btn-admin-back {
+            background: var(--bg2);
+            color: var(--text);
+            border: 1px solid var(--border);
         }
 
-        .btn-back-link:hover {
+        .btn-admin-back:hover {
+            background: var(--bg3);
+            transform: translateY(-2px);
             color: var(--text);
         }
 
-        @@media (max-width: 1024px) {
-            .detail-card {
-                grid-template-columns: 1fr;
-            }
-            .detail-image-side {
-                border-right: none;
-                border-bottom: 0.5px solid var(--border);
-            }
+        .info-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            background: var(--bg2);
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 24px;
         }
 
-        @@media (max-width: 576px) {
-            .detail-info-side {
-                padding: 32px 24px;
-            }
-            .specs-grid {
-                grid-template-columns: 1fr;
-            }
-            .product-name {
-                font-size: 24px;
-            }
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
+
+        .meta-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .meta-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .status-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .status-badge.instock { background: #eafff0; color: #34c759; }
+        .status-badge.outstock { background: #fff0f0; color: #ff3b30; }
+
+        /* Hide user-only elements */
+        .gallery-wish, .gallery-badge { display: none; }
     </style>
 }
 
 <main>
     <div class="head-title">
         <div class="left">
-            <h1>Product Details</h1>
+            <h1>Product Management</h1>
             <ul class="Breakcrumb">
                 <li><a asp-action="Index">Inventory</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li><a class="active">@Model.Name</a></li>
+                <li><a class="active">Product Details</a></li>
             </ul>
         </div>
     </div>
 
-    <div class="detail-card">
-        <!-- IMAGE SIDE -->
-        <div class="detail-image-side">
-            <div class="main-img-container">
-                <img src="@(string.IsNullOrEmpty(Model.Image) ? "/img/no-img.jfif" : Model.Image)" id="mainDisplayImg" alt="@Model.Name">
-            </div>
-            
-            <div class="gallery-grid">
+    <div class="product-layout">
+        <!-- GALLERY -->
+        <div class="gallery">
+            <div class="gallery-main" id="galleryMain">
                 @if (!string.IsNullOrEmpty(Model.Image))
                 {
-                    <div class="gallery-item active" onclick="updatePreview('@Model.Image', this)">
-                        <img src="@Model.Image" alt="Main image">
+                    <img src="@Model.Image" alt="@Model.Name" id="currentMainImg" style="width: 100%; height: 100%; object-fit: contain;" />
+                }
+                else
+                {
+                    <i class='bx bx-package gallery-main-icon' id="mainIcon"></i>
+                }
+            </div>
+            <div class="gallery-thumbs">
+                @if (!string.IsNullOrEmpty(Model.Image))
+                {
+                    <div class="thumb active" onclick="changeMainImage(this, '@Model.Image')">
+                        <img src="@Model.Image" alt="Main" style="width: 100%; height: 100%; object-fit: cover;" />
                     </div>
                 }
-                @if (Model.ProductImages != null)
+                @if (Model.ProductImages != null && Model.ProductImages.Any())
                 {
-                    foreach (var galleryImg in Model.ProductImages)
+                    @foreach (var img in Model.ProductImages)
                     {
-                        <div class="gallery-item" onclick="updatePreview('@galleryImg.Url', this)">
-                            <img src="@galleryImg.Url" alt="Gallery image">
+                        <div class="thumb" onclick="changeMainImage(this, '@img.Url')">
+                            <img src="@img.Url" alt="Gallery" style="width: 100%; height: 100%; object-fit: cover;" />
                         </div>
                     }
                 }
             </div>
         </div>
 
-        <!-- INFO SIDE -->
-        <div class="detail-info-side">
-            <div class="info-header">
-                @if (!string.IsNullOrEmpty(Model.Brand))
-                {
-                    <span class="brand-tag">@Model.Brand</span>
-                }
-                <h1 class="product-name">@Model.Name</h1>
-                <p class="product-price">@Model.Price.ToString("#,##0") ₫</p>
+        <!-- PRODUCT INFO -->
+        <div class="product-info">
+            <p class="info-brand">@(string.IsNullOrEmpty(Model.Brand) ? "No Brand" : Model.Brand)</p>
+            <h1 class="info-name">@Model.Name</h1>
+            
+            <div class="info-rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-val">5.0</span>
+                <span class="reviews-link">(System Default)</span>
             </div>
 
-            <div class="info-body">
-                <span class="section-label">Description</span>
-                <p class="description">@(string.IsNullOrEmpty(Model.Description) ? "No description available." : Model.Description)</p>
+            <div class="info-price">
+                <span class="price-current">@Model.Price.ToString("#,##0") đ</span>
+            </div>
+            <p class="info-tax">Current selling price in the store.</p>
 
-                <span class="section-label">Technical Specifications</span>
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <span class="spec-label">SKU</span>
-                        <span class="spec-value">PROD-@Model.Id.ToString("D5")</span>
+            <div class="divider"></div>
+
+            <!-- Internal Info / Inventory Info -->
+            <div class="spec-group">
+                <p class="spec-label">Inventory Status:</p>
+                <div class="qty-row">
+                    <div class="qty-box" style="background: var(--bg2); border: none; padding: 0 16px; height: 36px; display: flex; align-items: center;">
+                        <span class="qty-val" style="width: auto;">@Model.Stock Units</span>
                     </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Stock Status</span>
-                        <span class="spec-value">@Model.Stock Units</span>
-                    </div>
-                    @if (!string.IsNullOrEmpty(Model.Stiffness)) { <div class="spec-item"><span class="spec-label">Stiffness</span><span class="spec-value">@Model.Stiffness</span></div> }
-                    @if (!string.IsNullOrEmpty(Model.Weight)) { <div class="spec-item"><span class="spec-label">Weight/Grip</span><span class="spec-value">@Model.Weight</span></div> }
-                    @if (!string.IsNullOrEmpty(Model.BalancePoint)) { <div class="spec-item"><span class="spec-label">Balance Point</span><span class="spec-value">@Model.BalancePoint</span></div> }
-                    @if (!string.IsNullOrEmpty(Model.Material)) { <div class="spec-item"><span class="spec-label">Material</span><span class="spec-value">@Model.Material</span></div> }
-                    @if (!string.IsNullOrEmpty(Model.RecommendedTension)) { <div class="spec-item"><span class="spec-label">Rec. Tension</span><span class="spec-value">@Model.RecommendedTension</span></div> }
-                    @if (!string.IsNullOrEmpty(Model.Size)) { <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">@Model.Size</span></div> }
-                    @if (!string.IsNullOrEmpty(Model.Speed)) { <div class="spec-item"><span class="spec-label">Speed</span><span class="spec-value">@Model.Speed</span></div> }
-                    @if (!string.IsNullOrEmpty(Model.Color)) { <div class="spec-item"><span class="spec-label">Color</span><span class="spec-value">@Model.Color</span></div> }
+                    <span class="status-badge @(Model.Stock > 0 ? "instock" : "outstock")">
+                        @(Model.Stock > 0 ? "In Stock" : "Out of Stock")
+                    </span>
                 </div>
             </div>
 
-            <div class="detail-actions">
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-edit-main">
+            <!-- Meta info box -->
+            <div class="info-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Product ID</span>
+                    <span class="meta-value">#@Model.Id.ToString("D5")</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Category</span>
+                    <span class="meta-value">@(Model.Category?.Name ?? "Uncategorized")</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Date Created</span>
+                    <span class="meta-value">@(Model.CreatedAt?.ToString("dd/MM/yyyy HH:mm") ?? "N/A")</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Visibility</span>
+                    <span class="meta-value">Visible in Store</span>
+                </div>
+            </div>
+
+            <!-- Admin actions -->
+            <div class="admin-actions">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-admin btn-admin-edit">
                     <i class='bx bxs-edit'></i> Edit Product
                 </a>
-                <a asp-action="Index" class="btn-back-link">
+                <a asp-action="Index" class="btn-admin btn-admin-back">
                     <i class='bx bx-arrow-back'></i> Back to Inventory
                 </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABS SECTION -->
+    <div class="tabs-section">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('desc')">Description</button>
+            <button class="tab" onclick="switchTab('specs')">Technical Specifications</button>
+            <button class="tab" onclick="switchTab('stats')">Inventory & Stats</button>
+        </div>
+
+        <!-- DESC -->
+        <div class="tab-content active" id="tab-desc">
+            <div class="desc-text">
+                @if (!string.IsNullOrEmpty(Model.Description))
+                {
+                    @Html.Raw(Model.Description)
+                }
+                else
+                {
+                    <p>No description provided for this product.</p>
+                }
+            </div>
+        </div>
+
+        <!-- SPECS -->
+        <div class="tab-content" id="tab-specs">
+            <table class="specs-table">
+                <tr><td>Brand</td><td>@Model.Brand</td></tr>
+                <tr><td>Category</td><td>@(Model.Category?.Name ?? "N/A")</td></tr>
+                @if (!string.IsNullOrEmpty(Model.Stiffness)) { <tr><td>Stiffness</td><td>@Model.Stiffness</td></tr> }
+                @if (!string.IsNullOrEmpty(Model.Weight)) { <tr><td>Weight/Grip</td><td>@Model.Weight</td></tr> }
+                @if (!string.IsNullOrEmpty(Model.BalancePoint)) { <tr><td>Balance Point</td><td>@Model.BalancePoint</td></tr> }
+                @if (!string.IsNullOrEmpty(Model.Material)) { <tr><td>Material</td><td>@Model.Material</td></tr> }
+                @if (!string.IsNullOrEmpty(Model.RecommendedTension)) { <tr><td>Recommended Tension</td><td>@Model.RecommendedTension</td></tr> }
+                @if (!string.IsNullOrEmpty(Model.Color)) { <tr><td>Color</td><td>@Model.Color</td></tr> }
+                @if (!string.IsNullOrEmpty(Model.Origin)) { <tr><td>Origin</td><td>@Model.Origin</td></tr> }
+                @if (!string.IsNullOrEmpty(Model.Warranty)) { <tr><td>Warranty</td><td>@Model.Warranty</td></tr> }
+                @if (!string.IsNullOrEmpty(Model.Size)) { <tr><td>Size</td><td>@Model.Size</td></tr> }
+                @if (!string.IsNullOrEmpty(Model.Speed)) { <tr><td>Speed</td><td>@Model.Speed</td></tr> }
+            </table>
+        </div>
+
+        <!-- STATS -->
+        <div class="tab-content" id="tab-stats">
+            <div class="desc-text">
+                <h3>Inventory Management</h3>
+                <p>Current stock level is monitored by the system. Any changes to stock should be made through the Edit Product page.</p>
+                <ul>
+                    <li><strong>Stock on hand:</strong> @Model.Stock</li>
+                    <li><strong>Safety Stock level:</strong> 5 (Default)</li>
+                    <li><strong>Last updated:</strong> @(Model.CreatedAt?.ToString("dd/MM/yyyy") ?? "N/A")</li>
+                </ul>
+                <h3>Sales Performance</h3>
+                <p>Historical sales data for this specific product will appear here in future updates.</p>
             </div>
         </div>
     </div>
@@ -316,10 +288,28 @@
 
 @section Scripts {
     <script>
-        function updatePreview(url, el) {
-            document.getElementById('mainDisplayImg').src = url;
-            document.querySelectorAll('.gallery-item').forEach(item => item.classList.remove('active'));
-            el.classList.add('active');
+        function changeMainImage(thumb, url) {
+            const mainImg = document.querySelector('#currentMainImg');
+            if (mainImg) {
+                mainImg.style.opacity = '0';
+                setTimeout(() => {
+                    mainImg.src = url;
+                    mainImg.style.opacity = '1';
+                }, 200);
+            }
+            
+            // Update active thumb
+            document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
+            const content = document.getElementById(`tab-${tabId}`);
+            if (content) content.classList.add('active');
         }
     </script>
 }

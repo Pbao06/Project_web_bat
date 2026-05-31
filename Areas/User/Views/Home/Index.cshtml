@@ -13,19 +13,74 @@
 {
     <link href="~/css/Use_web/Home/home.css" rel="stylesheet" />
 }
-<section class="hero">
-    <div class="hero-content">
-        <div class="hero-eyebrow">
-            <i class='bx bx-sun'></i>
-            <span>Season 2026</span>
-            — New Collection Dropped
+<section class="hero-carousel-wrapper">
+    <div class="slider-container hero-slider-container">
+        <button class="slider-btn prev hero-nav" onclick="scrollSlider('heroSlider', -1)"><i class='bx bx-chevron-left'></i></button>
+        
+        <div class="hero-slider" id="heroSlider">
+            <!-- Slide 1 -->
+            <div class="hero-slide">
+                <div class="hero-bg" style="background-image: url('/img/BgHome1.webp');"></div>
+                <div class="hero">
+                    <div class="hero-content">
+                        <div class="hero-eyebrow">
+                            <i class='bx bx-sun'></i>
+                            <span>Season 2026</span>
+                            — New Collection Dropped
+                        </div>
+                        <h1>Play<br><em>Without</em><br>Limits.</h1>
+                        <p class="hero-sub">Professional-grade badminton gear built for players who refuse to compromise on performance.</p>
+                        <div class="hero-cta">
+                            <a class="btn-hero-primary" asp-area="User" asp-controller="Store" asp-action="Index">Shop Collection</a>
+                            <button class="btn-hero-ghost">Watch Campaign <i class='bx bx-play-circle' style="vertical-align:-2px"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 (Placeholder) -->
+            <div class="hero-slide">
+                 <div class="hero-bg" style="background-image: url('/img/BgHome2.webp');"></div>
+                <div class="hero hero-alt">
+                    <div class="hero-content">
+                        <div class="hero-eyebrow">
+                            <i class='bx bx-bolt-circle'></i>
+                            <span>Power Series</span>
+                            — Unleash Your Potential
+                        </div>
+                        <h1><br><em>Explore</em><br>Now</h1>
+                        <p class="hero-sub">Experience the next generation of badminton technology with our Elite Series.</p>
+                        <div class="hero-cta">
+                            <a class="btn-hero-primary" asp-area="User" asp-controller="Store" asp-action="Index">View Series</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- Slide 3 (Placeholder) -->
+            <div class="hero-slide">
+                 <div class="hero-bg">
+                         <video autoplay muted loop playsinline poster="/img/ThumbGiay.webp">
+                            <source src="/img/GiayVideo.mp4" type="video/mp4">
+                        </video>
+                 </div>
+                <div class="hero hero-alt">
+                    <div class="hero-content">
+                        @* <div class="hero-eyebrow">
+                            <i class='bx bx-bolt-circle'></i>
+                            <span>Power Series</span>
+                            — Unleash Your Potential
+                        </div>
+                        <h1><br><em>Explore</em><br>Now</h1>
+                        <p class="hero-sub">Experience the next generation of badminton technology with our Elite Series.</p>
+                        <div class="hero-cta"> *@
+                        @*     <a class="btn-hero-primary" asp-area="User" asp-controller="Store" asp-action="Index">View Series</a>
+                        </div> *@
+                    </div>
+                </div>
+            </div>
         </div>
-        <h1>Play<br><em>Without</em><br>Limits.</h1>
-        <p class="hero-sub">Professional-grade badminton gear built for players who refuse to compromise on performance.</p>
-        <div class="hero-cta">
-            <a class="btn-hero-primary" asp-area="User" asp-controller="Store" asp-action="Index">Shop Collection</a>
-            <button class="btn-hero-ghost">Watch Campaign <i class='bx bx-play-circle' style="vertical-align:-2px"></i></button>
-        </div>
+
+        <button class="slider-btn next hero-nav" onclick="scrollSlider('heroSlider', 1)"><i class='bx bx-chevron-right'></i></button>
     </div>
 
     <div class="hero-stats">
@@ -33,7 +88,7 @@
             <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Products</div></div>
             <div class="stat-item"><div class="stat-num">12K+</div><div class="stat-label">Happy Players</div></div>
             <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Average Rating</div></div>
-            <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">Shipping over $150</div></div>
+            <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">Shipping over 2.000.000 đ</div></div>
         </div>
     </div>
 </section>
@@ -44,17 +99,20 @@
             <span class="feature-tag">New Arrival 2026</span>
             <h2>Carbon<br>X-10</h2>
             <p>Weightless power. Absolute control. Our most advanced frame ever — built with aerospace-grade carbon fibre and tungsten weighting.</p>
-            <div class="feature-price"><span>From</span>$230.00</div>
+            <div class="feature-price"><span>From</span>230.000 đ</div>
             <div class="feature-btns">
                 <a class="btn-white" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-searchTerm="Carbon X-10">Buy Now</a>
                 <a class="btn-outline-white" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-searchTerm="Carbon X-10">Learn More</a>
             </div>
         </div>
         <div class="feature-visual">
-            <div class="racket-wrap" id="featureRacket">
+            @* <div class="racket-wrap" id="featureRacket">
                 <div class="r-head"><div class="r-strings" id="fStrings"></div></div>
                 <div class="r-throat"></div>
                 <div class="r-handle"></div>
+            </div> *@
+            <div class="racket-display">
+                <img src="/img/SanphamNoiBat.png" alt="Carbon X-10 Racket" class="feature-img">
             </div>
         </div>
     </div>
@@ -64,17 +122,34 @@
     <span class="section-label">Browse</span>
     <div class="section-head">
         <h2>Shop by Category</h2>
-        <a asp-area="User" asp-controller="Store" asp-action="Index">All Products <i class='bx bx-right-arrow-alt'></i></a>
+        <a asp-area="User" asp-controller="Store" asp-action="Index">All Categories <i class='bx bx-right-arrow-alt'></i></a>
     </div>
-    <div class="cat-grid">
-        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="1"><div class="tile-icon"><i class='bx bx-baseball'></i></div><h3>Vợt cầu lông</h3><p>Attack, Defense, All-Round & more.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="2"><div class="tile-icon"><i class='bx bx-football'></i></div><h3>Cầu lông</h3><p>Feather & nylon for every level.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="3"><div class="tile-icon"><i class='bx bx-user'></i></div><h3>Quần áo</h3><p>Performance tees, shorts & kits.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="4"><div class="tile-icon"><i class='bx bx-run'></i></div><h3>Giày</h3><p>Court grip, cushion & stability.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="5"><div class="tile-icon"><i class='bx bx-briefcase'></i></div><h3>Túi / Balo</h3><p>From 2-racket to 9-racket bags.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="6"><div class="tile-icon"><i class='bx bx-git-branch'></i></div><h3>Dây cước</h3><p>Tension, repulsion & durability.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="7"><div class="tile-icon"><i class='bx bx-transfer-alt'></i></div><h3>Grip / Cuốn cán</h3><p>Dry, tacky & towel grips.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
-        <a class="cat-tile" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="8"><div class="tile-icon"><i class='bx bx-package'></i></div><h3>Phụ kiện</h3><p>Wristbands, covers & more.</p><span class="tile-arrow">Shop <i class='bx bx-right-arrow-alt'></i></span></a>
+    <div class="yonex-cat-grid">
+        @* vì id category cũ đc map cho thg mới nên ta bắt đầu từ 4 trở đi  *@
+        <a class="yonex-cat-item" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="4">
+            <div class="yonex-cat-box">
+                <img src="~/img/thumbvot.webp" alt="Vợt cầu lông" />
+            </div>
+            <span class="yonex-cat-name">Vợt cầu lông</span>
+        </a>
+        <a class="yonex-cat-item" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="5">
+            <div class="yonex-cat-box">
+                <img src="~/img/shuttlecocksCategory.webp" alt="Cầu lông" />
+            </div>
+            <span class="yonex-cat-name">Cầu lông</span>
+        </a>
+        <a class="yonex-cat-item" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="6">
+            <div class="yonex-cat-box">
+                <img src="~/img/ShoesCategory.webp" alt="Giày" />
+            </div>
+            <span class="yonex-cat-name">Giày</span>
+        </a>
+        <a class="yonex-cat-item" asp-area="User" asp-controller="Store" asp-action="Index" asp-route-categoryId="8">
+            <div class="yonex-cat-box">
+                <img src="~/img/Balocategory.webp" alt="Túi / Balo" />
+            </div>
+            <span class="yonex-cat-name">Túi / Balo</span>
+        </a>
     </div>
 </div>
 
@@ -84,12 +159,16 @@
         <h2>Best Sellers</h2>
         <a asp-area="User" asp-controller="Store" asp-action="Index">View All <i class='bx bx-right-arrow-alt'></i></a>
     </div>
-    <div class="products-strip" id="bestSellers"></div>
+    <div class="slider-container">
+        <button class="slider-btn prev" onclick="scrollSlider('bestSellers', -1)"><i class='bx bx-chevron-left'></i></button>
+        <div class="products-strip standard-slider" id="bestSellers"></div>
+        <button class="slider-btn next" onclick="scrollSlider('bestSellers', 1)"><i class='bx bx-chevron-right'></i></button>
+    </div>
 </div>
 
 <div class="dual-banner">
     <div class="banner-card banner-apparel">
-        <div class="banner-bg"></div>
+        <div class="banner-bg" style="background-image: url('@Url.Content("~/img/Spotlight_Astrox99_Mobile.webp")');"></div>
         <i class='bx bx-user banner-icon'></i>
         <div class="banner-body">
             <span class="banner-tag">New Season Kit</span>
@@ -99,7 +178,7 @@
         </div>
     </div>
     <div class="banner-card banner-footwear">
-        <div class="banner-bg"></div>
+        <div class="banner-bg"  style="background-image: url('@Url.Content("~/img/Home_giay_cam.webp")');"></div>
         <i class='bx bx-run banner-icon'></i>
         <div class="banner-body">
             <span class="banner-tag">AeroStep Series</span>
@@ -116,7 +195,11 @@
         <h2>New Arrivals</h2>
         <a asp-area="User" asp-controller="Store" asp-action="Index">See All New <i class='bx bx-right-arrow-alt'></i></a>
     </div>
-    <div class="products-strip" id="newArrivals"></div>
+    <div class="slider-container">
+        <button class="slider-btn prev" onclick="scrollSlider('newArrivals', -1)"><i class='bx bx-chevron-left'></i></button>
+        <div class="products-strip standard-slider" id="newArrivals"></div>
+        <button class="slider-btn next" onclick="scrollSlider('newArrivals', 1)"><i class='bx bx-chevron-right'></i></button>
+    </div>
 </div>
 
 <div class="brand-strip">
@@ -174,6 +257,7 @@
 </div>
 
 @section Scripts {
+    <script src="~/js/favorite.js"></script>
     <script>
         /* ── Draw racket strings ── */
         const fs = document.getElementById('fStrings');
@@ -195,10 +279,12 @@
                 isNew = (DateTime.UtcNow - (p.CreatedAt ?? DateTime.UtcNow)).TotalDays < 30,
                 image = p.Image,
                 cat = p.CategoryName ?? "Sản phẩm",
-                brand = p.Brand
+                brand = p.Brand,
+                isLiked = p.IsLiked
             }) ?? Enumerable.Empty<object>()));
 
-        let wished = new Set();
+        // Khởi tạo tập hợp các sản phẩm đã thích từ Model
+        let wished = new Set(PRODUCTS.filter(p => p.isLiked).map(p => p.id));
 
         function badgeHTML(b){
           if(b==='new') return '<span class="badge badge-new">New</span>';
@@ -208,8 +294,12 @@
         function stars(r){ return '★'.repeat(Math.floor(r))+'☆'.repeat(5-Math.floor(r)); }
 
         function cardHTML(p, idx){
-            const imgHTML = p.image 
-                ? `<img src="/img/${p.image}" style="width:100%;height:100%;object-fit:contain;padding:16px;transition:transform .5s ease;">` 
+            const imagePath = p.image 
+                ? (p.image.startsWith('/') || p.image.startsWith('http') ? p.image : `/img/${p.image}`) 
+                : null;
+
+            const imgHTML = imagePath 
+                ? `<img src="${imagePath}" style="width:100%;height:100%;object-fit:contain;padding:16px;transition:transform .5s ease;">` 
                 : `<i class='bx ${p.icon}'></i>`;
 
             const isWished = wished.has(p.id) ? 'wished' : '';
@@ -219,7 +309,7 @@
                 <div class="card-img">
                     ${imgHTML}
                     <div class="card-badges">${badgeHTML(p.badge)}</div>
-                    <button class="card-wish ${isWished}" onclick="toggleWish(event, ${p.id})">
+                    <button type="button" class="card-wish ${isWished}" data-id="${p.id}" onclick="handleToggleWish(event, this, ${p.id})">
                         <i class='bx ${wished.has(p.id) ? 'bxs-heart' : 'bx-heart'}'></i>
                     </button>
                 </div>
@@ -228,8 +318,8 @@
                     <div class="card-name">${p.name}</div>
                     <div class="card-footer">
                         <div class="card-price">
-                            $${p.price.toLocaleString()}
-                            ${p.oldPrice ? `<span class="old">$${p.oldPrice.toLocaleString()}</span>` : ''}
+                            ${p.price.toLocaleString('vi-VN')} đ
+                            ${p.oldPrice ? `<span class="old">${p.oldPrice.toLocaleString('vi-VN')} đ</span>` : ''}
                         </div>
                         <div class="card-stars">
                             ${stars(p.rating)}
@@ -240,22 +330,45 @@
             </div>`;
         }
 
-        function toggleWish(e,id){
-          e.stopPropagation();
-          if(wished.has(id)) wished.delete(id); else wished.add(id);
-          renderAll();
+        async function handleToggleWish(e, btn, id) {
+            e.stopPropagation();
+            
+            if (typeof toggleWish === 'function') {
+                // Gọi hàm toggleWish chung từ favorite.js
+                await toggleWish(e, btn, id); 
+                
+                // Đồng bộ trạng thái vào Set wished
+                if (btn.classList.contains('wished')) {
+                    wished.add(id);
+                } else {
+                    wished.delete(id);
+                }
+                
+                // Re-render để cập nhật tất cả các vị trí xuất hiện của sản phẩm này (nếu có)
+                renderAll();
+            } else {
+                // Fallback nếu không load được favorite.js
+                if(wished.has(id)) wished.delete(id); else wished.add(id);
+                renderAll();
+            }
         }
 
         function renderAll(){
           // Show top 8 best sellers in slider
-          const bs = [...PRODUCTS].sort((a,b)=>b.reviews-a.reviews).slice(0,8);
+          const bs = [...PRODUCTS].sort((a,b)=>b.reviews-a.reviews).slice(0,12);
           document.getElementById('bestSellers').innerHTML = bs.map((p,i)=>cardHTML(p,i)).join('');
 
           // Show top 8 new arrivals in slider
           const na = PRODUCTS.filter(p=>p.isNew).length > 0 
-            ? PRODUCTS.filter(p=>p.isNew).slice(0,8)
-            : [...PRODUCTS].reverse().slice(0,8);
+            ? PRODUCTS.filter(p=>p.isNew).slice(0,12)
+            : [...PRODUCTS].reverse().slice(0,12);
           document.getElementById('newArrivals').innerHTML = na.map((p,i)=>cardHTML(p,i)).join('');
+
+          // Update slider buttons visibility
+          if(typeof updateSliderButtons === 'function'){
+            updateSliderButtons('bestSellers');
+            updateSliderButtons('newArrivals');
+          }
         }
 
         renderAll();

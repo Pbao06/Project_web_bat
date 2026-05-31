@@ -14,6 +14,7 @@ namespace Getdata1.DTOs
         public string? Brand { get; set; }
         public DateTime? CreatedAt { get; set; }
         public List<string>? GalleryImages { get; set; }
+        public bool IsLiked { get; set; } // Trạng thái đã thích bởi người dùng hiện tại
 
         // Technical Specifications
         public string? Stiffness { get; set; }

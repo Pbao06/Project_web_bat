@@ -1,0 +1,318 @@
+﻿@{
+    ViewData["Title"] = "Contact us";
+    Layout = "~/Areas/User/Views/Shared/Layout.cshtml";
+}
+@section Styles
+{
+    <link href="~/css/Use_web/Home/contactus.css" rel="stylesheet" />
+}
+
+
+<!-- PAGE HERO -->
+@* <section class="page-hero">
+    <div class="page-hero-inner">
+        <div class="page-eyebrow">
+            <i class='bx bx-support'></i>
+            <span>We're Here</span>
+        </div>
+        <h1>Get in<br><em>Touch.</em></h1>
+        <p>Questions about gear, orders, or stringing services? Our team of badminton specialists is ready to help.</p>
+    </div>
+</section> *@
+
+<!-- MAIN CONTACT LAYOUT -->
+<div class="contact-wrap">
+
+    <!-- FORM -->
+    <div class="contact-form-side">
+        <span class="form-label-top">Send a Message</span>
+        <h2 class="form-title">How can we help?</h2>
+        <p class="form-subtitle">Pick a topic below so we can route your message to the right specialist.</p>
+
+        <!-- Topic pills -->
+        <div class="topic-pills">
+            <div class="pill active" onclick="selectPill(this)">Order & Shipping</div>
+            <div class="pill" onclick="selectPill(this)">Product Advice</div>
+            <div class="pill" onclick="selectPill(this)">Stringing Service</div>
+            <div class="pill" onclick="selectPill(this)">Returns & Warranty</div>
+            <div class="pill" onclick="selectPill(this)">Partnership</div>
+            <div class="pill" onclick="selectPill(this)">Other</div>
+        </div>
+
+        <!-- Form -->
+        <div class="form-row">
+            <div class="form-group">
+                <label>First Name *</label>
+                <input type="text" placeholder="Nguyễn" id="fname">
+            </div>
+            <div class="form-group">
+                <label>Last Name *</label>
+                <input type="text" placeholder="Thanh" id="lname">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" placeholder="you@email.com" id="email">
+            </div>
+            <div class="form-group">
+                <label>Phone (optional)</label>
+                <input type="tel" placeholder="+84 900 000 000" id="phone">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Order Number (if applicable)</label>
+            <input type="text" placeholder="PB-2026-XXXXX" id="order">
+        </div>
+
+        <div class="form-group">
+            <label>Message *</label>
+            <textarea placeholder="Tell us what's on your mind — the more detail, the faster we can help." id="msg" oninput="updateChar()"></textarea>
+            <div class="char-count" id="charCount">0 / 500</div>
+        </div>
+
+        <div class="form-group">
+            <label>Rate your recent experience (optional)</label>
+            <div class="star-rating" id="stars">
+                <i class='bx bx-star' onclick="setRating(1)"></i>
+                <i class='bx bx-star' onclick="setRating(2)"></i>
+                <i class='bx bx-star' onclick="setRating(3)"></i>
+                <i class='bx bx-star' onclick="setRating(4)"></i>
+                <i class='bx bx-star' onclick="setRating(5)"></i>
+            </div>
+        </div>
+
+        <button class="btn-submit" onclick="submitForm()">
+            Send Message <i class='bx bx-send'></i>
+        </button>
+
+        <div class="success-msg" id="successMsg">
+            <i class='bx bx-check-circle'></i>
+            <p><strong>Message sent!</strong> Our team will get back to you within 24 hours. Check your inbox for a confirmation email.</p>
+        </div>
+    </div>
+
+    <!-- INFO CARDS -->
+    <div class="contact-info-side">
+
+        <div class="info-card">
+            <div class="info-card-head">
+                <div class="info-icon"><i class='bx bx-map-pin'></i></div>
+                <h3>Visit Our Store</h3>
+            </div>
+            <p>123 Nguyễn Huệ Boulevard<br>District 1, Ho Chi Minh City<br>Vietnam, 700000</p>
+            <a href="#" class="info-link">Get Directions <i class='bx bx-right-arrow-alt'></i></a>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-head">
+                <div class="info-icon"><i class='bx bx-time'></i></div>
+                <h3>Opening Hours</h3>
+            </div>
+            <div class="hours-list">
+                <div class="hours-row"><span class="day">Mon – Fri</span><span class="time">8:00 – 21:00</span></div>
+                <div class="hours-row"><span class="day">Saturday</span><span class="time">8:00 – 22:00</span></div>
+                <div class="hours-row"><span class="day">Sunday</span><span class="time">9:00 – 20:00</span></div>
+                <div class="hours-row"><span class="day">Public Holiday</span><span class="time closed">Closed</span></div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-head">
+                <div class="info-icon"><i class='bx bx-phone'></i></div>
+                <h3>Call or Email</h3>
+            </div>
+            <p>Prefer to talk? Reach us directly.</p>
+            <a href="tel:+842812345678" class="info-link"><i class='bx bx-phone' style="font-size:14px"></i> +84 28 1234 5678</a><br>
+            <a href="mailto:hello@pbao.com" class="info-link"><i class='bx bx-envelope' style="font-size:14px"></i> hello@pbao.com</a>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-head">
+                <div class="info-icon"><i class='bx bx-chat'></i></div>
+                <h3>Follow Us</h3>
+            </div>
+            <p>Stay updated on new drops & court tips.</p>
+            <div class="social-row">
+                <a href="#" class="social-btn" title="Facebook"><i class='bx bxl-facebook'></i></a>
+                <a href="#" class="social-btn" title="Instagram"><i class='bx bxl-instagram'></i></a>
+                <a href="#" class="social-btn" title="TikTok"><i class='bx bxl-tiktok'></i></a>
+                <a href="#" class="social-btn" title="YouTube"><i class='bx bxl-youtube'></i></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+    <div class="faq-inner">
+        <span class="faq-label">Common Questions</span>
+        <h2 class="faq-title">Quick Answers</h2>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                How long does shipping take within Vietnam?
+                <i class='bx bx-chevron-down'></i>
+            </button>
+            <div class="faq-a">Standard delivery within Ho Chi Minh City takes 1–2 business days. For other provinces, please allow 3–5 business days. Express same-day delivery is available in District 1–12. Orders above 2.000.000 đ ship free.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Can I get my racket strung at the store?
+                <i class='bx bx-chevron-down'></i>
+            </button>
+            <div class="faq-a">Yes! Walk-ins are welcome for our professional stringing service. Standard restring takes 30–60 minutes in-store. We carry over 40 string types and can string to your preferred tension. Prices start from 80,000 VND per racket.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                What is your return & exchange policy?
+                <i class='bx bx-chevron-down'></i>
+            </button>
+            <div class="faq-a">We accept returns within 14 days of purchase for unused items in original packaging. Defective products are covered by the manufacturer's warranty (1–2 years depending on brand). Please contact us with your order number to start the process.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Do you offer bulk or club discounts?
+                <i class='bx bx-chevron-down'></i>
+            </button>
+            <div class="faq-a">Absolutely. We have special pricing for badminton clubs, academies, and team orders of 10+ items. Reach out via the contact form and select "Partnership" as your topic — our team will get back with a custom quote within 24 hours.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+                Are all products on the site authentic?
+                <i class='bx bx-chevron-down'></i>
+            </button>
+            <div class="faq-a">100%. We are an official authorised dealer for Yonex, Victor, Li-Ning, and Apacs. All products come with official authenticity seals and full manufacturer warranty. We never stock grey-market or replica products.</div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+        <script>
+    /* Topic pills */
+    function selectPill(el){
+      document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    /* Char count */
+    function updateChar(){
+      const v = document.getElementById('msg').value.length;
+      document.getElementById('charCount').textContent = v + ' / 500';
+    }
+
+    /* Star rating */
+    let rating = 0;
+    function setRating(n){
+      rating = n;
+      document.querySelectorAll('#stars i').forEach((s,i)=>{
+        s.className = i < n ? 'bx bxs-star' : 'bx bx-star';
+        s.style.color = i < n ? '#f5a623' : 'var(--bg3)';
+      });
+    }
+
+    /* Submit */
+    // function submitForm(){
+    //        const fields = [
+    //         { id: 'fname', name: 'First Name' },
+    //         { id: 'email', name: 'Email' },
+    //         { id: 'msg', name: 'Message' }
+    //     ];
+    //     let haserror=false;
+    //     reset lại status old before check
+    //     fields.forEach(fields=>{
+    //         const el=document.getElementById(fields.id)
+    //         if(!el.value.Trim())
+    //         {
+    //             el.classList.add('input-error'); tô đỏ nếu ko nhập 
+    //             haserror=true;
+    //         }
+    //     };
+    //   const fname = document.getElementById('fname').value.trim();
+    //   const email = document.getElementById('email').value.trim();
+    //   const msg   = document.getElementById('msg').value.trim();
+    //       3. Nếu có lỗi -> Hiện Toast báo lỗi
+    //   if(!fname || !email || !msg){
+    //     const btn = document.querySelector('.btn-submit');
+    //     btn.style.background='#bf4800';
+    //     btn.textContent='Please fill required fields';
+    //     setTimeout(()=>{
+    //       btn.style.background='';
+    //       btn.innerHTML='Send Message <i class="bx bx-send"></i>';
+    //     },2000);
+    //     return;
+    //   }
+    //   const btn = document.querySelector('.btn-submit');
+    //   btn.innerHTML='<i class="bx bx-loader-alt" style="animation:spin .8s linear infinite"></i> Sending…';
+    //   btn.disabled=true;
+    //   setTimeout(()=>{
+    //     btn.style.display='none';
+    //     document.getElementById('successMsg').classList.add('show');
+    //   },1400);
+    // }
+            function submitForm() {
+            // 1. Lấy danh sách các trường cần bắt buộc
+                const fields = [
+                    { id: 'fname', name: 'First Name' },
+                    { id: 'email', name: 'Email' },
+                    { id: 'msg', name: 'Message' }
+                ];
+
+                let hasError = false;
+
+                // Reset lại trạng thái cũ trước khi check
+                fields.forEach(field => {
+                    const el = document.getElementById(field.id);
+                    el.classList.remove('input-error');
+                });
+
+                // 2. Kiểm tra từng trường
+                fields.forEach(field => {
+                    const el = document.getElementById(field.id);
+                    if (!el.value.trim()) {
+                        el.classList.add('input-error'); // Tô đỏ ô thiếu
+                        hasError = true;
+                    }
+                });
+
+                // 3. Nếu có lỗi -> Hiện Toast báo lỗi
+                if (hasError) {
+                    // Gọi hàm Toast báo lỗi của bạn ở đây (mình dùng alert thay thế nếu bạn chưa có hàm toast)
+                    showToast("Vui lòng điền các ô được đánh dấu đỏ!", 'error');
+                    return;
+                }
+
+                // 4. Nếu vượt qua check -> Bắt đầu loading
+                const btn = document.querySelector('.btn-submit');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Đang gửi...';
+
+                // 5. Giả lập gửi thành công
+                setTimeout(() => {
+                    btn.style.display = 'none';
+                    document.getElementById('successMsg').classList.add('show');
+                    showToast("Thành công! Chúng tôi đã nhận được tin nhắn.");
+                }, 2000);
+        }
+
+    /* FAQ */
+    function toggleFaq(btn){
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    }
+
+    /* Spin animation */
+    const style=document.createElement('style');
+    style.textContent='@@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}';
+    document.head.appendChild(style);
+    </script>
+}

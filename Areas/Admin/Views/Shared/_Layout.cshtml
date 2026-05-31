@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - Pbao Admin</title>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -18,12 +18,19 @@
 </head>
 <body>
     @using Microsoft.AspNetCore.Mvc.Rendering
+    @using Microsoft.AspNetCore.Identity
+    @using Getdata1.Models
+    @inject UserManager<User> UserManager
+    @inject SignInManager<User> SignInManager
     @{
         string IsActive(string controller)
         {
             var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
             return string.Equals(controller, currentController, StringComparison.OrdinalIgnoreCase) ? "active" : "";
         }
+
+        var currentUser = await UserManager.GetUserAsync(User);
+        var initials = currentUser?.UserName?.Substring(0, 1).ToUpper() ?? "A";
     }
 
     <!-- SIDEBAR -->
@@ -74,7 +81,7 @@
                 </a>
             </li>
             <li>
-                <a asp-area="User" asp-controller="Account" asp-action="Logout" class="logout">
+                <a @*asp-area="User" asp-controller="Account" asp-action="Logout"*@ href="javascript:void(0)" onclick="Logout()" class="logout">
                     <i class='bx bx-log-out'></i>
                     <span>Logout</span>
                 </a>
@@ -88,20 +95,17 @@
         <nav>
             <i class='bx bx-menu'></i>
             
-            <form action="#">
+            @* <form action="#">
                 <div class="form-input">
                     <input type="search" placeholder="Search anything...">
                     <button type="submit"><i class='bx bx-search'></i></button>
                 </div>
-            </form>
+            </form> *@
 
-            <a href="#" class="notification">
-                <i class='bx bx-bell'></i>
-                <span class="num">8</span>
-            </a>
+            @await Component.InvokeAsync("AdminNotification")
             
-            <a href="#" class="profile">
-                <img src="~/img/1bfa3f73-66d5-4a3c-8cb5-2ffa81f336d8.jpg" alt="Profile">
+            <a asp-area="User" asp-controller="Profile" asp-action="MyAccount" class="profile" title="@currentUser?.UserName">
+                <div class="avatar-initials">@initials</div>
             </a>
         </nav>
 
@@ -111,9 +115,44 @@
 
     <!-- SCRIPTS -->
     <script src="~/js/Admin_script.js"></script>
+    @await Html.PartialAsync("_GlobalModal")
     @await RenderSectionAsync("Scripts", required: false)
     
+    @if (TempData["Notification"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const data = @Html.Raw(TempData["Notification"]);
+                showGlobalModal({
+                    title: data.Type === 'success' ? 'Thành công' : (data.Type === 'error' ? 'Lỗi' : 'Thông báo'),
+                    content: data.Message,
+                    confirmText: 'Đóng',
+                    hideCancel: true
+                });
+            });
+        </script>
+    }
+
     <script>
+
+         function Logout() {
+                console.log("Clicked");
+            showGlobalModal({
+                title: 'Đăng xuất',
+                content: 'Bạn có chắc muốn đăng xuất không?',
+                confirmText: 'Đăng xuất',
+                cancelText: 'Hủy',
+                onConfirm: function() {
+                    // Đóng modal
+                    closeGlobalModal();
+                     setTimeout(function () {
+                         window.location.href = '/User/Account/Logout';
+                     }, 300); // 300ms hoặc bằng thời gian animation
+                    // Đẩy sang trang logout để xóa cookie user redirect về login 
+                    // window.location.href = '/User/Account/Logout';
+                }
+            });
+         }
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof initSidebar === 'function') initSidebar();
             if (typeof initNavbar === 'function') initNavbar();

@@ -1,4 +1,3 @@
-﻿
 
 @model Getdata1.DTOs.CartDto
 
@@ -16,8 +15,8 @@
 
     <div class="page-heading">
         <div class="page-heading-left">
-            <h1>Giỏ hàng <span id="headCount" style="color:var(--muted);font-weight:400;font-size:28px">(3)</span></h1>
-            <p id="headSub">Bạn có <strong>3 sản phẩm</strong> trong giỏ hàng.</p>
+            <h1>Giỏ hàng <span id="headCount" style="color:var(--muted);font-weight:400;font-size:28px">(0)</span></h1>
+            <p id="headSub">Bạn có <strong>0 sản phẩm</strong> trong giỏ hàng.</p>
         </div>
         <button class="btn-clear" onclick="clearAll()">
             <i class='bx bx-trash'></i> Xoá tất cả
@@ -54,9 +53,10 @@
                 <span class="section-label">Gợi ý cho bạn</span>
                 <div class="also-like-head">
                     <h2>Có thể bạn thích</h2>
-                    <a href="#">Xem tất cả <i class='bx bx-right-arrow-alt'></i></a>
+                    <a href="/User/Store">Xem tất cả <i class='bx bx-right-arrow-alt'></i></a>
                 </div>
-                <div class="suggest-strip" id="suggestStrip"></div>
+                <div class="suggest-strip" id="suggestStrip"></div> 
+                @* render -> sản phẩm goi y  *@
             </div>
         </div>
 
@@ -74,7 +74,7 @@
                 </div>
                 <div class="promo-success" id="promoSuccess">
                     <i class='bx bx-check-circle'></i>
-                    Mã <strong>PBAO2026</strong> — Giảm $23.00!
+                    Mã <strong>PBAO2026</strong> — Giảm 23.000 đ!
                 </div>
                 <div class="promo-err" id="promoErr">Mã không hợp lệ. Thử lại nhé!</div>
             </div>
@@ -83,11 +83,11 @@
             <div class="os-totals">
                 <div class="os-row">
                     <span>Tạm tính</span>
-                    <span class="val" id="subTotal">$434.00</span>
+                    <span class="val" id="subTotal">0 đ</span>
                 </div>
                 <div class="os-row discount" id="discountRow" style="display:none">
                     <span>Giảm giá (PBAO2026)</span>
-                    <span class="val">-$23.00</span>
+                    <span class="val">-0 đ</span>
                 </div>
                 <div class="os-row shipping">
                     <span>Vận chuyển</span>
@@ -104,17 +104,17 @@
                 </div>
                 <div class="os-row total">
                     <span>Tổng cộng</span>
-                    <span class="val" id="totalVal">$434.00</span>
+                    <span class="val" id="totalVal">0 đ</span>
                 </div>
             </div>
 
             <!-- CTA -->
             <div class="os-cta">
-                <button class="btn-checkout" onclick="window.location.href='/User/Cart/Payment'">
+                <button class="btn-checkout">
                     <i class='bx bx-lock-alt'></i>
                     Tiến hành thanh toán
                 </button>
-                <button class="btn-continue" onclick="window.location.href='/User/Store'">
+                <button class="btn-continue">
                     <i class='bx bx-left-arrow-alt'></i>
                     Tiếp tục mua sắm
                 </button>
@@ -159,9 +159,10 @@
         const empty     = document.getElementById('cartEmpty');
         const heading   = document.getElementById('headCount');
         const headSub   = document.getElementById('headSub');
+        const tableHead = document.querySelector('.cart-table-head');
         
-        const items = data.items || [];
-        const itemCount = data.totalItems;
+        const items = data.items || []; 
+        const itemCount = data.totalItems || 0;
 
         heading.textContent = `(${itemCount})`;
         headSub.innerHTML = items.length
@@ -169,52 +170,59 @@
             : `Giỏ hàng của bạn đang trống.`;
 
         if (items.length === 0) {
-            container.innerHTML = '';
-            empty.classList.add('show');
-            document.getElementById('alsoLike').style.opacity = '.5';
+            container.innerHTML = ''; 
+            empty.classList.add('show'); 
+            if(tableHead) tableHead.style.display = 'none';
+            document.getElementById('alsoLike').style.opacity = '.5'; 
         } else {
             empty.classList.remove('show');
-            document.getElementById('alsoLike').style.opacity = '1';
-            container.innerHTML = items.map((item, idx) => itemHTML(item, idx)).join('');
+            if(tableHead) tableHead.style.display = 'grid';
+            document.getElementById('alsoLike').style.opacity = '1'; 
+            container.innerHTML = items.map((item, idx) => itemHTML(item, idx)).join(''); 
         }
 
-        // totals
-        document.getElementById('subTotal').textContent = '$' + data.subTotal.toFixed(2);
+        // Totals
+        document.getElementById('subTotal').textContent = (data.subTotal || 0).toLocaleString('vi-VN') + ' đ';
         
         const hasPromo = data.appliedPromoCode != null;
         document.getElementById('discountRow').style.display = hasPromo ? 'flex' : 'none';
         if (hasPromo) {
             document.getElementById('discountRow').querySelector('span:first-child').textContent = `Giảm giá (${data.appliedPromoCode})`;
-            document.getElementById('discountRow').querySelector('.val').textContent = '-$' + data.discountAmount.toFixed(2);
+            document.getElementById('discountRow').querySelector('.val').textContent = '-' + (data.discountAmount || 0).toLocaleString('vi-VN') + ' đ';
             document.getElementById('promoSuccess').classList.add('show');
-            document.getElementById('promoSuccess').innerHTML = `<i class='bx bx-check-circle'></i> Mã <strong>${data.appliedPromoCode}</strong> — Giảm $${data.discountAmount.toFixed(2)}!`;
+            document.getElementById('promoSuccess').innerHTML = `<i class='bx bx-check-circle'></i> Mã <strong>${data.appliedPromoCode}</strong> — Giảm ${(data.discountAmount || 0).toLocaleString('vi-VN')} đ!`;
+        } else {
+            document.getElementById('promoSuccess').classList.remove('show');
         }
 
-        document.getElementById('totalVal').textContent = '$' + data.totalPrice.toFixed(2);
+        document.getElementById('totalVal').textContent = (data.totalPrice || 0).toLocaleString('vi-VN') + ' đ';
 
-        // shipping bar (example threshold $150)
-        const sub = data.subTotal;
-        const pct = Math.min((sub / 150) * 100, 100);
-        document.getElementById('shipFill').style.width = pct + '%';
-        if (sub >= 150) {
-            document.getElementById('freeShipNotice').querySelector('div').innerHTML =
+        // Shipping bar
+        const sub = data.subTotal || 0;
+        const threshold = 2000000;
+        const pct = Math.min((sub / threshold) * 100, 100);
+        const shipFill = document.getElementById('shipFill');
+        if(shipFill) shipFill.style.width = pct + '%';
+        
+        const noticeDiv = document.getElementById('freeShipNotice').querySelector('div');
+        if (sub >= threshold) {
+            noticeDiv.innerHTML =
                 'Đơn hàng của bạn đủ điều kiện giao hàng <strong>miễn phí</strong>!<div class="ship-progress-bar" style="margin-top:6px"><div class="ship-progress-fill" id="shipFill" style="width:100%"></div></div>';
         } else {
-            const need = (150 - sub).toFixed(2);
-            document.getElementById('freeShipNotice').querySelector('div').innerHTML =
-                `Mua thêm <strong>$${need}</strong> để được <strong>miễn phí vận chuyển</strong>!<div class="ship-progress-bar" style="margin-top:6px"><div class="ship-progress-fill" id="shipFill" style="width:${pct}%"></div></div>`;
+            const need = (threshold - sub).toLocaleString('vi-VN');
+            noticeDiv.innerHTML =
+                `Mua thêm <strong>${need} đ</strong> để được <strong>miễn phí vận chuyển</strong>!<div class="ship-progress-bar" style="margin-top:6px"><div class="ship-progress-fill" id="shipFill" style="width:${pct}%"></div></div>`;
         }
     }
 
     function itemHTML(item, idx) {
-        // Assume badges or extra info might come from product logic later, for now simplified
-        const imgPath = item.image ? `/img/${item.image}` : '/img/no-img.jfif';
+        const imgPath = item.image ? (item.image.startsWith('/') ? item.image : `/img/${item.image}`) : '/img/no-img.jfif';
         
         return `
         <div class="cart-item" id="item-${item.productId}" style="animation-delay:${idx*0.06}s">
             <div class="item-product">
                 <div class="item-thumb">
-                    <img src="${imgPath}" alt="${item.productName}" style="width:100%; height:100%; object-fit:cover; border-radius:8px;" />
+                    <img src="${imgPath}" alt="${item.productName}" />
                 </div>
                 <div class="item-meta">
                     <div class="item-cat">${item.categoryName || 'Sản phẩm'}</div>
@@ -224,7 +232,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item-price">$${item.price.toFixed(2)}</div>
+            <div class="item-price">${item.price.toLocaleString('vi-VN')} đ</div>
             <div class="item-qty-wrap">
                 <div class="qty-ctrl">
                     <button class="qty-btn" onclick="changeQty(${item.productId}, -1)"><i class='bx bx-minus'></i></button>
@@ -233,7 +241,7 @@
                 </div>
             </div>
             <div class="item-del">
-                <button class="btn-del" onclick="removeItem(${item.productId})" title="Xoá">
+                <button class="btn-del" onclick="removeItem(${item.productId}, '${item.productName}')" title="Xoá">
                     <i class='bx bx-x'></i>
                 </button>
             </div>
@@ -242,12 +250,13 @@
 
     /* ── ACTIONS ── */
     async function changeQty(productId, delta) {
+        if (!currentCart) return;
         const item = currentCart.items.find(i => i.productId === productId);
         if (!item) return;
         
         const newQty = item.quantity + delta;
         if (newQty <= 0) {
-            removeItem(productId);
+            removeItem(productId, item.productName);
             return;
         }
 
@@ -260,7 +269,6 @@
                 currentCart = result.cart;
                 render(result.cart);
                 
-                // bump animation
                 const el = document.querySelector(`#item-${productId} .qty-num`);
                 if (el) { el.style.transform='scale(1.4)'; setTimeout(()=>el.style.transform='',200); }
             }
@@ -269,62 +277,70 @@
         }
     }
 
-    async function removeItem(productId) {
-        if (!confirm('Xoá sản phẩm này khỏi giỏ hàng?')) return;
-
-        const el = document.getElementById('item-' + productId);
-        if (el) {
-            el.style.transition = 'opacity .3s, transform .3s, max-height .35s, padding .35s';
-            el.style.opacity = '0';
-            el.style.transform = 'translateX(20px)';
-            el.style.maxHeight = el.offsetHeight + 'px';
-            
-            setTimeout(() => {
-                el.style.maxHeight = '0';
-                el.style.padding = '0';
-                el.style.borderBottom = 'none';
-            }, 280);
-
-            try {
-                const response = await fetch(`/User/Cart/RemoveFromCart?productId=${productId}`, {
-                    method: 'POST'
-                });
-                const result = await response.json();
-                if (result.success) {
-                    setTimeout(() => {
-                        currentCart = result.cart;
-                        render(result.cart);
-                    }, 500);
+    async function removeItem(productId, productName) {
+        showGlobalModal({
+            title: 'Xác nhận xoá',
+            content: `Bạn có chắc chắn muốn xoá <strong>${productName}</strong> khỏi giỏ hàng?`,
+            confirmText: 'Xoá ngay',
+            cancelText: 'Hủy',
+            onConfirm: async function() {
+                const el = document.getElementById('item-' + productId);
+                if (el) {
+                    el.classList.add('removing');
+                    
+                    try {
+                        const response = await fetch(`/User/Cart/RemoveFromCart?productId=${productId}`, {
+                            method: 'POST'
+                        });
+                        const result = await response.json();
+                        if (result.success) {
+                            setTimeout(() => {
+                                currentCart = result.cart;
+                                render(result.cart);
+                                showToast('Đã xoá sản phẩm khỏi giỏ hàng.', 'success');
+                            }, 350);
+                        }
+                    } catch (error) {
+                        console.error('Error removing item:', error);
+                        showToast('Có lỗi xảy ra khi xoá sản phẩm.', 'error');
+                    }
                 }
-            } catch (error) {
-                console.error('Error removing item:', error);
             }
-        }
+        });
     }
 
     async function clearAll() {
         if (!currentCart || currentCart.items.length === 0) return;
-        if (!confirm('Xoá toàn bộ giỏ hàng?')) return;
+        
+        showGlobalModal({
+            title: 'Xoá toàn bộ giỏ hàng',
+            content: 'Bạn có chắc chắn muốn xoá tất cả sản phẩm trong giỏ hàng không?',
+            confirmText: 'Xoá tất cả',
+            cancelText: 'Hủy',
+            onConfirm: async function() {
+                const items = document.querySelectorAll('.cart-item');
+                items.forEach((el, i) => {
+                    setTimeout(() => {
+                        el.style.transition = '.25s'; el.style.opacity='0'; el.style.transform='translateX(20px)';
+                    }, i * 60);
+                });
 
-        const items = document.querySelectorAll('.cart-item');
-        items.forEach((el, i) => {
-            setTimeout(() => {
-                el.style.transition = '.25s'; el.style.opacity='0'; el.style.transform='translateX(20px)';
-            }, i * 60);
-        });
-
-        try {
-            const response = await fetch('/User/Cart/ClearCart', { method: 'POST' });
-            const result = await response.json();
-            if (result.success) {
-                setTimeout(() => {
-                    currentCart = { items: [], totalItems: 0, subTotal: 0, totalPrice: 0, discountAmount: 0 };
-                    render(currentCart);
-                }, items.length * 60 + 300);
+                try {
+                    const response = await fetch('/User/Cart/ClearCart', { method: 'POST' });
+                    const result = await response.json();
+                    if (result.success) {
+                        setTimeout(() => {
+                            currentCart = { items: [], totalItems: 0, subTotal: 0, totalPrice: 0, discountAmount: 0 };
+                            render(currentCart);
+                            showToast('Đã làm trống giỏ hàng.', 'success');
+                        }, items.length * 60 + 300);
+                    }
+                } catch (error) {
+                    console.error('Error clearing cart:', error);
+                    showToast('Có lỗi xảy ra khi xoá giỏ hàng.', 'error');
+                }
             }
-        } catch (error) {
-            console.error('Error clearing cart:', error);
-        }
+        });
     }
 
     async function applyPromo() {
@@ -356,32 +372,43 @@
         }
     }
 
-    /* ── SUGGESTIONS (Mock for UI) ── */
-    const SUGGEST = [
-        { id: 4, name: 'Victor K9900', cat: 'Vợt', price: '$195.00', icon: 'bx-baseball' },
-        { id: 5, name: 'Yonex PC 65 Z3', cat: 'Giày', price: '$135.00', icon: 'bx-run' },
-        { id: 6, name: 'Pbao Carbon X-10', cat: 'Vợt', price: '$210.00', icon: 'bx-baseball' },
-        { id: 7, name: 'Pro Series Tee', cat: 'Quần áo', price: '$45.00', icon: 'bx-user' },
-    ];
-
-    function renderSuggest() {
+    /* ── SUGGESTIONS ── */
+    async function renderSuggest() {
         const strip = document.getElementById('suggestStrip');
         if (!strip) return;
-        strip.innerHTML = SUGGEST.map(s => `
-            <div class="suggest-card">
-                <div class="suggest-img"><i class='bx ${s.icon}'></i></div>
-                <div class="suggest-body">
-                    <div class="suggest-cat">${s.cat}</div>
-                    <div class="suggest-name">${s.name}</div>
-                    <div class="suggest-footer">
-                        <span class="suggest-price">${s.price}</span>
-                        <button class="btn-suggest-add" onclick="addToCart(${s.id})">
-                            <i class='bx bx-plus'></i>
-                        </button>
+
+        try {
+            const response = await fetch('/User/Cart/GetSuggestedProducts');
+            const products = await response.json();
+            
+            if (!products || products.length === 0) {
+                document.getElementById('alsoLike').style.display = 'none';
+                return;
+            }
+
+            const displayProducts = products.slice(0, 4);
+
+            strip.innerHTML = displayProducts.map(s => {
+                const imgPath = s.image ? (s.image.startsWith('/') ? s.image : `/img/${s.image}`) : '/img/no-img.jfif';
+                return `
+                <div class="suggest-card" onclick="location.href='/User/Store/Details/${s.id}'" style="cursor:pointer;">
+                    <div class="suggest-img">
+                         <img src="${imgPath}" alt="${s.name}" style="width:100%; height:100%; object-fit:contain; padding:12px;" />
+                    </div>
+                    <div class="suggest-body">
+                        <div class="suggest-cat">${s.categoryName || 'Sản phẩm'}</div>
+                        <div class="suggest-name">${s.name}</div>
+                        <div class="suggest-footer">
+                            <span class="suggest-price">${s.price.toLocaleString('vi-VN')} đ</span>
+                           
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `}).join('');
+        } catch (error) {
+            console.error('Error loading suggestions:', error);
+            document.getElementById('alsoLike').style.display = 'none';
+        }
     }
 
     async function addToCart(productId) {
@@ -394,7 +421,6 @@
                 currentCart = result.cart;
                 render(result.cart);
                 
-                // flash cart heading
                 const h = document.getElementById('headCount');
                 h.style.color = 'var(--success)';
                 setTimeout(() => h.style.color = 'var(--muted)', 600);
@@ -408,31 +434,45 @@
     }
 
     function addBack() {
-        window.location.href = '/';
+        window.location.href = '/User/Store';
     }
 
-    /* Enter key on promo */
+    /* Initialization */
     document.addEventListener('DOMContentLoaded', () => {
         loadCart();
         renderSuggest();
         
+        const isAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
+
         document.getElementById('promoInput').addEventListener('keydown', e => {
             if (e.key === 'Enter') applyPromo();
         });
 
-        // Checkout button
         const btnCheckout = document.querySelector('.btn-checkout');
         if (btnCheckout) {
             btnCheckout.onclick = function() {
-                if (!currentCart || currentCart.totalItems === 0) {
+                if (!currentCart || (currentCart.items && currentCart.items.length === 0)) {
                     showToast('Bạn không có sản phẩm nào để thanh toán', 'warning');
                     return;
                 }
+
+                if (!isAuthenticated) {
+                    showGlobalModal({
+                        title: 'Yêu cầu đăng nhập',
+                        content: 'Bạn cần đăng nhập để tiếp tục thanh toán. Việc này giúp chúng tôi quản lý đơn hàng của bạn tốt hơn.',
+                        confirmText: 'Đi đến Đăng nhập',
+                        cancelText: 'Hủy',
+                        onConfirm: function() {
+                            window.location.href = '/Account/Login?ReturnUrl=/User/Cart';
+                        }
+                    });
+                    return;
+                }
+
                 window.location.href = '/User/Cart/Payment';
             };
         }
 
-        // Continue shopping
         const btnContinue = document.querySelector('.btn-continue');
         if (btnContinue) {
             btnContinue.onclick = function() {

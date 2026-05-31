@@ -1,13 +1,124 @@
-﻿.hero {
+﻿.hero-carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    background: #070708;
     margin-top: 48px;
+    width: 100%;
+    max-width: none !important;
+    padding: 0 !important;
+}
+
+.hero-slider-container {
+    padding: 0 !important;
+    margin-top: 0 !important;
+    width: 100%;
+    max-width: none !important;
+}
+
+.hero-slider {
+    display: grid !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: 100% !important;
+    width: 100% !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+
+.hero-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.hero-slide {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    scroll-snap-align: start;
+    overflow: hidden;
+    position:relative;
+}
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0; /* Đảm bảo ảnh nằm sau nội dung */
+}
+    /* 3. Thêm lớp phủ mờ (overlay) để chữ nổi bật trên ảnh */
+    .hero-bg::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5); /* Độ tối 50%, bạn có thể tăng giảm tùy ý */
+    }
+    .hero-bg video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: cover; /* Quan trọng: giúp ảnh không bị méo */
+    }
+
+.hero {
     height: calc(100vh - 48px);
     min-height: 600px;
-    background: #070708;
+    width: 100%;
+/*    background: #070708;*/
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    /*background: transparent !important;*/ /* Xóa màu đen cố định để lộ ảnh nền */
+    /*position: relative;
+    z-index: 1;*/ /* Chữ nằm trên ảnh */
+}
+
+
+.hero-alt {
+/*    background: radial-gradient(circle at 70% 30%, #1a1a2e 0%, #070708 100%); tranh lam de len img vi day la pattern de test thoi*/
+}
+
+.hero-nav {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 32px !important;
+    backdrop-filter: blur(10px);
+}
+
+.hero-nav.hidden {
+    opacity: 0.1 !important;
+}
+
+.hero-nav:not(.hidden):hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-50%) scale(1.05) !important;
+}
+
+.hero-slider-container .slider-btn.prev {
+    left: 20px;
+}
+
+.hero-slider-container .slider-btn.next {
+    right: 20px;
 }
 
     /* subtle grid texture */
@@ -97,7 +208,7 @@
     }
 
 .hero h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Archivo', sans-serif;
     font-size: clamp(52px, 8vw, 110px);
     font-weight: 800;
     color: #fff;
@@ -235,7 +346,7 @@
     }
 
 .stat-num {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 26px;
     font-weight: 800;
     color: #fff;
@@ -266,7 +377,7 @@
 }
 
     .section-head h2 {
-        font-family: 'Syne',sans-serif;
+        font-family: 'Archivo',sans-serif;
         font-size: 34px;
         font-weight: 800;
         letter-spacing: -1px;
@@ -319,7 +430,7 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(ellipse 60% 80% at 75% 50%, #102040 0%, transparent 65%);
+/*        background: radial-gradient(ellipse 60% 80% at 75% 50%, #102040 0%, transparent 65%);*/
         pointer-events: none;
     }
 
@@ -347,7 +458,7 @@
 }
 
 .feature-text h2 {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 48px;
     font-weight: 800;
     color: #fff;
@@ -365,7 +476,7 @@
 }
 
 .feature-price {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 28px;
     font-weight: 800;
     color: #fff;
@@ -426,6 +537,17 @@
     padding: 40px;
     position: relative;
     z-index: 1;
+}
+.feature-img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* Hiệu ứng di chuột vào ảnh */
+.feature-visual:hover .feature-img {
+    transform: scale(1.05) rotate(2deg);
 }
 /* CSS racket for placeholder */
 .racket-wrap {
@@ -552,9 +674,7 @@
         gap: 3px;
     }
 
-/* ──────────────────────────────────────
-   PRODUCT CARDS STRIP (SLIDER)
-────────────────────────────────────── */
+/* ── PRODUCT CARDS STRIP (SLIDER) ── */
 .products-strip {
     display: flex;
     overflow-x: auto;
@@ -709,7 +829,7 @@
 }
 
 .card-price {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 15px;
     font-weight: 700;
 }
@@ -776,10 +896,16 @@
 }
 
     .banner-card::after {
-        content: '';
+        /*        content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 55%, transparent 100%);
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 55%, transparent 100%);*/
+
+        /*content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;*/ /* Nằm trên ảnh nhưng dưới banner-body */
+        /*background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);*/
     }
 
 .banner-bg {
@@ -795,13 +921,13 @@
 }
 
 .banner-apparel .banner-bg {
-    background-color: #1a1a2e;
-    background-image: radial-gradient(ellipse at 30% 60%, #2d1b4e 0%, #1a1a2e 100%);
+/*    background-color: #1a1a2e;
+    background-image: radial-gradient(ellipse at 30% 60%, #2d1b4e 0%, #1a1a2e 100%);*/
 }
 
 .banner-footwear .banner-bg {
-    background-color: #1a2e1a;
-    background-image: radial-gradient(ellipse at 70% 40%, #0d3320 0%, #1a2e1a 100%);
+/*    background-color: #1a2e1a;
+    background-image: radial-gradient(ellipse at 70% 40%, #0d3320 0%, #1a2e1a 100%);*/
 }
 
 .banner-body {
@@ -818,10 +944,20 @@
     color: rgba(255,255,255,0.5);
     display: block;
     margin-bottom: 6px;
+
+
+
+    position: absolute;
+    inset: 0;
+    background-size: cover; /* Ảnh sẽ phủ đầy khung */
+    background-position: center; /* Căn giữa ảnh */
+    background-repeat: no-repeat;
+    transition: transform .5s ease;
+    z-index: 0;
 }
 
 .banner-body h3 {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 28px;
     font-weight: 800;
     color: #fff;
@@ -886,7 +1022,7 @@
 .brand-item {
     flex: 1;
     text-align: center;
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-weight: 800;
     font-size: 18px;
     color: var(--muted);
@@ -940,7 +1076,7 @@
 
     .t-card::before {
         content: '"';
-        font-family: 'Syne',sans-serif;
+        font-family: 'Archivo',sans-serif;
         font-size: 72px;
         font-weight: 800;
         color: var(--border);
@@ -1022,7 +1158,7 @@
     }
 
     .newsletter-inner h2 {
-        font-family: 'Syne',sans-serif;
+        font-family: 'Archivo',sans-serif;
         font-size: 36px;
         font-weight: 800;
         color: #fff;
@@ -1078,6 +1214,110 @@
     transition: background .2s;
 }
 
-    .btn-nl:hover {
-        background: var(--accent-hover);
+    /* ──────────────────────────────────────
+   CATEGORY GRID (MODERN CARD STYLE)
+────────────────────────────────────── */
+.yonex-cat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.yonex-cat-item {
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    background: var(--bg2);
+    border-radius: var(--card-r);
+    overflow: hidden;
+    transition: transform .28s ease, box-shadow .28s ease, background .28s ease;
+    position: relative;
+    animation: fadeUp 0.6s ease both;
+}
+
+.yonex-cat-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 44px rgba(0,0,0,0.1);
+}
+
+.yonex-cat-box {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fdfdfd;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+
+.yonex-cat-box img {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+    transition: transform .5s ease;
+    z-index: 2;
+}
+
+.yonex-cat-box i {
+    position: absolute;
+    font-size: 40px;
+    color: rgba(0,0,0,0.05);
+    z-index: 1;
+    transition: transform .5s ease, color .3s ease;
+}
+
+.yonex-cat-item:hover .yonex-cat-box img {
+    transform: scale(1.1);
+}
+
+.yonex-cat-item:hover .yonex-cat-box i {
+    transform: scale(1.2);
+    color: var(--accent);
+}
+
+.yonex-cat-name {
+    padding: 12px 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text);
+    text-align: center;
+    transition: color .3s ease;
+}
+
+.yonex-cat-item:hover .yonex-cat-name {
+    color: var(--accent);
+}
+
+/* Staggered animation delays for categories */
+.yonex-cat-item:nth-child(1) { animation-delay: 0.05s; }
+.yonex-cat-item:nth-child(2) { animation-delay: 0.1s; }
+.yonex-cat-item:nth-child(3) { animation-delay: 0.15s; }
+.yonex-cat-item:nth-child(4) { animation-delay: 0.2s; }
+.yonex-cat-item:nth-child(5) { animation-delay: 0.25s; }
+.yonex-cat-item:nth-child(6) { animation-delay: 0.3s; }
+.yonex-cat-item:nth-child(7) { animation-delay: 0.35s; }
+.yonex-cat-item:nth-child(8) { animation-delay: 0.4s; }
+
+@media (max-width: 900px) {
+    .yonex-cat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
     }
+}
+
+@media (max-width: 480px) {
+    .yonex-cat-box i {
+        font-size: 40px;
+    }
+    .yonex-cat-name {
+        font-size: 11px;
+        padding: 10px 8px 14px;
+    }
+}
+

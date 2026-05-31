@@ -47,10 +47,10 @@ namespace Getdata1
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
 
-            // 6. Session
+            // 6. Session ta 
             builder.Services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // cho nó sống 30p 
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
@@ -92,7 +92,7 @@ namespace Getdata1
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller}/{action}/{id?}",
-                defaults: new { area = "User", controller = "Account", action = "Login"}
+                defaults: new { area = "Admin", controller = "Home", action = "Index"}
             );
 
             // Seed

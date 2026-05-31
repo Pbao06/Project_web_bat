@@ -14,9 +14,9 @@
                 <li><a class="active" href="#">Overview</a></li>
             </ul>
         </div>
-        <a href="#" class="btn-download">
+        @* <a href="#" class="btn-download">
             <span class="text">Export Report</span>
-        </a>
+        </a> *@
     </div>
 
     <ul class="box-info">
@@ -37,7 +37,7 @@
         <li>
             <i class='bx bx-dollar-circle'></i>
             <span class="text">
-                <h3>@Model.TotalSales.ToString("#,##0") ₫</h3>
+                <h3>@Model.TotalSales.ToString("#,##0") đ</h3>
                 <p>Total Revenue</p>
             </span>
         </li>
@@ -47,7 +47,19 @@
         <div class="order">
             <div class="head">
                 <h3>Recent Transactions</h3>
-                <i class="bx bx-filter"></i>
+                <div class="filter-wrapper" style="position: relative;">
+                    <i class="bx bx-filter" onclick="toggleFilter()" style="font-size: 20px; cursor: pointer;"></i>
+                    <div id="filterDropdown" style="display:none; position: absolute; right: 0; top: 30px; background: #fff; border: 0.5px solid var(--border); border-radius: 12px; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); z-index: 100;">
+                        <form method="get" asp-action="Index" asp-controller="Home">
+                            <select name="status" onchange="this.form.submit()" style="border: none; outline: none; font-size: 13px; background: transparent; cursor: pointer;">
+                                <option value="">All Orders</option>
+                                <option value="Pending" selected="@(ViewBag.Status == "Pending")">Pending</option>
+                                <option value="Paid" selected="@(ViewBag.Status == "Paid")">Paid</option>
+                                <option value="Cancelled" selected="@(ViewBag.Status == "Cancelled")">Cancelled</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
             </div>
             <table>
                 <thead>
@@ -63,7 +75,7 @@
                         <tr>
                             <td>
                                 <div style="display: flex; align-items: center;">
-                                    <img src="~/img/no-img.jfif" alt="@order.User?.UserName">
+                                    @* <img src="~/img/no-img.jfif" alt="@order.User?.UserName"> *@
                                     <p>@order.User.UserName</p>
                                 </div>
                             </td>

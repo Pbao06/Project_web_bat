@@ -1,0 +1,186 @@
+
+<div id="globalModal" class="g-modal">
+    <div class="g-modal-overlay"></div>
+    <div class="g-modal-container">
+        <div class="g-modal-header">
+            <h3 id="gModalTitle">Thông báo</h3>
+            <button class="g-modal-close" onclick="closeGlobalModal()">&times;</button>
+        </div>
+        <div class="g-modal-body" id="gModalContent">
+            <!-- Nội dung sẽ được chèn động ở đây -->
+        </div>
+        <div class="g-modal-footer" id="gModalFooter">
+            <button class="g-btn g-btn-secondary" onclick="closeGlobalModal()" id="gModalCancelBtn">Hủy</button>
+            <button class="g-btn g-btn-primary" id="gModalConfirmBtn">Xác nhận</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --g-primary: #1a1a1a;
+        --g-secondary: #f4f4f4;
+        --g-text: #333;
+        --g-white: #fff;
+        --g-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        --g-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .g-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--g-transition);
+    }
+
+    .g-modal.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .g-modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+    }
+
+    .g-modal-container {
+        position: relative;
+        background: var(--g-white);
+        width: 90%;
+        max-width: 450px;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: var(--g-shadow);
+        transform: translateY(20px);
+        transition: var(--g-transition);
+        border: 1px solid #eee;
+    }
+
+    .g-modal.active .g-modal-container {
+        transform: translateY(0);
+    }
+
+    .g-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .g-modal-header h3 {
+        font-family: 'Archivo', sans-serif;
+        font-weight: 700;
+        font-size: 24px;
+        margin: 0;
+        color: var(--g-primary);
+    }
+
+    .g-modal-close {
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: #999;
+        line-height: 1;
+        transition: color 0.2s;
+    }
+
+    .g-modal-close:hover {
+        color: var(--g-primary);
+    }
+
+    .g-modal-body {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    .g-modal-footer {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+    }
+
+    .g-btn {
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-family: 'DM Sans', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: var(--g-transition);
+        border: none;
+    }
+
+    .g-btn-primary {
+        background: var(--g-primary);
+        color: var(--g-white);
+    }
+
+    .g-btn-primary:hover {
+        background: #333;
+        transform: translateY(-2px);
+    }
+
+    .g-btn-secondary {
+        background: var(--g-secondary);
+        color: var(--g-text);
+    }
+
+    .g-btn-secondary:hover {
+        background: #e5e5e5;
+    }
+</style>
+
+<script>
+    function showGlobalModal(options) {
+        const modal = document.getElementById('globalModal');
+        const titleEl = document.getElementById('gModalTitle');
+        const contentEl = document.getElementById('gModalContent');
+        const confirmBtn = document.getElementById('gModalConfirmBtn');
+        const cancelBtn = document.getElementById('gModalCancelBtn');
+
+        titleEl.textContent = options.title || 'Thông báo';
+        contentEl.innerHTML = options.content || '';
+        confirmBtn.textContent = options.confirmText || 'Xác nhận';
+        cancelBtn.textContent = options.cancelText || 'Hủy';
+
+        if (options.hideCancel) {
+            cancelBtn.style.display = 'none';
+        } else {
+            cancelBtn.style.display = 'block';
+        }
+
+        confirmBtn.onclick = function() {
+            if (options.onConfirm) options.onConfirm();
+            closeGlobalModal();
+        };
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeGlobalModal() {
+        const modal = document.getElementById('globalModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Đóng khi click bên ngoài
+    document.querySelector('.g-modal-overlay').onclick = closeGlobalModal;
+</script>

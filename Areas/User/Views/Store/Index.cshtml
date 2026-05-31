@@ -8,20 +8,21 @@
     <link rel="stylesheet" href="~/css/pagination.css" />
     <link href="~/css/Use_web/Store/store.css" rel="stylesheet" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 }
 
-<div style="max-width:1080px; margin:48px auto 0; padding:44px 24px 0;">
+<div class="store-header-wrap" style="max-width:1080px; margin:48px auto 0; padding:32px 24px 12px;">
     <p style="font-size:12px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; font-weight:600; margin-bottom:8px">Pbao Performance</p>
-    <h1 style="font-family:'Syne',sans-serif; font-size:52px; font-weight:800; letter-spacing:-2px; line-height:1; margin-bottom:8px">Store.</h1>
+    <h1 style="font-family:'Archivo',sans-serif; font-size:52px; font-weight:800; letter-spacing:-2px; line-height:1; margin-bottom:8px">Store.</h1>
     <p style="font-size:16px; color:var(--sub)">Everything you need to play at your best.</p>
 </div>
 
-<div class="cat-scroll-wrap" style="margin-top:24px;">
+<div class="cat-scroll-wrap">
     <div class="cat-scroll" id="catScroll">
         <a style="text-decoration:none" asp-area="User" asp-action="Index" 
            asp-route-searchTerm="@Model.SearchTerm" 
-           asp-route-brand="@Model.SortBy" @* Truyền các tham số lọc hiện tại *@
+           asp-route-brand="@Model.Brand"
+           asp-route-sortBy="@Model.SortBy"
            class="cat-pill @(Model.CategoryId == null ? "active" : "")" style="text-decoration: none;">
             <i class='bx bx-grid-alt'></i> <span>All Products</span>
         </a>
@@ -42,10 +43,11 @@
                 var t when t.Contains("sale") => "bx-purchase-tag",
                 _ => "bx-package"
             };
-
+            @* nhấn vào sẽ tạo ra url  gửi dữ liệu truyền về parameter controller -> xuống service xử lý -> db -> model Dto -> trả về danh sách  *@
             <a asp-area="User" asp-action="Index" 
                asp-route-categoryId="@cat.Id"
                asp-route-searchTerm="@Model.SearchTerm"
+               asp-route-brand="@Model.Brand"
                asp-route-sortBy="@Model.SortBy"
                class="cat-pill @(Model.CategoryId == cat.Id ? "active" : "")" style="text-decoration: none;">
                 <i class='bx @categoryIcon'></i> 
@@ -61,7 +63,7 @@
         <div class="promo-text">
             <span>Limited Offer</span>
             <h2>Carbon X-10 — New Season Drop</h2>
-            <p>Weightless power. Absolute control. From $230.</p>
+            <p>Weightless power. Absolute control. From 230.000 đ.</p>
         </div>
         <button class="promo-cta">Shop Now</button>
     </div>
@@ -69,7 +71,7 @@
 
 <form id="filterForm" asp-area="User" asp-action="Index" method="get">
     <input type="hidden" name="categoryId" value="@Model.CategoryId" />
-    <input type="hidden" id="currentViewInput" name="viewMode" value="@(Context.Request.Query["viewMode"].ToString() ?? "grid")" />
+    <input type="hidden" id="currentViewInput" name="viewMode" value="@(Model.ViewMode ?? "grid")" />
 
     <div class="filter-bar">
         <div class="filter-left">
@@ -86,10 +88,10 @@
 
             <select name="brand" class="filter-select" id="brandSelect" onchange="this.form.submit()">
                 <option value="">All Brands</option>
-                <option value="yonex" selected="@(Context.Request.Query["brand"] == "yonex")">Yonex</option>
-                <option value="victor" selected="@(Context.Request.Query["brand"] == "victor")">Victor</option>
-                <option value="lining" selected="@(Context.Request.Query["brand"] == "lining")">Li-Ning</option>
-                <option value="pbao" selected="@(Context.Request.Query["brand"] == "pbao")">Pbao</option>
+                <option value="yonex" selected="@(Model.Brand == "yonex")">Yonex</option>
+                <option value="victor" selected="@(Model.Brand == "victor")">Victor</option>
+                <option value="lining" selected="@(Model.Brand == "lining")">Li-Ning</option>
+                <option value="pbao" selected="@(Model.Brand == "pbao")">Pbao</option>
             </select>
         </div>
 
@@ -113,7 +115,7 @@
                 _ => "bx-baseball" // Mặc định hiển thị icon vợt, bạn có thể tinh chỉnh logic này theo ý muốn
             };
 
-            <div class="product-card" style="cursor: pointer;" onclick="location.href='@Url.Action("Details", "Store", new { area = "User", id = product.Id })'">
+            <div class="product-card" data-id="@product.Id" style="cursor: pointer;" onclick="location.href='@Url.Action("Details", "Store", new { area = "User", id = product.Id })'">
                 <div class="card-img">
                     <div class="img-placeholder">
                         @if (!string.IsNullOrEmpty(product.Image))
@@ -121,7 +123,7 @@
                             var imagePath = product.Image.StartsWith("/") ? "~" + product.Image : "~/img/" + product.Image;
                             <img src="@Url.Content(imagePath)" alt="@product.Name" style="width: 100%; height: 100%; object-fit: contain;" />
                         }
-                        else
+                        else // nếu ko có ảnh thì để icon
                         {
                             <i class='bx @productIcon'></i>
                         }
@@ -133,9 +135,9 @@
                             <span class="badge badge-new">New</span>
                         }
                     </div>
-                    
-                    <button type="button" class="card-wish" onclick="toggleWish(event, this)">
-                        <i class='bx bx-heart'></i>
+                   
+                    <button type="button" class="card-wish @(Model.LikedProductIds.Contains(product.Id) ? "wished" : "")" onclick="toggleWish(event, this)">
+                        <i class=' bx @(Model.LikedProductIds.Contains(product.Id) ? "bxs-heart" : "bx-heart")'></i>
                     </button>
                 </div>
 
@@ -144,21 +146,21 @@
                     <p class="card-name">
                         @product.Name
                     </p>
-                    <p class="card-desc">@product.Description</p>
+                    @* <p class="card-desc">@product.Description</p> *@
                     
                     <div class="card-footer">
                         <div>
                             <div class="card-price">
-                                @product.Price.ToString("C0") @* Tự động format định dạng tiền tệ *@
+                                @product.Price.ToString("N0") đ
                             </div>
                             <div class="card-stars">
                                 ★★★★☆ <span style="font-size: 11px; color: var(--muted); font-weight: 400;">(88)</span>
                             </div>
                         </div>
                         
-                        <button type="button" class="add-btn" onclick="addToCart(event, @product.Id)">
+                        @* <button type="button" class="add-btn" onclick="addToCart(event, @product.Id)">
                             <i class='bx bx-plus'></i>
-                        </button>
+                        </button> *@
                     </div>
                 </div>
             </div>
@@ -173,12 +175,13 @@
         </div>
     }
 
-    <div style="margin-top: 56px; display: flex; justify-content: center;">
-        <partial name="_Pagination" model="Model.Pagination" />
+    <div class="pagination-wrapper">
+        <partial name="_PaginationStore" model="Model.Pagination" />
     </div>
 </div>
 
 @section Scripts {
+    <script src="~/js/favorite.js"></script>
     <script>
         // Hàm chuyển đổi linh hoạt chế độ hiển thị Grid / List kế thừa từ mẫu thiết kế 
         function setView(viewMode) {
@@ -200,62 +203,5 @@
             const initialView = document.getElementById('currentViewInput').value;
             setView(initialView);
         });
-
-        // Xử lý hiệu ứng tim đổi màu khi click nút yêu thích
-        function toggleWish(event, button) {
-            event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài thẻ card (tránh nhảy trang Details)
-            button.classList.toggle('wished');
-            const icon = button.querySelector('i');
-            if (button.classList.contains('wished')) {
-                icon.className = 'bx bxs-heart';
-            } else {
-                icon.className = 'bx bx-heart';
-            }
-        }
-
-        // Xử lý thêm vào giỏ hàng bằng AJAX
-        async function addToCart(event, productId) {
-            event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài thẻ card
-            
-            try {
-                const response = await fetch('/User/Cart/AddToCart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `productId=${productId}&quantity= 1`
-                });
-                // đợi cho server xử lý -> trả về dữ lieuj jsson
-                const result = await response.json();
-                // dao diện tại chỗ không load lại page 
-                if (result.success) {
-                    showNotification(result.message);
-                    animateCartDot(); // hiệu ứng nhấp nháy 
-                    // Có thể cập nhật số lượng trên icon giỏ hàng nếu có
-                    const cartCountElement = document.querySelector('.cart-count');
-                    if (cartCountElement && result.cartCount !== undefined) {
-                        cartCountElement.innerText = result.cartCount;
-                    }
-                } else {
-                    showNotification(result.message || 'Có lỗi xảy ra.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Không thể kết nối tới máy chủ.');
-            }
-        }
-
-        // Giữ hiệu ứng chấm thông báo giỏ hàng nhảy mượt mà
-        function animateCartDot() {
-            const dot = document.querySelector('.cart-dot');
-            if(dot) {
-                dot.style.transform = 'scale(1.8)';
-                dot.style.background = '#34c759';
-                setTimeout(() => { 
-                    dot.style.transform = ''; 
-                    dot.style.background = 'var(--accent)'; 
-                }, 400);
-            }
-        }
     </script>
 }

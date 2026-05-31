@@ -1,0 +1,244 @@
+@model Getdata1.Models.User
+@using Getdata1.DTOs
+@using Getdata1.Models.Enums
+@{
+    ViewData["Title"] = "My Account";
+    Layout = "~/Areas/User/Views/Shared/Layout.cshtml";
+    var orders = ViewBag.Orders as IEnumerable<OrderDto> ?? new List<OrderDto>();
+    
+    // Logic for Avatar Initial
+    string displayName = Model.UserName ?? Model.Email ?? "User";
+    string initial = displayName.Substring(0, 1).ToUpper();
+    
+    // Colors for Avatar background
+    string[] colors = { "#2ecc71", "#3498db", "#9b59b6", "#e67e22", "#e74c3c", "#1abc9c", "#f1c40f" };
+    int colorIndex = Math.Abs(displayName.GetHashCode()) % colors.Length;
+    string avatarColor = colors[colorIndex];
+}
+
+@section Styles
+{
+    <link href="~/css/Use_web/MyAccount/myaccount.css" rel="stylesheet" />
+    <style>
+        .avatar-initial {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+            color: white;
+            background-color: @avatarColor;
+            border-radius: 50%;
+            text-transform: uppercase;
+        }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-processing { background: #cce5ff; color: #004085; }
+        .status-shipped { background: #d4edda; color: #155724; }
+        .status-delivered { background: #d1ecf1; color: #0c5460; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: #f9f9f9;
+            border-radius: 12px;
+            border: 1px dashed #ddd;
+        }
+        
+        .order-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+}
+
+<div class="account-wrap">
+
+    <!-- SIDEBAR -->
+    <aside class="account-sidebar">
+        <div class="profile-card">
+            <div class="avatar-wrap">
+                <div class="avatar">
+                    <div class="avatar-initial">@initial</div>
+                </div>
+            </div>
+            <div class="profile-name">@displayName</div>
+            <div class="profile-email">@Model.Email</div>
+        </div>
+
+        <div class="sidebar-nav">
+            <a class="sidebar-nav-item active" onclick="showTab('orders');return false;" href="#" id="nav-orders">
+                <i class='bx bx-box'></i> Orders
+                <span class="nav-badge">@orders.Count()</span>
+            </a>
+            <a class="sidebar-nav-item" asp-area="User" asp-controller="Store" asp-action="Liked">
+                <i class='bx bx-heart'></i> Wishlist
+            </a>
+            <a class="sidebar-nav-item" onclick="showTab('profile');return false;" href="#" id="nav-profile">
+                <i class='bx bx-user'></i> Profile
+            </a>
+            @if(User.IsInRole("Admin"))
+            {
+                <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <i class='bx bx-shield-quarter'></i> Trang quản trị (Admin)
+                </a>
+            }
+        </div>
+
+        <form asp-area="User" asp-controller="Account" asp-action="Logout" method="post" style="margin-top: auto; width: 100%;">
+            <button type="submit" class="logout-btn"><i class='bx bx-log-out'></i> Sign Out</button>
+        </form>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="account-main">
+
+        <!-- ORDERS TAB -->
+        <div class="tab-content active" id="tab-orders">
+            <div class="section-header">
+                <div class="section-title-wrap">
+                    <div class="section-eyebrow">My Account</div>
+                    <h1 class="section-title">Orders</h1>
+                </div>
+                <a asp-area="User" asp-controller="Store" asp-action="Index" class="btn-sm"><i class='bx bx-store'></i> Continue Shopping</a>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-value">@orders.Count()</div>
+                    <div class="stat-label">Total Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏸</div>
+                    <div class="stat-value">@orders.Sum(o => o.Items.Sum(i => i.Quantity))</div>
+                    <div class="stat-label">Items Bought</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value">@orders.Sum(o => o.TotalPrice).ToString("N0") đ</div>
+                    <div class="stat-label">Total Spent</div>
+                </div>
+            </div>
+
+            <!-- Orders list -->
+            <div class="orders-list">
+                @if (!orders.Any())
+                {
+                    <div class="empty-state">
+                        <i class='bx bx-receipt' style="font-size: 48px; color: #ccc;"></i>
+                        <p>You haven't placed any orders yet.</p>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var order in orders)
+                    {
+                        <div class="order-card">
+                            <div class="order-top">
+                                <div class="order-id">ORD-#@order.Id.ToString("D5") <span>· @order.Items.Count items</span></div>
+                                <div class="order-status">
+                                    <span class="status-badge status-@order.Status.ToString().ToLower()">@order.Status</span>
+                                </div>
+                            </div>
+                            <div class="order-items">
+                                @if (order.Items.Any())
+                                {
+                                    var firstItem = order.Items.First();
+                                    <div class="order-thumb">
+                                        @if (!string.IsNullOrEmpty(firstItem.Image))
+                                        {
+                                            <img src="@firstItem.Image" alt="@firstItem.ProductName" />
+                                        }
+                                        else
+                                        {
+                                            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #eee; border-radius: 8px;">🏸</div>
+                                        }
+                                    </div>
+                                    <div class="order-item-info">
+                                        <div class="order-item-name">@firstItem.ProductName</div>
+                                        <div class="order-item-meta">@firstItem.CategoryName · Qty @firstItem.Quantity @(order.Items.Count > 1 ? $"+ {order.Items.Count - 1} more items" : "")</div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="order-bottom">
+                                <span class="order-date">Placed @order.OrderDate.ToString("dd MMM yyyy")</span>
+                                <span class="order-total">@order.TotalPrice.ToString("N0") đ</span>
+                                <div class="order-actions">
+                                    <button class="btn-sm"><i class='bx bx-detail'></i> Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- PROFILE TAB -->
+        <div class="tab-content" id="tab-profile">
+            <div class="section-header">
+                <div class="section-title-wrap">
+                    <div class="section-eyebrow">My Account</div>
+                    <h1 class="section-title">Profile</h1>
+                </div>
+            </div>
+            <div class="profile-form">
+                <div class="form-section-title">Personal Information</div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" value="@Model.UserName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" value="@Model.Email" readonly>
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" value="@Model.PhoneNumber" placeholder="Not updated" readonly>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1.5rem;">
+                    <p style="font-size: 13px; color: #888;">To update your profile information, please contact support.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    function showTab(tabName) {
+        // Hide all tabs
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        // Show selected tab
+        const targetTab = document.getElementById('tab-' + tabName);
+        if (targetTab) targetTab.classList.add('active');
+        
+        // Update sidebar nav
+        document.querySelectorAll('.sidebar-nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        const navItem = document.getElementById('nav-' + tabName);
+        if (navItem) navItem.classList.add('active');
+    }
+</script>

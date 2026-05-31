@@ -8,6 +8,8 @@ using System.Security.Claims;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Getdata1.Areas.Admin.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Getdata1.Helpers;
+
 namespace Getdata1.Areas.Admin.Controllers;
 
 [Area("Admin")]
@@ -106,12 +108,25 @@ public class OrderController : Controller
     public async Task<IActionResult> UpdateStatus(int id,string status)
     {
         var order = await _context._Orders.FindAsync(id);
-        if (order == null) return NotFound();
+        if (order == null)
+        {
+            NotificationHelper.SetNotification(TempData, "Không tìm thấy đơn hàng.", "error");
+            return NotFound();
+        }
+
         // convert string to enum
         if(Enum.TryParse<OrderStatus>(status,out var newStatus))
         {
             order.Status=newStatus;
             await _context.SaveChangesAsync();
+            
+            string message = newStatus == OrderStatus.Paid ? "Đã duyệt đơn hàng thành công!" : "Đã hủy đơn hàng.";
+            string type = newStatus == OrderStatus.Paid ? "success" : "warning";
+            NotificationHelper.SetNotification(TempData, message, type);
+        }
+        else
+        {
+            NotificationHelper.SetNotification(TempData, "Trạng thái không hợp lệ.", "error");
         }
         return RedirectToAction("Index");
     }

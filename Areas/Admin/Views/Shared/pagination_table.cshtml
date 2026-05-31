@@ -1,37 +1,76 @@
-﻿@model dynamic
+@model dynamic
+@using Microsoft.AspNetCore.Http
 
-<div class="pagination-container">
-    @if (Model.CurrentPage > 1)
+@{
+    var query = Context.Request.Query;
+    string GetUrl(int page)
     {
-        <a href="?page=@(Model.CurrentPage - 1)@(Context.Request.QueryString.HasValue ? Context.Request.QueryString.Value.Replace("?page=" + Model.CurrentPage, "").Replace("&page=" + Model.CurrentPage, "") : "")" class="pagination-item">
-            <i class='bx bx-chevron-left'></i>
-        </a>
+        var dict = query.ToDictionary(k => k.Key, v => v.Value.ToString());
+        dict["page"] = page.ToString();
+        var qs = string.Join("&", dict.Select(x => $"{x.Key}={System.Net.WebUtility.UrlEncode(x.Value)}"));
+        return "?" + qs;
     }
-    else
-    {
-        <span class="pagination-item disabled"><i class='bx bx-chevron-left'></i></span>
-    }
+}
 
-    @{
-        int startPage = Math.Max(1, Model.CurrentPage - 1);
-        int endPage = Math.Min(Model.TotalPages, startPage + 2);
-
-        for (int i = startPage; i <= endPage; i++)
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination-container">
+        @if (Model.CurrentPage > 1)
         {
-            <a href="?page=@i" class="pagination-item @(i == Model.CurrentPage ? "active" : "")">
-                @i
+            <a href="@GetUrl(Model.CurrentPage - 1)" class="pagination-item">
+                <i class='bx bx-chevron-left'></i>
             </a>
         }
-    }
+        else
+        {
+            <span class="pagination-item disabled"><i class='bx bx-chevron-left'></i></span>
+        }
 
-    @if (Model.CurrentPage < Model.TotalPages)
-    {
-        <a href="?page=@(Model.CurrentPage + 1)" class="pagination-item">
-            <i class='bx bx-chevron-right'></i>
-        </a>
-    }
-    else
-    {
-        <span class="pagination-item disabled"><i class='bx bx-chevron-right'></i></span>
-    }
-</div>
+        @{
+            int startPage = Math.Max(1, Model.CurrentPage - 1);
+            int endPage = Math.Min(Model.TotalPages, startPage + 2);
+
+            // Adjust if we are at the end
+            if (endPage == Model.TotalPages && Model.TotalPages > 2)
+            {
+                startPage = Math.Max(1, endPage - 2);
+            }
+
+            if (startPage > 1)
+            {
+                <a href="@GetUrl(1)" class="pagination-item">1</a>
+                if (startPage > 2)
+                {
+                    <span class="pagination-ellipsis">...</span>
+                }
+            }
+
+            for (int i = startPage; i <= endPage; i++)
+            {
+                <a href="@GetUrl(i)" class="pagination-item @(i == Model.CurrentPage ? "active" : "")">
+                    @i
+                </a>
+            }
+
+            if (endPage < Model.TotalPages)
+            {
+                if (endPage < Model.TotalPages - 1)
+                {
+                    <span class="pagination-ellipsis">...</span>
+                }
+                <a href="@GetUrl(Model.TotalPages)" class="pagination-item">@Model.TotalPages</a>
+            }
+        }
+
+        @if (Model.CurrentPage < Model.TotalPages)
+        {
+            <a href="@GetUrl(Model.CurrentPage + 1)" class="pagination-item">
+                <i class='bx bx-chevron-right'></i>
+            </a>
+        }
+        else
+        {
+            <span class="pagination-item disabled"><i class='bx bx-chevron-right'></i></span>
+        }
+    </div>
+}

@@ -44,7 +44,7 @@ namespace Getdata1.Areas.User.Controllers
 
             try
             {
-                var cart = HttpContext.Session.Get<CartDto>(CartSessionKey);
+                var cart = HttpContext.Session.Get<CartDto>(CartSessionKey); // lấy giỏ hang từ session ra 
                 if (cart == null || !cart.Items.Any())
                 {
                     return Json(new { success = false, message = "Giỏ hàng trống." });

@@ -6,11 +6,10 @@ namespace Getdata1.DTOs
         public decimal SubTotal => Items.Sum(i => i.Price * i.Quantity);
         public decimal DiscountAmount { get; set; }
         public string? AppliedPromoCode { get; set; }
-        public decimal ShippingFee { get; set; } = 0; // Default to free or calculated
+        public decimal ShippingFee { get; set; } = 0; // q Default to free or calculated
         public decimal TotalPrice => SubTotal - DiscountAmount + ShippingFee;
         public int TotalItems => Items.Sum(i => i.Quantity);
     }
-
     public class CartItemDto
     {
         public int ProductId { get; set; }

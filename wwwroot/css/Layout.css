@@ -23,7 +23,7 @@
         height: 64px;
         display: flex;
         align-items: center;
-        font-family: var(--lato);
+        font-family: var(--archivo);
         color: var(--dark);
         letter-spacing: -1px;
         padding: 0 20px;
@@ -238,7 +238,7 @@
     }
 
         #content main .head-title .left h1 {
-            font-family: var(--lato);
+            font-family: var(--archivo);
             font-size: 28px;
             font-weight: 800;
             letter-spacing: -0.5px;
@@ -330,7 +330,7 @@
             }
 
             #content main .box-info li h3 {
-                font-family: var(--lato);
+                font-family: var(--archivo);
                 font-size: 22px;
                 font-weight: 800;
                 letter-spacing: -0.5px;
@@ -364,7 +364,7 @@
 
             #content main .table-data .head h3 {
                 margin-right: auto;
-                font-family: var(--lato);
+                font-family: var(--archivo);
                 font-size: 18px;
                 font-weight: 800;
                 color: var(--dark);
@@ -410,7 +410,7 @@
                 #content main .table-data .order table td img {
                     height: 32px;
                     width: 32px;
-                    border-radius: 50%;
+                    border-radius: 10%;
                     object-fit: cover;
                 }
 

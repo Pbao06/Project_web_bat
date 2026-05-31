@@ -19,8 +19,8 @@ namespace Getdata1.Data
         public DbSet<_Order> _Orders { get; set; }  
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ProductsImage> ProductsImages { get; set; } 
-        public DbSet<ProductReview> ProductReviews { get; set; } 
-
+        public DbSet<ProductReview> ProductReviews { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

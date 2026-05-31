@@ -24,6 +24,7 @@ namespace Getdata1.Services.Implementations
                 .Where(o => o.UserId == userId)
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Products)
+                        .ThenInclude(p => p.Category)
                 .OrderByDescending(o => o.OrderDate)
                 .ToListAsync();
             return _mapper.Map<IEnumerable<OrderDto>>(orders);
@@ -35,6 +36,7 @@ namespace Getdata1.Services.Implementations
                 .Include(o => o.User)
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Products)
+                        .ThenInclude(p => p.Category)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
             return _mapper.Map<OrderDto>(order);
         }
@@ -102,10 +104,11 @@ namespace Getdata1.Services.Implementations
                 };
 
                 _context._Orders.Add(order);
-                await _context.SaveChangesAsync(); // Get order ID
+                await _context.SaveChangesAsync(); // Get order ID lưu tậm để lay id 
 
                 foreach (var item in cart.Items)
                 {
+                    // check lại giá 
                     // SNAPSHOT PRICE: Get current price from database to prevent price manipulation
                     var product = await _context.Products.FindAsync(item.ProductId);
                     if (product == null) throw new Exception($"Sản phẩm ID {item.ProductId} không tồn tại.");

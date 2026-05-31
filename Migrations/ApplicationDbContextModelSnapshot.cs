@@ -89,6 +89,30 @@ namespace Getdata1.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Getdata1.Models.Favorite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Favorites");
+                });
+
             modelBuilder.Entity("Getdata1.Models.OrderItem", b =>
                 {
                     b.Property<int>("Id")
@@ -581,6 +605,17 @@ namespace Getdata1.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("Getdata1.Models.Favorite", b =>
+                {
+                    b.HasOne("Getdata1.Models.Product", "Product")
+                        .WithMany("Favorites")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Getdata1.Models.OrderItem", b =>
                 {
                     b.HasOne("Getdata1.Models._Order", "Order")
@@ -714,6 +749,8 @@ namespace Getdata1.Migrations
             modelBuilder.Entity("Getdata1.Models.Product", b =>
                 {
                     b.Navigation("CartItems");
+
+                    b.Navigation("Favorites");
 
                     b.Navigation("OrderItems");
 

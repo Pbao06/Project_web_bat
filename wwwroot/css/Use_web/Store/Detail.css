@@ -167,7 +167,7 @@
 }
 
 .info-name {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 36px;
     font-weight: 800;
     letter-spacing: -1px;
@@ -212,7 +212,7 @@
 }
 
 .price-current {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 32px;
     font-weight: 800;
 }
@@ -537,7 +537,7 @@
 }
 
     .desc-text h3 {
-        font-family: 'Syne',sans-serif;
+        font-family: 'Archivo',sans-serif;
         font-size: 18px;
         font-weight: 700;
         color: var(--text);
@@ -567,7 +567,7 @@
 }
 
 .big-rating {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 52px;
     font-weight: 800;
     line-height: 1;
@@ -681,7 +681,7 @@
 }
 
 .section-title {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 22px;
     font-weight: 800;
     letter-spacing: -0.5px;
@@ -752,7 +752,7 @@
 }
 
 .related-price {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 15px;
     font-weight: 700;
 }
@@ -785,7 +785,7 @@
     }
 
     .sticky-bar .sticky-price {
-        font-family: 'Syne',sans-serif;
+        font-family: 'Archivo',sans-serif;
         font-size: 16px;
         font-weight: 700;
     }

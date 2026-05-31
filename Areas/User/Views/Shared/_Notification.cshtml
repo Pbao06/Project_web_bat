@@ -2,12 +2,6 @@
 
 <div id="toast-container"></div>
 
-<!-- Existing Cart Notification (Keep for compatibility) -->
-<div id="cart-notification">
-    <i class='bx bx-check-circle' style="font-size: 24px; color: #10b981;"></i>
-    <span id="notif-message">Đã thêm vào giỏ hàng!</span>
-</div>
-
 @if (TempData["Notification"] != null)
 {
     <script>
@@ -53,18 +47,5 @@
                 setTimeout(() => toast.remove(), 400);
             }
         }, 5000);
-    }
-
-    // Global notification function
-    function showNotification(message) {
-        const notif = document.getElementById('cart-notification');
-        const msg = document.getElementById('notif-message');
-        if (notif && msg) {
-            msg.innerText = message;
-            notif.classList.add('show');
-            setTimeout(() => {
-                notif.classList.remove('show');
-            }, 3000);
-        }
     }
 </script>

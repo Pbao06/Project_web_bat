@@ -30,7 +30,7 @@
     }
 
     .details-header h1 {
-        font-family: 'Syne', sans-serif;
+        font-family: 'Archivo', sans-serif;
         font-size: 32px;
         font-weight: 700;
     }
@@ -123,7 +123,7 @@
     }
 
     .card-title {
-        font-family: 'Syne', sans-serif;
+        font-family: 'Archivo', sans-serif;
         font-size: 18px;
         font-weight: 700;
         margin-bottom: 24px;
@@ -276,13 +276,15 @@
                     @foreach (var item in Model.Items)
                     {
                         <div class="item-row">
-                            <img src="/img/no-img.jfif" class="item-img" alt="@item.ProductName">
+                            <img src="@(string.IsNullOrEmpty(item.Image) ? Url.Content("~/img/no-img.jfif") : (item.Image.StartsWith("/") ? item.Image : Url.Content("~/img/" + item.Image)))" 
+                                 class="item-img" 
+                                 alt="@item.ProductName">
                             <div class="item-info">
                                 <div class="item-name">@item.ProductName</div>
                                 <div class="item-meta">@item.CategoryName</div>
                             </div>
                             <div class="item-price-qty">
-                                <div class="item-price">$@item.Price.ToString("N2")</div>
+                                <div class="item-price">@item.Price.ToString("N0") đ</div>
                                 <div class="item-qty">x @item.Quantity</div>
                             </div>
                         </div>
@@ -320,22 +322,22 @@
                 <div class="info-list">
                     <div class="info-item">
                         <span class="info-label">Tạm tính</span>
-                        <span class="info-val">$@((Model.TotalPrice + Model.DiscountAmount - Model.ShippingFee).ToString("N2"))</span>
+                        <span class="info-val">@((Model.TotalPrice + Model.DiscountAmount - Model.ShippingFee).ToString("N0")) đ</span>
                     </div>
                     @if (Model.DiscountAmount > 0)
                     {
                         <div class="info-item">
                             <span class="info-label">Giảm giá (@Model.PromoCode)</span>
-                            <span class="info-val" style="color:var(--new)">-$@Model.DiscountAmount.ToString("N2")</span>
+                            <span class="info-val" style="color:var(--new)">-@Model.DiscountAmount.ToString("N0") đ</span>
                         </div>
                     }
                     <div class="info-item">
                         <span class="info-label">Phí vận chuyển</span>
-                        <span class="info-val">@(Model.ShippingFee > 0 ? "$" + Model.ShippingFee.ToString("N2") : "Miễn phí")</span>
+                        <span class="info-val">@(Model.ShippingFee > 0 ? Model.ShippingFee.ToString("N0") + " đ" : "Miễn phí")</span>
                     </div>
                     <div class="total-row">
                         <span>Tổng cộng</span>
-                        <span style="color:var(--accent)">$@Model.TotalPrice.ToString("N2")</span>
+                        <span style="color:var(--accent)">@Model.TotalPrice.ToString("N0") đ</span>
                     </div>
                     <div class="info-item" style="margin-top:15px">
                         <span class="info-label">Phương thức</span>

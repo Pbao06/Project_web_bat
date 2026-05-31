@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor; 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http; // Đừng quên cái này để dùng IFormFile
@@ -16,6 +16,7 @@ namespace Getdata1.Models
         public decimal Price { get; set; }
 
         public string? Image {  get; set; }// ? la neu ko co thi null chu dung bao loi 
+        [Required(ErrorMessage = "Vui lòng chọn danh mục sản phẩm")]
         public int CategoryId { get; set; }
         public virtual Category? Category { get; set; } // id khóa ngoại phải có nhma nguyên cả đối tượng có thể null vì no ko lấy heeys đc
         [Required]
@@ -51,6 +52,7 @@ namespace Getdata1.Models
 
         [NotMapped]
         public List<IFormFile>? GalleryFiles { get; set; } // Add the ? to make it optional
+        public virtual ICollection<Favorite>? Favorites { get; set; }  // giúp sản phẩm biết đddclike 
 
     }
 }

@@ -54,7 +54,7 @@
     border-radius: 50%;
     background: var(--text);
     color: #fff;
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 12px;
     font-weight: 800;
     display: flex;
@@ -67,7 +67,7 @@
     }
 
 .co-section-title h3 {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 15px;
     font-weight: 700;
     letter-spacing: -.2px;
@@ -289,7 +289,7 @@ select.field-input {
 }
 
 .opt-price {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-weight: 700;
     font-size: 13px;
     color: var(--text);
@@ -454,7 +454,7 @@ select.field-input {
 }
 
     .os-header h3 {
-        font-family: 'Syne',sans-serif;
+        font-family: 'Archivo',sans-serif;
         font-size: 17px;
         font-weight: 800;
         letter-spacing: -.3px;
@@ -496,6 +496,7 @@ select.field-input {
     flex-shrink: 0;
     border: 1px solid var(--border);
     position: relative;
+    overflow: hidden;
 }
 
 .os-item-qty {
@@ -531,7 +532,7 @@ select.field-input {
 }
 
 .os-item-price {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-weight: 700;
     font-size: 14px;
 }
@@ -582,7 +583,7 @@ select.field-input {
     }
 
         .os-row.total .val {
-            font-family: 'Syne',sans-serif;
+            font-family: 'Archivo',sans-serif;
             font-size: 20px;
             font-weight: 800;
         }
@@ -602,7 +603,7 @@ select.field-input {
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -675,7 +676,7 @@ select.field-input {
 }
 
     .checkout-heading h1 {
-        font-family: 'Syne',sans-serif;
+        font-family: 'Archivo',sans-serif;
         font-size: 28px;
         font-weight: 800;
         letter-spacing: -1px;
@@ -756,7 +757,7 @@ select.field-input {
 }
 
 .confirm-card h2 {
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 26px;
     font-weight: 800;
     letter-spacing: -1px;
@@ -774,7 +775,7 @@ select.field-input {
     background: var(--bg2);
     border-radius: 12px;
     padding: 12px 20px;
-    font-family: 'Syne',sans-serif;
+    font-family: 'Archivo',sans-serif;
     font-size: 18px;
     font-weight: 800;
     color: var(--text);

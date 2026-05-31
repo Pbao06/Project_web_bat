@@ -38,7 +38,9 @@ namespace Getdata1.Mappings
                 .ForMember(dest => dest.PromoCode, opt => opt.MapFrom(src => src.PromoCode));
 
             CreateMap<OrderItem, OrderItemDto>()
-                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Products != null ? src.Products.Name : "Unknown"));
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Products != null ? src.Products.Name : "Unknown"))
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Products != null ? src.Products.Image : null))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Products != null && src.Products.Category != null ? src.Products.Category.Name : "Sản phẩm"));
         }
     }
 }

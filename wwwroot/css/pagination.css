@@ -1,65 +1,72 @@
 /* wwwroot/css/pagination.css */
+/* Minimalist Pagination - Admin Style Replication */
+
 .pagination-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-    gap: 6px;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    gap: 8px;
+    margin-top: 56px;
+    margin-bottom: 40px;
+    width: 100%;
+    clear: both;
 }
 
 .pagination-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 36px;
+    width: 36px;
     height: 36px;
-    padding: 0 12px;
-    border-radius: 50%; /* Dạng tròn Apple */
+    border-radius: 50%;
     text-decoration: none;
-    color: #1d1d1f;
-    font-size: 14px;
-    font-weight: 400;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
-    background-color: transparent;
+    color: var(--sub);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+    user-select: none;
 }
 
-.pagination-item:hover {
-    background-color: #f5f5f7;
-    color: #0066cc;
+.pagination-item:hover:not(.disabled):not(.active) {
+    background: var(--bg2);
+    color: var(--text);
+    transform: translateY(-1px);
 }
 
-.pagination-item:active {
+.pagination-item:active:not(.disabled):not(.active) {
     transform: scale(0.95);
 }
 
 .pagination-item.active {
-    background-color: #1d1d1f;
-    color: #ffffff;
-    font-weight: 500;
+    background: var(--text);
+    color: #fff;
     cursor: default;
-}
-
-.pagination-item.active:hover {
-    background-color: #1d1d1f;
-    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .pagination-item.disabled {
-    color: #d2d2d7;
-    pointer-events: none;
+    color: var(--muted);
     cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .pagination-ellipsis {
-    color: #86868b;
-    font-size: 14px;
-    padding: 0 4px;
+    color: var(--muted);
+    font-size: 13px;
+    width: 24px;
+    text-align: center;
     cursor: default;
 }
 
-.pagination-nav-icon {
-    font-size: 16px;
-    line-height: 1;
+/* Biểu tượng BoxIcons */
+.pagination-item i {
+    font-size: 18px;
+}
+
+/* Đảm bảo pagination luôn nằm dưới cùng của container */
+.products-wrap {
+    display: flex !important;
+    flex-direction: column !important;
 }

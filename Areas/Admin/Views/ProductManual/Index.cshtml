@@ -81,6 +81,16 @@
                                 <input type="number" name="MaxStock" value="@Model.MaxStock" placeholder="Max" onchange="this.form.submit()" />
                             </div>
                         </div>
+
+                        @* filter theo status *@
+                        <div class="filter-group select-box">
+                            <select asp-for="Status" onchange="this.form.submit()">
+                                <option value="">All Status</option>
+                                <option value="instock">InStock</option>
+                                <option value="lowstock">Low Stock</option>
+                                <option value="outstock">Out of Stock</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -98,7 +108,11 @@
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Products) {
-                        <tr>
+                        var statusClass = item.Stock > 10 ? "instock" : (item.Stock > 0 ? "lowstock" : "outstock");
+                        var statusText = item.Stock > 10 ? "In Stock" : (item.Stock > 0 ? "Low Stock" : "Out of Stock");
+                        @* đoạn trên là truy cập vào product entity thông qua Vm  *@
+                      
+                        <tr class="product-row">
                             <td>
                                 <div style="display: flex; align-items: center;">
                                     @if (!string.IsNullOrEmpty(item.Image))
@@ -112,51 +126,47 @@
                                     <p>@item.Name</p>
                                 </div>
                             </td>
-                            <td>@item.Price.ToString("#,##0") ₫</td>
+                            <td>@item.Price.ToString("#,##0") đ</td>
                             <td>@item.Brand</td>
                             <td>@item.Stock</td>
                             <td>
-                                @if (item.Stock > 10)
-                                {
-                                    <span class="status instock">In Stock</span>
-                                }
-                                else if (item.Stock > 0)
-                                {
-                                    <span class="status lowstock">Low Stock</span>
-                                }
-                                else
-                                {
-                                    <span class="status outstock">Out of Stock</span>
-                                }
+                                <span class="status @statusClass">
+                                    @statusText
+                                </span>
                             </td>
                             <td class="btn-Edit-Delete-Detail">
                                 <a asp-action="Edit" asp-route-id="@item.Id"><i class='bx bx-edit-alt'></i></a>
                                 <a asp-action="Detail" asp-route-id="@item.Id"><i class='bx bx-show'></i></a>
-                                <a asp-action="Delete" asp-route-id="@item.Id"><i class='bx bx-trash'></i></a>
+                                <a href="javascript:void(0)" onclick="confirmDelete(@item.Id, '@item.Name')"><i class='bx bx-trash'></i></a>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
 
-            @{
-                var pagination = new Getdata1.Models.PaginationVM
-                {
-                    CurrentPage = Model.CurrentPage,
-                    TotalPages = Model.TotalPages,
-                    ActionName = "Index",
-                    RouteValues = new Dictionary<string, string> 
-                    { 
-                        { "Name", Model.Name ?? "" },
-                        { "CategoryId", Model.CategoryId?.ToString() ?? "" },
-                        { "MinPrice", Model.MinPrice?.ToString() ?? "" },
-                        { "MaxPrice", Model.MaxPrice?.ToString() ?? "" },
-                        { "MinStock", Model.MinStock?.ToString() ?? "" },
-                        { "MaxStock", Model.MaxStock?.ToString() ?? "" }
-                    }
-                };
-            }
-            <partial name="_Pagination" model="pagination" />
+            <form id="deleteForm" method="post" asp-action="Delete">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" id="deleteId" />
+            </form>
+
+            @await Html.PartialAsync("pagination_table", Model)
         </div>
     </div>
 </main>
+
+@section Scripts {
+    <script>
+        function confirmDelete(id, name) {
+            showGlobalModal({
+                title: 'Xác nhận xóa',
+                content: `Bạn có chắc chắn muốn xóa sản phẩm <strong>${name}</strong>? Hành động này không thể hoàn tác.`,
+                confirmText: 'Xóa vĩnh viễn',
+                cancelText: 'Hủy',
+                onConfirm: function () {
+                    document.getElementById('deleteId').value = id;
+                    document.getElementById('deleteForm').submit();
+                }
+            });
+        }
+    </script>
+}

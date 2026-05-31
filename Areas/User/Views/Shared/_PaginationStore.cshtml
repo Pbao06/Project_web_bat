@@ -1,0 +1,88 @@
+@model Getdata1.Models.PaginationVM
+
+@if (Model != null && Model.TotalPages > 1)
+{
+    <div class="pagination-container" aria-label="Store pagination">
+        @* Nút Trang Trước *@
+        @if (Model.HasPreviousPage)
+        {
+            <a class="pagination-item"
+               asp-area="@Model.AreaName"
+               asp-controller="@Model.ControllerName"
+               asp-action="@Model.ActionName"
+               asp-all-route-data="@Model.RouteValues"
+               asp-route-page="@(Model.CurrentPage - 1)">
+                <i class='bx bx-chevron-left'></i>
+            </a>
+        }
+        else
+        {
+            <span class="pagination-item disabled"><i class='bx bx-chevron-left'></i></span>
+        }
+
+        @{
+            // Logic hiển thị tối đa 5 trang xung quanh trang hiện tại
+            int startPage = Math.Max(1, Model.CurrentPage - 2);
+            int endPage = Math.Min(Model.TotalPages, Model.CurrentPage + 2);
+
+            // Đảm bảo luôn hiển thị trang đầu
+            if (startPage > 1)
+            {
+                <a class="pagination-item" 
+                   asp-area="@Model.AreaName"
+                   asp-controller="@Model.ControllerName" 
+                   asp-action="@Model.ActionName" 
+                   asp-all-route-data="@Model.RouteValues"
+                   asp-route-page="1">1</a>
+                if (startPage > 2)
+                {
+                    <span class="pagination-ellipsis">...</span>
+                }
+            }
+
+            for (int i = startPage; i <= endPage; i++)
+            {
+                <a class="pagination-item @(i == Model.CurrentPage ? "active" : "")"
+                   asp-area="@Model.AreaName"
+                   asp-controller="@Model.ControllerName"
+                   asp-action="@Model.ActionName"
+                   asp-all-route-data="@Model.RouteValues"
+                   asp-route-page="@i">
+                    @i
+                </a>
+            }
+
+            // Đảm bảo luôn hiển thị trang cuối
+            if (endPage < Model.TotalPages)
+            {
+                if (endPage < Model.TotalPages - 1)
+                {
+                    <span class="pagination-ellipsis">...</span>
+                }
+                <a class="pagination-item" 
+                   asp-area="@Model.AreaName"
+                   asp-controller="@Model.ControllerName" 
+                   asp-action="@Model.ActionName" 
+                   asp-all-route-data="@Model.RouteValues"
+                   asp-route-page="@Model.TotalPages">@Model.TotalPages</a>
+            }
+        }
+
+        @* Nút Trang Tiếp *@
+        @if (Model.HasNextPage)
+        {
+            <a class="pagination-item"
+               asp-area="@Model.AreaName"
+               asp-controller="@Model.ControllerName"
+               asp-action="@Model.ActionName"
+               asp-all-route-data="@Model.RouteValues"
+               asp-route-page="@(Model.CurrentPage + 1)">
+                <i class='bx bx-chevron-right'></i>
+            </a>
+        }
+        else
+        {
+            <span class="pagination-item disabled"><i class='bx bx-chevron-right'></i></span>
+        }
+    </div>
+}

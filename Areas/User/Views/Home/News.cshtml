@@ -1,0 +1,481 @@
+﻿@{
+    ViewData["Title"] = "News";
+    Layout = "~/Areas/User/Views/Shared/Layout.cshtml";
+}
+@section Styles
+{
+    <link href="~/css/Use_web/Home/News.css" rel="stylesheet" />
+}
+
+<!-- HERO CAROUSEL -->
+<section class="hero-carousel-wrapper">
+    <div class="slider-container hero-slider-container">
+        <button class="slider-btn prev hero-nav" onclick="scrollSlider('heroSlider', -1)"><i class='bx bx-chevron-left'></i></button>
+
+        <div class="hero-slider" id="heroSlider">
+            <!-- Slide 1 -->
+            <div class="hero-slide">
+                <div class="hero-bg" style="background-image: url('/img/thumb1news.webp');"></div>
+                <div class="hero">
+                    <div class="hero-content">
+                        <div class="hero-eyebrow">
+                            <i class='bx bx-news'></i>
+                            <span>Newsroom</span>
+                            — Season 2026
+                        </div>
+                        <h1>Badminton<br><em>Stories.</em></h1>
+                        <p class="hero-sub">Lịch sử, huyền thoại, kỹ thuật — tất cả những câu chuyện đáng đọc nhất về cầu lông.</p>
+                        @* <div class="hero-cta">
+                            <button class="btn-hero-primary" onclick="document.getElementById('articlesGrid').scrollIntoView({behavior:'smooth'})">Explore Stories</button>
+                        </div> *@
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="hero-slide">
+                <div class="hero-bg" style="background-image: url('/img/lindan--ke-chinh-phuc-vi-dai--hoi-uc-huyen-thoai-1716800755.jpeg');"></div>
+                <div class="hero hero-alt">
+                    <div class="hero-content">
+                        <div class="hero-eyebrow">
+                            <i class='bx bx-crown'></i>
+                            <span>Legend Series</span>
+                            — Super Dan
+                        </div>
+                        <h1>Lin Dan<br><em>The</em><br>G.O.A.T.</h1>
+                        <p class="hero-sub">Hai lần vô địch Olympic liên tiếp, năm lần vô địch thế giới — câu chuyện về huyền thoại bất tử.</p>
+                        @* <div class="hero-cta">
+                            <button class="btn-hero-primary" onclick="openModal('featured')">Read Article</button>
+                        </div> *@
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            @* <div class="hero-slide">
+                <div class="hero">
+                    <div class="hero-content">
+                        <div class="hero-eyebrow">
+                            <i class='bx bx-bolt-circle'></i>
+                            <span>Tech Insight</span>
+                            — Yonex Astrox
+                        </div>
+                        <h1>Elite<br><em>Gear</em><br>Review.</h1>
+                        <p class="hero-sub">Phân tích chi tiết về Yonex Astrox 99 — chiếc vợt đã thay đổi hoàn toàn thế hệ smash.</p>
+                        <div class="hero-cta">
+                            <button class="btn-hero-primary" onclick="openModal('a3')">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div> *@
+        </div>
+
+        <button class="slider-btn next hero-nav" onclick="scrollSlider('heroSlider', 1)"><i class='bx bx-chevron-right'></i></button>
+    </div>
+
+    @* <div class="hero-stats">
+        <div class="hero-stats-inner">
+            <div class="stat-item"><div class="stat-num">150+</div><div class="stat-label">Articles</div></div>
+            <div class="stat-item"><div class="stat-num">50K+</div><div class="stat-label">Readers</div></div>
+            <div class="stat-item"><div class="stat-num">12+</div><div class="stat-label">Contributors</div></div>
+            <div class="stat-item"><div class="stat-num">Daily</div><div class="stat-label">Updates</div></div>
+        </div>
+    </div> *@
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+    <div class="filter-pill active" onclick="filterArticles('all', this)">Tất cả</div>
+    <div class="filter-pill" onclick="filterArticles('legend', this)">Huyền thoại</div>
+    <div class="filter-pill" onclick="filterArticles('history', this)">Lịch sử</div>
+    <div class="filter-pill" onclick="filterArticles('gear', this)">Vợt & Gear</div>
+    <div class="filter-pill" onclick="filterArticles('tips', this)">Kỹ thuật</div>
+</div>
+
+<!-- FEATURED -->
+<div class="featured-wrap">
+    <div class="featured-card" onclick="openModal('featured')">
+        <div class="featured-img thumb-1 ">
+            <div class="featured-img-inner" style="background-image: url('/img/lindan--ke-chinh-phuc-vi-dai--hoi-uc-huyen-thoai-1716800755.jpeg');"></div>
+            <span class="img-label">Featured</span>
+        </div>
+        <div class="featured-content">
+            <div class="featured-meta">
+                <span class="tag tag-legend">Huyền thoại</span>
+                <span class="featured-date">18 tháng 5, 2026</span>
+                <span class="read-time"><i class='bx bx-time-five'></i> 6 phút đọc</span>
+            </div>
+            <h2>Lin Dan — Siêu Nhân Của Làng Cầu Lông Thế Giới</h2>
+            <p>Không ai trong lịch sử cầu lông lại thống trị toàn diện như Lin Dan. Hai lần vô địch Olympic liên tiếp, năm lần vô địch thế giới — câu chuyện về con người được mệnh danh "Super Dan".</p>
+            <span class="btn-read">Đọc bài viết <i class='bx bx-right-arrow-alt'></i></span>
+        </div>
+    </div>
+</div>
+
+<!-- ARTICLES GRID -->
+<div class="news-wrap">
+    <span class="section-label">Bài viết mới nhất</span>
+    <div class="articles-grid" id="articlesGrid">
+
+        <div class="article-card" data-cat="history" onclick="openModal('a1')">
+            <div class="article-thumb thumb-7">
+                <span></span>
+            </div>
+            <div class="article-body">
+                <div class="article-meta">
+                    <span class="tag tag-history">Lịch sử</span>
+                    <span class="read-time" style="font-size:11px;color:var(--muted)"><i class='bx bx-time-five'></i> 5 phút</span>
+                </div>
+                <h3>Cầu lông ra đời như thế nào? Hành trình từ sân Poona đến Olympic</h3>
+                <p>Từ trò chơi dân gian của binh lính Anh ở Ấn Độ thế kỷ 19 đến môn thể thao thi đấu Olympic — lịch sử hình thành kỳ diệu của cầu lông.</p>
+                <div class="article-footer">
+                    <div class="article-actions">
+                        <button class="action-btn" onclick="toggleLike(event, this)"><i class='bx bx-heart'></i> <span>24</span></button>
+                        <button class="action-btn" onclick="event.stopPropagation(); openModal('a1')"><i class='bx bx-comment'></i> <span>8</span></button>
+                    </div>
+                    <span class="read-more-link">Đọc thêm <i class='bx bx-right-arrow-alt'></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-cat="legend" onclick="openModal('a2')">
+            <div class="article-thumb thumb-3"><span></span></div>
+            <div class="article-body">
+                <div class="article-meta">
+                    <span class="tag tag-legend">Huyền thoại</span>
+                    <span class="read-time" style="font-size:11px;color:var(--muted)"><i class='bx bx-time-five'></i> 4 phút</span>
+                </div>
+                <h3>Peter Gade — Người Đan Mạch Thay Đổi Cách Chơi Cầu Lông</h3>
+                <p>Phong cách chơi sáng tạo và lối di chuyển uyển chuyển khiến Peter Gade trở thành một trong những tay vợt được yêu thích nhất mọi thời đại.</p>
+                <div class="article-footer">
+                    <div class="article-actions">
+                        <button class="action-btn" onclick="toggleLike(event, this)"><i class='bx bx-heart'></i> <span>31</span></button>
+                        <button class="action-btn" onclick="event.stopPropagation(); openModal('a2')"><i class='bx bx-comment'></i> <span>12</span></button>
+                    </div>
+                    <span class="read-more-link">Đọc thêm <i class='bx bx-right-arrow-alt'></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-cat="gear" onclick="openModal('a3')">
+            <div class="article-thumb thumb-4"><span></span></div>
+            <div class="article-body">
+                <div class="article-meta">
+                    <span class="tag tag-gear">Vợt & Gear</span>
+                    <span class="read-time" style="font-size:11px;color:var(--muted)"><i class='bx bx-time-five'></i> 3 phút</span>
+                </div>
+                <h3>Yonex Astrox 99 — Chiếc Vợt Đã Thay Đổi Thế Hệ Smash</h3>
+                <p>Từ công nghệ rotational generator đến khung graphite cao cấp — tại sao Astrox 99 lại là lựa chọn của hàng loạt VĐV chuyên nghiệp hàng đầu thế giới.</p>
+                <div class="article-footer">
+                    <div class="article-actions">
+                        <button class="action-btn" onclick="toggleLike(event, this)"><i class='bx bx-heart'></i> <span>47</span></button>
+                        <button class="action-btn" onclick="event.stopPropagation(); openModal('a3')"><i class='bx bx-comment'></i> <span>19</span></button>
+                    </div>
+                    <span class="read-more-link">Đọc thêm <i class='bx bx-right-arrow-alt'></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-cat="legend" onclick="openModal('a4')">
+            <div class="article-thumb thumb-5"><span>⚡</span></div>
+            <div class="article-body">
+                <div class="article-meta">
+                    <span class="tag tag-legend">Huyền thoại</span>
+                    <span class="read-time" style="font-size:11px;color:var(--muted)"><i class='bx bx-time-five'></i> 5 phút</span>
+                </div>
+                <h3>Taufik Hidayat — Cú Backhand Đẹp Nhất Lịch Sử Cầu Lông</h3>
+                <p>Cú backhand cross-court của Taufik được coi là đòn đánh kỹ thuật nhất trong lịch sử — hành trình của huyền thoại người Indonesia.</p>
+                <div class="article-footer">
+                    <div class="article-actions">
+                        <button class="action-btn" onclick="toggleLike(event, this)"><i class='bx bx-heart'></i> <span>58</span></button>
+                        <button class="action-btn" onclick="event.stopPropagation(); openModal('a4')"><i class='bx bx-comment'></i> <span>22</span></button>
+                    </div>
+                    <span class="read-more-link">Đọc thêm <i class='bx bx-right-arrow-alt'></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-cat="tips" onclick="openModal('a5')">
+            <div class="article-thumb thumb-6"><span>🎯</span></div>
+            <div class="article-body">
+                <div class="article-meta">
+                    <span class="tag tag-tips">Kỹ thuật</span>
+                    <span class="read-time" style="font-size:11px;color:var(--muted)"><i class='bx bx-time-five'></i> 4 phút</span>
+                </div>
+                <h3>5 Lỗi Footwork Phổ Biến Và Cách Khắc Phục Trong 2 Tuần</h3>
+                <p>Di chuyển tốt là nền tảng của mọi tay vợt giỏi. Phân tích chi tiết 5 lỗi footwork mà 90% người chơi phong trào mắc phải — và cách sửa.</p>
+                <div class="article-footer">
+                    <div class="article-actions">
+                        <button class="action-btn" onclick="toggleLike(event, this)"><i class='bx bx-heart'></i> <span>63</span></button>
+                        <button class="action-btn" onclick="event.stopPropagation(); openModal('a5')"><i class='bx bx-comment'></i> <span>15</span></button>
+                    </div>
+                    <span class="read-more-link">Đọc thêm <i class='bx bx-right-arrow-alt'></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-card" data-cat="history" onclick="openModal('a6')">
+            <div class="article-thumb thumb-2"><span>🌏</span></div>
+            <div class="article-body">
+                <div class="article-meta">
+                    <span class="tag tag-history">Lịch sử</span>
+                    <span class="read-time" style="font-size:11px;color:var(--muted)"><i class='bx bx-time-five'></i> 6 phút</span>
+                </div>
+                <h3>Indonesia — Đế Chế Cầu Lông Và Những Thập Kỷ Thống Trị</h3>
+                <p>Không quốc gia nào thống trị cầu lông lâu dài như Indonesia. Từ Rudy Hartono đến Kevin/Marcus — câu chuyện về một dân tộc và niềm đam mê.</p>
+                <div class="article-footer">
+                    <div class="article-actions">
+                        <button class="action-btn" onclick="toggleLike(event, this)"><i class='bx bx-heart'></i> <span>39</span></button>
+                        <button class="action-btn" onclick="event.stopPropagation(); openModal('a6')"><i class='bx bx-comment'></i> <span>11</span></button>
+                    </div>
+                    <span class="read-more-link">Đọc thêm <i class='bx bx-right-arrow-alt'></i></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+    <div class="modal" id="modal">
+        <div class="modal-thumb" id="modalThumb">
+            <button class="modal-close" onclick="closeModal()"><i class='bx bx-x'></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-meta" id="modalMeta"></div>
+            <h2 id="modalTitle"></h2>
+            <div class="article-full" id="modalContent"></div>
+        </div>
+        <div class="comment-section">
+            <h4>Bình luận <span id="commentCount">0</span></h4>
+            <div class="comment-form">
+                <div class="comment-input-row">
+                    <div class="comment-avatar" id="userAvatar">B</div>
+                    <textarea class="comment-input" id="commentInput" placeholder="Chia sẻ suy nghĩ của bạn..." rows="1"
+                              oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+                </div>
+                <button class="comment-submit" onclick="submitComment()">Gửi bình luận</button>
+                <div style="clear:both"></div>
+            </div>
+            <div class="comments-list" id="commentsList"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        const avatarColors = ['#0071e3','#34c759','#ff3b30','#ff9500','#5856d6','#00c7be','#ff2d55'];
+        const userColor = avatarColors[Math.floor(Math.random()*avatarColors.length)];
+        document.getElementById('userAvatar').style.background = userColor;
+
+        /* Article data */
+        const articles = {
+          featured: {
+            thumb: 'thumb-1', icon: '',
+            tag: '<span class="tag tag-legend">Huyền thoại</span>',
+            date: '18 tháng 5, 2026', readTime: '6 phút',
+            title: 'Lin Dan — Siêu Nhân Của Làng Cầu Lông Thế Giới',
+            content: `<p>Trong lịch sử cầu lông thế giới, hiếm có cái tên nào gắn liền với sự vĩ đại như <strong>Lin Dan</strong>. Sinh năm 1983 tại Longyan, Phúc Kiến (Trung Quốc), anh bắt đầu chơi cầu lông từ năm 5 tuổi và gia nhập đội tuyển quốc gia khi mới 17 tuổi.</p>
+            <p>Sự nghiệp của Lin Dan là bộ sưu tập danh hiệu không tưởng: 2 HCV Olympic (2008 Athens, 2012 London), 5 lần vô địch Giải cầu lông thế giới BWF, 6 lần vô địch All England — môn thể thao này hiếm khi thấy ai thống trị toàn diện đến vậy.</p>
+            <p>Điều khiến Lin Dan đặc biệt không chỉ là danh hiệu — mà là <em>phong cách</em>. Anh kết hợp sức mạnh thể chất, phản xạ siêu việt và trí tuệ chiến thuật sắc bén. Trận chung kết Olympic 2012 với Lee Chong Wei được nhiều người coi là trận đấu vĩ đại nhất lịch sử cầu lông.</p>
+            <p>Lin Dan giải nghệ năm 2020 sau hơn 20 năm thi đấu đỉnh cao — để lại di sản mà nhiều thế hệ tay vợt sau này sẽ còn nhắc đến.</p>`,
+            comments: [
+              { name: 'Minh Khoa', avatar: 'MK', color: '#0071e3', time: '2 giờ trước', text: 'Lin Dan xứng đáng là GOAT của cầu lông! Trận chung kết 2012 với Lee Chong Wei mình xem đến 3 lần rồi, vẫn rùng mình.', likes: 14 },
+              { name: 'Thu Hà', avatar: 'TH', color: '#ff2d55', time: '5 giờ trước', text: 'Phong cách thi đấu của anh ấy quá đẹp, vừa mạnh vừa tinh tế. Cầu lông sau này thiếu đi nhân vật như Lin Dan nhiều lắm.', likes: 9 }
+            ]
+          },
+          a1: {
+            thumb: 'thumb-7', icon: '',
+            tag: '<span class="tag tag-history">Lịch sử</span>',
+            date: '14 tháng 5, 2026', readTime: '5 phút',
+            title: 'Cầu lông ra đời như thế nào? Hành trình từ sân Poona đến Olympic',
+            content: `<p>Cầu lông có lịch sử lâu đời hơn nhiều người nghĩ. Các trò chơi sử dụng vợt và cầu đã xuất hiện ở Trung Quốc, Nhật Bản và Ấn Độ hàng thế kỷ trước. Nhưng phiên bản cầu lông hiện đại bắt nguồn từ <strong>Poona, Ấn Độ</strong> — nơi các sĩ quan quân đội Anh chơi một trò gọi là "Poona" vào thập niên 1860.</p>
+            <p>Khi trở về Anh, họ mang trò chơi này theo. Năm 1873, Công tước xứ Beaufort tổ chức buổi chơi tại điền trang <em>Badminton House</em> ở Gloucestershire — cái tên "badminton" ra đời từ đó.</p>
+            <p>Liên đoàn Cầu lông Thế giới (BWF) được thành lập năm 1934. Đến năm 1992, cầu lông chính thức trở thành môn thi đấu Olympic tại Barcelona — đánh dấu bước ngoặt lớn nhất trong lịch sử môn thể thao này.</p>
+            <p>Ngày nay, cầu lông có hơn 220 triệu người chơi trên toàn thế giới, đặc biệt phổ biến tại châu Á.</p>`,
+            comments: [
+              { name: 'Văn Đức', avatar: 'VĐ', color: '#34c759', time: '1 ngày trước', text: 'Mình không biết cái tên "badminton" lại có nguồn gốc từ tên điền trang, thú vị quá!', likes: 7 },
+              { name: 'Lan Anh', avatar: 'LA', color: '#5856d6', time: '1 ngày trước', text: 'Bài viết hay và ngắn gọn. Hy vọng có thêm bài về lịch sử cầu lông Việt Nam.', likes: 5 }
+            ]
+          },
+          a2: {
+            thumb: 'thumb-3', icon: '',
+            tag: '<span class="tag tag-legend">Huyền thoại</span>',
+            date: '10 tháng 5, 2026', readTime: '4 phút',
+            title: 'Peter Gade — Người Đan Mạch Thay Đổi Cách Chơi Cầu Lông',
+            content: `<p><strong>Peter Gade Christensen</strong> là một trong những tay vợt đơn nam xuất sắc và được yêu thích nhất trong lịch sử cầu lông thế giới. Người Đan Mạch này không chỉ thi đấu giỏi — anh thi đấu đẹp.</p>
+            <p>Gade nổi tiếng với lối chơi sáng tạo, di chuyển thanh thoát và khả năng kiểm soát cầu tuyệt vời. Anh từng giữ vị trí số 1 thế giới và đoạt vô số danh hiệu cấp cao, trong đó có chức vô địch All England 1999.</p>
+            <p>Điều làm Gade đặc biệt là anh không bao giờ từ bỏ phong cách chơi nghệ thuật của mình, dù phải đối mặt với những đối thủ cực kỳ mạnh mẽ về thể lực như Lin Dan hay Lee Chong Wei.</p>
+            <p>Sau khi giải nghệ, Peter Gade trở thành huấn luyện viên và vẫn tiếp tục truyền cảm hứng cho thế hệ cầu thủ trẻ Đan Mạch.</p>`,
+            comments: [
+              { name: 'Hữu Nghĩa', avatar: 'HN', color: '#ff9500', time: '3 ngày trước', text: 'Peter Gade là idol của mình từ nhỏ! Cách anh ấy chơi giống như nghệ thuật vậy, không ai bắt chước được.', likes: 18 }
+            ]
+          },
+          a3: {
+            thumb: 'thumb-4', icon: '',
+            tag: '<span class="tag tag-gear">Vợt & Gear</span>',
+            date: '7 tháng 5, 2026', readTime: '3 phút',
+            title: 'Yonex Astrox 99 — Chiếc Vợt Đã Thay Đổi Thế Hệ Smash',
+            content: `<p>Dòng vợt <strong>Yonex Astrox</strong> ra đời để phục vụ cho lối chơi tấn công mạnh mẽ, và Astrox 99 là đỉnh cao của dòng sản phẩm này. Được thiết kế đặc biệt với công nghệ <em>Rotational Generator System</em>, vợt cho phép người chơi tạo ra lực smash cực mạnh mà vẫn duy trì kiểm soát tốt.</p>
+            <p>Khung vợt làm từ graphite cao cấp kết hợp với Tungsten Infused Grommets giúp mặt vợt ổn định hơn khi va chạm mạnh. Đầu vợt nặng (head-heavy) phù hợp với những tay vợt ưa smash từ cuối sân.</p>
+            <p>Astrox 99 được sử dụng bởi nhiều VĐV chuyên nghiệp hàng đầu, trong đó có Chen Long — cựu vô địch Olympic. Với người chơi phong trào có kỹ thuật tốt, đây là một trong những cây vợt đáng đầu tư nhất hiện nay.</p>`,
+            comments: [
+              { name: 'Quang Minh', avatar: 'QM', color: '#00c7be', time: '4 ngày trước', text: 'Mình đang dùng Astrox 99 Pro, cầm nặng tay hơn nhưng smash cực đã! Recommend cho ai chơi tấn công.', likes: 22 },
+              { name: 'Bảo Châu', avatar: 'BC', color: '#ff3b30', time: '5 ngày trước', text: 'Bài viết có thể so sánh với Victor Thruster K 9900 không? Đang phân vân giữa hai cây này.', likes: 8 }
+            ]
+          },
+          a4: {
+            thumb: 'thumb-5', icon: '',
+            tag: '<span class="tag tag-legend">Huyền thoại</span>',
+            date: '3 tháng 5, 2026', readTime: '5 phút',
+            title: 'Taufik Hidayat — Cú Backhand Đẹp Nhất Lịch Sử Cầu Lông',
+            content: `<p><strong>Taufik Hidayat</strong> là tay vợt người Indonesia đã để lại dấu ấn không thể phai mờ trong lịch sử cầu lông thế giới. Không phải vì số lượng danh hiệu — mà vì cú <em>backhand cross-court drop shot</em> huyền thoại của anh.</p>
+            <p>Vô địch Olympic Athens 2004, vô địch thế giới 2005 — Taufik đạt đỉnh cao sự nghiệp trong giai đoạn cực kỳ cạnh tranh. Nhưng điều người hâm mộ nhớ nhất vẫn là phong cách thi đấu đầy cá tính và những pha cầu kỹ thuật khiến khán giả á khẩu.</p>
+            <p>Nhiều chuyên gia đánh giá cú backhand của Taufik là đỉnh cao kỹ thuật — một đòn đánh mà ngay cả các tay vợt chuyên nghiệp hiện đại cũng rất khó tái hiện đúng tinh thần nguyên bản.</p>
+            <p>Sau khi giải nghệ, Taufik tiếp tục cống hiến cho cầu lông Indonesia với vai trò cố vấn và đại sứ thương hiệu.</p>`,
+            comments: [
+              { name: 'Trọng Tài', avatar: 'TT', color: '#5856d6', time: '6 ngày trước', text: 'Xem lại clip backhand của Taufik mà vẫn không hiểu sao con người có thể đánh như vậy được. Siêu thực!', likes: 31 },
+              { name: 'Kim Ngân', avatar: 'KN', color: '#ff2d55', time: '1 tuần trước', text: 'Indonesia quá may mắn khi có anh ấy. Hy vọng thế hệ trẻ Indonesia sẽ có người kế tục.', likes: 11 }
+            ]
+          },
+          a5: {
+            thumb: 'thumb-6', icon: '',
+            tag: '<span class="tag tag-tips">Kỹ thuật</span>',
+            date: '28 tháng 4, 2026', readTime: '4 phút',
+            title: '5 Lỗi Footwork Phổ Biến Và Cách Khắc Phục Trong 2 Tuần',
+            content: `<p>Footwork là nền tảng của mọi tay vợt giỏi. Dù bạn smash mạnh hay có cú drop shot tinh tế đến đâu, nếu di chuyển kém thì hiệu quả sẽ giảm đi rất nhiều. Dưới đây là 5 lỗi phổ biến nhất:</p>
+            <p><strong>1. Không về trung tâm sân sau mỗi cú đánh:</strong> Đây là lỗi cơ bản nhất. Sau mỗi pha bóng, bạn cần nhanh chóng trở về trung tâm (khu vực T giữa sân) để sẵn sàng cho cú tiếp theo.</p>
+            <p><strong>2. Bước chân quá lớn hoặc quá nhỏ:</strong> Bước chân cần tương xứng với khoảng cách đến cầu. Nhiều người chơi phong trào thường bước quá lớn gây mất thăng bằng, hoặc quá nhỏ khiến không với tới cầu.</p>
+            <p><strong>3. Không sử dụng chasse step:</strong> Kỹ thuật chasse (lướt bước) giúp di chuyển nhanh hơn mà tiêu hao ít năng lượng hơn so với chạy thông thường.</p>
+            <p><strong>4. Nhìn vào chân thay vì nhìn cầu và đối thủ:</strong> Mắt phải luôn theo dõi cầu và đọc vị trí đối thủ. Footwork tốt cần được tự động hoá qua luyện tập.</p>
+            <p><strong>5. Không khởi động đúng cách:</strong> Split step trước mỗi cú đánh của đối thủ giúp bạn phản xạ nhanh hơn đáng kể.</p>`,
+            comments: [
+              { name: 'Phúc An', avatar: 'PA', color: '#34c759', time: '1 tuần trước', text: 'Lỗi số 1 là mình hay mắc nhất, cứ đánh xong là đứng tại chỗ ngắm cầu rồi bị bỏ điểm. Cảm ơn bài viết!', likes: 27 },
+              { name: 'Diễm My', avatar: 'DM', color: '#ff9500', time: '1 tuần trước', text: 'Chasse step mình học mãi mà vẫn chưa thành thục. Có video hướng dẫn không ạ?', likes: 13 }
+            ]
+          },
+          a6: {
+            thumb: 'thumb-2', icon: '',
+            tag: '<span class="tag tag-history">Lịch sử</span>',
+            date: '22 tháng 4, 2026', readTime: '6 phút',
+            title: 'Indonesia — Đế Chế Cầu Lông Và Những Thập Kỷ Thống Trị',
+            content: `<p>Nếu có một quốc gia gắn liền với cầu lông hơn bất kỳ đất nước nào khác, đó phải là <strong>Indonesia</strong>. Từ thập niên 1950 đến nay, Indonesia liên tục sản sinh ra những tay vợt đẳng cấp thế giới và thống trị môn thể thao này theo từng giai đoạn.</p>
+            <p><strong>Rudy Hartono</strong> — huyền thoại đơn nam với 8 lần vô địch All England liên tiếp (1968–1976) — là biểu tượng đầu tiên. Sau đó là <em>Ricky Gunawan, Ardy Wiranata</em>, và thế hệ đôi nam huyền thoại <strong>Rexy/Ricky</strong>.</p>
+            <p>Đến thời hiện đại, Indonesia tiếp tục thống trị đôi nam với cặp đôi <strong>Kevin Sanjaya/Marcus Gideon</strong> — được coi là một trong những cặp đôi nam xuất sắc nhất mọi thời đại, nổi tiếng với tốc độ và lối chơi cực kỳ mãnh liệt.</p>
+            <p>Cầu lông tại Indonesia không chỉ là thể thao — đó là văn hoá, niềm tự hào dân tộc. Các sân cầu lông xuất hiện ở khắp nơi, từ thành phố lớn đến làng quê hẻo lánh. Đó là lý do tại sao Indonesia luôn có nguồn tài năng dồi dào.</p>`,
+            comments: [
+              { name: 'Ngọc Hà', avatar: 'NH', color: '#0071e3', time: '2 tuần trước', text: 'Kevin/Marcus đánh nhanh kinh khủng, xem live không kịp theo dõi cầu luôn. Họ xứng đáng là thế hệ vĩ đại nhất của đôi nam.', likes: 20 }
+            ]
+          }
+        };
+
+        let currentArticleId = null;
+        const articleComments = {};
+
+        Object.keys(articles).forEach(id => {
+          articleComments[id] = articles[id].comments.map(c => ({...c}));
+        });
+
+        function openModal(id) {
+          currentArticleId = id;
+          const a = articles[id];
+          const thumb = document.getElementById('modalThumb');
+          thumb.className = 'modal-thumb ' + a.thumb;
+          thumb.querySelector('button').remove();
+          thumb.innerHTML = `<span style="font-size:72px">${a.icon}</span><button class="modal-close" onclick="closeModal()"><i class='bx bx-x'></i></button>`;
+          document.getElementById('modalMeta').innerHTML = `${a.tag}<span class="featured-date" style="font-size:12px;color:var(--muted)">${a.date}</span><span class="read-time" style="font-size:12px;color:var(--muted)"><i class='bx bx-time-five'></i> ${a.readTime}</span>`;
+          document.getElementById('modalTitle').textContent = a.title;
+          document.getElementById('modalContent').innerHTML = a.content;
+          renderComments();
+          document.getElementById('modalOverlay').classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+          document.getElementById('modalOverlay').classList.remove('open');
+          document.body.style.overflow = '';
+          currentArticleId = null;
+        }
+
+        function handleOverlayClick(e) {
+          if(e.target === document.getElementById('modalOverlay')) closeModal();
+        }
+
+        function renderComments() {
+          const comments = articleComments[currentArticleId] || [];
+          document.getElementById('commentCount').textContent = comments.length;
+          const list = document.getElementById('commentsList');
+          list.innerHTML = comments.map((c, i) => `
+            <div class="comment-item">
+              <div class="c-avatar" style="background:${c.color}">${c.avatar}</div>
+              <div class="c-content">
+                <div class="c-header">
+                  <span class="c-name">${c.name}</span>
+                  <span class="c-time">${c.time}</span>
+                </div>
+                <div class="c-text">${c.text}</div>
+                <div class="c-actions">
+                  <button class="c-like-btn ${c.userLiked?'liked':''}" onclick="likeComment(${i})">
+                    <i class='bx ${c.userLiked?"bxs-heart":"bx-heart"}'></i> ${c.likes}
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        function likeComment(i) {
+          const c = articleComments[currentArticleId][i];
+          if(c.userLiked) { c.likes--; c.userLiked = false; }
+          else { c.likes++; c.userLiked = true; }
+          renderComments();
+        }
+
+        function submitComment() {
+          const input = document.getElementById('commentInput');
+          const text = input.value.trim();
+          if(!text) return;
+          articleComments[currentArticleId].unshift({
+            name: 'Bạn',
+            avatar: 'B',
+            color: userColor,
+            time: 'Vừa xong',
+            text: text,
+            likes: 0,
+            userLiked: false
+          });
+          input.value = '';
+          input.style.height = 'auto';
+          renderComments();
+        }
+
+        function toggleLike(e, btn) {
+          e.stopPropagation();
+          const isLiked = btn.classList.toggle('liked');
+          const countEl = btn.querySelector('span');
+          const count = parseInt(countEl.textContent);
+          countEl.textContent = isLiked ? count + 1 : count - 1;
+          const icon = btn.querySelector('i');
+          icon.className = isLiked ? 'bx bxs-heart' : 'bx bx-heart';
+        }
+
+        function filterArticles(cat, pill) {
+          document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          const cards = document.querySelectorAll('.article-card');
+          cards.forEach(card => {
+            if(cat === 'all' || card.dataset.cat === cat) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        }
+
+        document.getElementById('commentInput').addEventListener('keydown', function(e) {
+          if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitComment(); }
+        });
+    </script>
+}

@@ -5,7 +5,7 @@
     <nav class="pagination-container" aria-label="Page navigation">
         @* Previous Page *@
         <a class="pagination-item @(Model.HasPreviousPage ? "" : "disabled")"
-           asp-area="@(ViewData["Area"] ?? "")"
+           asp-area="@Model.AreaName"
            asp-controller="@Model.ControllerName"
            asp-action="@Model.ActionName"
            asp-all-route-data="@Model.RouteValues"
@@ -25,7 +25,7 @@
             if (startPage > 1)
             {
                 <a class="pagination-item" 
-                   asp-area="@(ViewData["Area"] ?? "")"
+                   asp-area="@Model.AreaName"
                    asp-controller="@Model.ControllerName" 
                    asp-action="@Model.ActionName" 
                    asp-all-route-data="@Model.RouteValues"
@@ -39,7 +39,7 @@
             for (int i = startPage; i <= endPage; i++)
             {
                 <a class="pagination-item @(i == Model.CurrentPage ? "active" : "")"
-                   asp-area="@(ViewData["Area"] ?? "")"
+                   asp-area="@Model.AreaName"
                    asp-controller="@Model.ControllerName"
                    asp-action="@Model.ActionName"
                    asp-all-route-data="@Model.RouteValues"
@@ -55,7 +55,7 @@
                     <span class="pagination-ellipsis">...</span>
                 }
                 <a class="pagination-item" 
-                   asp-area="@(ViewData["Area"] ?? "")"
+                   asp-area="@Model.AreaName"
                    asp-controller="@Model.ControllerName" 
                    asp-action="@Model.ActionName" 
                    asp-all-route-data="@Model.RouteValues"
@@ -65,7 +65,7 @@
 
         @* Next Page *@
         <a class="pagination-item @(Model.HasNextPage ? "" : "disabled")"
-           asp-area="@(ViewData["Area"] ?? "")"
+           asp-area="@Model.AreaName"
            asp-controller="@Model.ControllerName"
            asp-action="@Model.ActionName"
            asp-all-route-data="@Model.RouteValues"

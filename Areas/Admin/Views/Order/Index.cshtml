@@ -50,23 +50,25 @@
                       <tr>
                             <td>@order.UserName</td>
                             <td>@order.OrderDate.ToString("MMM dd, yyyy HH:mm")</td>
-                            <td>@order.TotalPrice.ToString("#,##0") ₫</td>
+                            <td>@order.TotalPrice.ToString("#,##0") đ</td>
                             <td>
                                 <span class="status @order.Status.ToString().ToLower()">
                                     @order.Status
                                 </span>
                             </td>
                             <td class="btn-Edit-Delete-Detail">
-                                <a asp-action="Detail" asp-route-id="@order.OrderId"><i class='bx bx-show'></i></a>
+                                <a asp-action="Detail" asp-route-id="@order.OrderId" title="Chi tiết"><i class='bx bx-show'></i></a>
                                 @if(order.Status == Getdata1.Models.Enums.OrderStatus.Pending)
                                 {
-                                    <a asp-action="UpdateStatus" asp-route-id="@order.OrderId" asp-route-status="Paid"
-                                       onclick="return confirm('Approve this order?')">
+                                    <a href="javascript:void(0)" 
+                                       onclick="confirmUpdateStatus(@order.OrderId, 'Paid', '@order.UserName')" 
+                                       title="Duyệt đơn" style="color: var(--blue);">
                                         <i class='bx bx-check-circle'></i>
                                     </a>
 
-                                    <a asp-action="UpdateStatus" asp-route-id="@order.OrderId" asp-route-status="Cancelled"
-                                       onclick="return confirm('Cancel this order?')">
+                                    <a href="javascript:void(0)" 
+                                       onclick="confirmUpdateStatus(@order.OrderId, 'Cancelled', '@order.UserName')" 
+                                       title="Hủy đơn" style="color: var(--red);">
                                         <i class='bx bx-x-circle'></i>
                                     </a>
                                 }
@@ -76,22 +78,32 @@
                 </tbody>
             </table>
 
-            @await Html.PartialAsync("paginationOrder", Model)
+            @await Html.PartialAsync("pagination_table", Model)
         </div>
     </div>
 </main>
 
 @section Scripts {
     <script>
-        function toggleFilter() {
-            var dropdown = document.getElementById('filterDropdown');
-            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-        }
+        function confirmUpdateStatus(id, status, userName) {
+            const isPaid = status === 'Paid';
+            const title = isPaid ? 'Xác nhận duyệt đơn' : 'Xác nhận hủy đơn';
+            const content = isPaid 
+                ? `Bạn có chắc chắn muốn <strong>Duyệt</strong> đơn hàng của khách hàng <strong>${userName}</strong>?`
+                : `Bạn có chắc chắn muốn <strong>Hủy</strong> đơn hàng của khách hàng <strong>${userName}</strong>?`;
+            const confirmText = isPaid ? 'Duyệt đơn' : 'Hủy đơn';
+            const btnClass = isPaid ? 'btn-primary' : 'btn-danger';
 
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.filter-wrapper')) {
-                document.getElementById('filterDropdown').style.display = 'none';
-            }
-        });
+            showGlobalModal({
+                title: title,
+                content: content,
+                confirmText: confirmText,
+                cancelText: 'Hủy',
+                confirmClass: btnClass,
+                onConfirm: function () {
+                    window.location.href = `@Url.Action("UpdateStatus", "Order")?id=${id}&status=${status}`;
+                }
+            });
+        }
     </script>
 }

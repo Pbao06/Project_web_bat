@@ -48,7 +48,7 @@
       <form asp-area="User" asp-controller="Account" asp-action="Login" method="post">
     @Html.AntiForgeryToken()
     @* under code is accept ModelStade *@
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
 
     <div class="input-group">
         <label>Email Address</label>
@@ -90,3 +90,14 @@
     </div>
 
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('form').on('invalid-form.validate', function () {
+                showToast("Vui lòng nhập đầy đủ thông tin đăng nhập.", "error");
+            });
+        });
+    </script>
+}

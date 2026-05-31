@@ -60,6 +60,7 @@
             <div class="input-group">
                 <label>Password</label>
                 <input type="password" asp-for="Password" placeholder="••••••••">
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
             <div class="input-group">
@@ -92,4 +93,15 @@
     </div>
 
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('form').on('invalid-form.validate', function () {
+                showToast("Vui lòng nhập đầy đủ thông tin đăng ký.", "error");
+            });
+        });
+    </script>
+}
 
