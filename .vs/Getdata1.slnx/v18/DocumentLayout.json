@@ -127,8 +127,7 @@
               "ViewState": "AgIAAAwBAAAAAAAAAAAgwCMBAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-27T14:39:10.827Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -141,8 +140,7 @@
               "ViewState": "AgIAAEAAAAAAAAAAAAAAAFQAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2026-05-28T14:16:54.02Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -155,8 +153,7 @@
               "ViewState": "AgIAACQAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-24T07:52:33.719Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -169,8 +166,7 @@
               "ViewState": "AgIAAAIBAAAAAAAAAAAAAB8BAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-25T14:23:32.212Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -196,8 +192,7 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-15T11:25:49.678Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -210,8 +205,7 @@
               "ViewState": "AgIAABIAAAAAAAAAAAAgwBwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-14T13:47:55.702Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -224,8 +218,7 @@
               "ViewState": "AgIAAFcAAAAAAAAAAAAAACMAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-31T03:54:11.521Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -238,21 +231,7 @@
               "ViewState": "AgIAADMAAAAAAAAAAAAAAEoAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-31T04:44:00.472Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ProfileController.cs",
-              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\ProfileController.cs",
-              "RelativeDocumentMoniker": "Areas\\User\\Controllers\\ProfileController.cs",
-              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\ProfileController.cs",
-              "RelativeToolTip": "Areas\\User\\Controllers\\ProfileController.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-31T13:17:34.205Z",
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -268,6 +247,18 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ProfileController.cs",
+              "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\ProfileController.cs",
+              "RelativeDocumentMoniker": "Areas\\User\\Controllers\\ProfileController.cs",
+              "ToolTip": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\Areas\\User\\Controllers\\ProfileController.cs",
+              "RelativeToolTip": "Areas\\User\\Controllers\\ProfileController.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-31T13:17:34.205Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 10,
               "Title": "Style.css",
               "DocumentMoniker": "C:\\Users\\OS\\OneDrive\\Desktop\\ASP.net\\Getdata1\\wwwroot\\css\\Style.css",
@@ -276,8 +267,7 @@
               "RelativeToolTip": "wwwroot\\css\\Style.css",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-05-31T07:16:10.488Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-31T07:16:10.488Z"
             },
             {
               "$type": "Document",
