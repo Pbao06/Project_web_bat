@@ -52,5 +52,27 @@ namespace Getdata1.Areas.User.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SubscribeNewsletter(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return Json(new { success = false, message = "Vui lòng nhập địa chỉ email của bạn." });
+            }
+
+            // Newsletter should be inclusive. We can check if they have an account just to customize the message,
+            // but we shouldn't block them if they don't.
+            var userExists = await _context.Users.AnyAsync(u => u.Email == email);
+
+            if (userExists)
+            {
+                return Json(new { success = true, message = "Chào mừng bạn trở lại! Chúng tôi đã cập nhật đăng ký bản tin cho tài khoản của bạn." });
+            }
+            
+            // For guests, we just acknowledge the subscription.
+            // In a real app, we would save this to a NewsletterSubscriptions table.
+            return Json(new { success = true, message = "Cảm ơn bạn đã đăng ký! Bạn sẽ nhận được những tin tức mới nhất từ Pbao." });
+        }
     }
 }

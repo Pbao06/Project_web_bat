@@ -212,7 +212,7 @@
     </div>
 </div>
 
-<div class="testimonials">
+@* <div class="testimonials">
     <span class="section-label">Reviews</span>
     <div class="section-head" style="margin-bottom:28px">
         <h2>What Players Say</h2>
@@ -243,15 +243,15 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@
 
 <div class="newsletter">
     <div class="newsletter-inner">
         <h2>Stay in the Game.</h2>
         <p>New arrivals, exclusive drops & training tips — straight to your inbox.</p>
         <div class="nl-form">
-            <input class="nl-input" type="email" placeholder="Your email address">
-            <button class="btn-nl">Subscribe</button>
+            <input class="nl-input" id="newsletter-email" type="email" placeholder="Your email address">
+            <button class="btn-nl" id="newsletter-btn">Subscribe</button>
         </div>
     </div>
 </div>
@@ -259,6 +259,74 @@
 @section Scripts {
     <script src="~/js/favorite.js"></script>
     <script>
+        /* ── Newsletter Subscription ── */
+        document.getElementById('newsletter-btn')?.addEventListener('click', async function() {
+            const emailInput = document.getElementById('newsletter-email');
+            const email = emailInput.value.trim();
+            const btn = this;
+
+            if (!email) {
+                if (typeof showToast === 'function') {
+                    showToast("Vui lòng nhập địa chỉ email.", "warning");
+                }
+                return;
+            }
+
+            // Email regex simple check
+           // ĐÃ SỬA: Thay  thành @@ để Razor bỏ qua
+             const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+            if (!emailRegex.test(email)) {
+                if (typeof showToast === 'function') {
+                    showToast("Email không hợp lệ.", "error");
+                }
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i>';
+
+            try {
+                const response = await fetch('/User/Home/SubscribeNewsletter', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `email=${encodeURIComponent(email)}`
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    if (typeof showGlobalModal === 'function') {
+                        showGlobalModal({
+                            title: 'Thành công',
+                            content: `
+                                <div style="text-align:center;">
+                                    <i class='bx bx-check-circle' style="font-size: 64px; color: #28a745;"></i>
+                                    <p style="margin-top: 15px; font-size: 1.1rem;">${result.message}</p>
+                                </div>
+                            `,
+                            confirmText: 'Đóng',
+                            hideCancel: true
+                        });
+                    }
+                    emailInput.value = '';
+                } else {
+                    if (typeof showToast === 'function') {
+                        showToast(result.message, "error");
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                if (typeof showToast === 'function') {
+                    showToast("Có lỗi xảy ra, vui lòng thử lại sau.", "error");
+                }
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Subscribe';
+            }
+        });
+
         /* ── Draw racket strings ── */
         const fs = document.getElementById('fStrings');
         if(fs){

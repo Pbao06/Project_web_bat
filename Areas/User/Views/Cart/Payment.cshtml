@@ -193,7 +193,7 @@
                     <div class="field-row">
                         <div class="field-group">
                             <label class="field-label">Tên chủ thẻ</label>
-                            <input class="field-input" type="text" placeholder="NGUYEN VAN A">
+                            <input class="field-input" type="text" placeholder="NGUYEN VAN A" id="cardName">
                         </div>
                     </div>
                     <div class="field-row">
@@ -208,11 +208,11 @@
                     <div class="field-row col2">
                         <div class="field-group">
                             <label class="field-label">Ngày hết hạn</label>
-                            <input class="field-input" type="text" placeholder="MM / YY" oninput="formatExpiry(this)" maxlength="7">
+                            <input class="field-input" type="text" placeholder="MM / YY" oninput="formatExpiry(this)" maxlength="7" id="cardExpiry">
                         </div>
                         <div class="field-group">
                             <label class="field-label">CVV</label>
-                            <input class="field-input" type="password" placeholder="•••" maxlength="4">
+                            <input class="field-input" type="password" placeholder="•••" maxlength="4" id="cardCVV">
                         </div>
                     </div>
                     <div class="card-icons">
@@ -236,7 +236,7 @@
                     <div class="field-row" style="margin-top:12px">
                         <div class="field-group">
                             <label class="field-label">Số điện thoại MoMo</label>
-                            <input class="field-input" type="tel" placeholder="0912 345 678">
+                            <input class="field-input" type="tel" placeholder="0912 345 678" id="momoPhone">
                         </div>
                     </div>
                 </div>
@@ -378,6 +378,7 @@
         let currentCart = null;
         let selectedShipping = 'standard';
         let shippingFee = 0;
+        let selectedPaymentType = 'card';
 
         async function loadOrderSummary() {
             try {
@@ -453,6 +454,7 @@
         function selectPay(el, type) {
             document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
+            selectedPaymentType = type;
             ['payCard','payMomo','payBanking','payCod'].forEach(id => document.getElementById(id).style.display='none');
             const map = {card:'payCard',momo:'payMomo',banking:'payBanking',cod:'payCod'};
             document.getElementById(map[type]).style.display='block';
@@ -492,7 +494,6 @@
 
         async function placeOrder() {
             // Collect data
-            //lấy dữ liệu 
             const firstName = document.getElementById('firstName').value.trim();
             const lastName = document.getElementById('lastName').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -501,26 +502,45 @@
             const city = document.getElementById('city').value;
             const district = document.getElementById('district').value;
 
+            let hasError = false;
+
             // Validation basic
             if (!firstName || !lastName || !email || !phone || !address) {
-                showToast('Vui lòng điền đầy đủ thông tin bắt buộc.', 'warning');
-                
-                // Highlight fields
                 if (!firstName) document.getElementById('firstName').classList.add('field-err');
                 if (!lastName) document.getElementById('lastName').classList.add('field-err');
                 if (!email) document.getElementById('email').classList.add('field-err');
                 if (!phone) document.getElementById('phone').classList.add('field-err');
                 if (!address) document.getElementById('address').classList.add('field-err');
-                
+                hasError = true;
+            }
+
+            // Validation Payment
+            if (selectedPaymentType === 'card') {
+                const cardName = document.getElementById('cardName').value.trim();
+                const cardNum = document.getElementById('cardNum').value.trim();
+                const cardExpiry = document.getElementById('cardExpiry').value.trim();
+                const cardCVV = document.getElementById('cardCVV').value.trim();
+
+                if (!cardName) { document.getElementById('cardName').classList.add('field-err'); hasError = true; }
+                if (!cardNum || cardNum.replace(/\s/g,'').length < 16) { document.getElementById('cardNum').classList.add('field-err'); hasError = true; }
+                if (!cardExpiry) { document.getElementById('cardExpiry').classList.add('field-err'); hasError = true; }
+                if (!cardCVV) { document.getElementById('cardCVV').classList.add('field-err'); hasError = true; }
+            } else if (selectedPaymentType === 'momo') {
+                const momoPhone = document.getElementById('momoPhone').value.trim();
+                if (!momoPhone) { document.getElementById('momoPhone').classList.add('field-err'); hasError = true; }
+            }
+
+            if (hasError) {
+                showToast('Vui lòng điền đầy đủ thông tin bắt buộc.', 'warning');
                 setTimeout(() => {
                     document.querySelectorAll('.field-input').forEach(el => el.classList.remove('field-err'));
                 }, 3000);
-                
                 return;
             }
 
             if (!email.includes('@@')) {
                 showToast('Email không hợp lệ.', 'error');
+                document.getElementById('email').classList.add('field-err');
                 document.getElementById('email').focus();
                 return;
             }
@@ -529,6 +549,7 @@
             const originalContent = btn.innerHTML;
             btn.innerHTML = '<i class="bx bx-loader-alt" style="animation:spin .7s linear infinite"></i> Đang xử lý...';
             btn.disabled = true;
+            
             // gom dữ liệu vào checkour DATA
             const checkoutData = {
                 firstName: firstName,
