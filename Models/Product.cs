@@ -9,19 +9,22 @@ namespace Getdata1.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Tên sản phẩm không được để trống")]
         [MaxLength(200)]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Giá sản phẩm không được để trống")]
+        [Range(0, double.MaxValue, ErrorMessage = "Giá sản phẩm phải lớn hơn hoặc bằng 0")]
         public decimal Price { get; set; }
 
         public string? Image {  get; set; }// ? la neu ko co thi null chu dung bao loi 
         [Required(ErrorMessage = "Vui lòng chọn danh mục sản phẩm")]
         public int CategoryId { get; set; }
         public virtual Category? Category { get; set; } // id khóa ngoại phải có nhma nguyên cả đối tượng có thể null vì no ko lấy heeys đc
-        [Required]
-        public int Stock {  get; set; }
+        [Required(ErrorMessage = "Số lượng tồn kho không được để trống")]
+        [Range(0, int.MaxValue, ErrorMessage = "Số lượng tồn kho phải lớn hơn hoặc bằng 0")]
+        public int? Stock {  get; set; }
         public string? Description { get; set; }
+        [Required(ErrorMessage = "Thương hiệu không được để trống")]
         public string? Brand {  get; set; }
         public DateTime? CreatedAt {  get; set; } = DateTime.UtcNow; // no need for nullable
 

@@ -1,10 +1,26 @@
-﻿@model Getdata1.Models.Product
+@model Getdata1.Models.Product
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Edit Product";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/Use_web/Notification.css" />
+    <style>
+        .text-danger {
+            color: #ff3b30;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: block;
+        }
+        .my-input.input-validation-error {
+            border-color: #ff3b30;
+        }
+    </style>
+}
+
 <main>
+    <div id="toast-container"></div>
     <div class="head-title">
         <div class="left">
             <h1>Edit Product</h1>
@@ -22,7 +38,8 @@
                 <h3>Product Record</h3>
             </div>
             
-            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data" id="editProductForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="Image" />
 
@@ -78,28 +95,33 @@
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="Name">Product Name</label>
+                            <label asp-for="Name">Product Name <span class="text-danger" style="display:inline">*</span></label>
                             <input asp-for="Name" class="my-input" placeholder="e.g. Yonex Astrox 100ZZ">
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
 
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                             <div class="form-group">
-                                <label asp-for="Price">Price (đ)</label>
+                                <label asp-for="Price">Price (đ) <span class="text-danger" style="display:inline">*</span></label>
                                 <input asp-for="Price" class="my-input">
+                                <span asp-validation-for="Price" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Brand">Brand</label>
+                                <label asp-for="Brand">Brand <span class="text-danger" style="display:inline">*</span></label>
                                 <input asp-for="Brand" class="my-input">
+                                <span asp-validation-for="Brand" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Stock">Stock Level</label>
+                                <label asp-for="Stock">Stock Level <span class="text-danger" style="display:inline">*</span></label>
                                 <input asp-for="Stock" class="my-input">
+                                <span asp-validation-for="Stock" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="CategoryId">Category</label>
+                                <label asp-for="CategoryId">Category <span class="text-danger" style="display:inline">*</span></label>
                                 <select asp-for="CategoryId" asp-items="@(ViewData["Category"] as SelectList)" class="my-input">
                                     <option value="">Select Category</option>
                                 </select>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
                             </div>
                         </div>
 
@@ -195,8 +217,34 @@
 </main>
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
     <script>
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = `toast-item ${type}`;
+
+            let icon = 'bx-check-circle';
+            if (type === 'error') icon = 'bx-x-circle';
+            if (type === 'warning') icon = 'bx-error-circle';
+
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <i class='bx ${icon} toast-icon'></i>
+                    <span class="toast-message">${message}</span>
+                </div>
+                <span class="toast-close" onclick="this.parentElement.remove()">×</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 5000);
+        }
+
         function deleteImage(imageId) {
             showGlobalModal({
                 title: 'Xác nhận xóa ảnh',
@@ -214,7 +262,7 @@
                                     $(this).remove();
                                 });
                             } else {
-                                alert(response.message || "Không thể xóa ảnh.");
+                                showToast(response.message || "Không thể xóa ảnh.", "error");
                             }
                         }
                     });
@@ -223,9 +271,16 @@
         }
 
         // Form submission confirmation
-        document.querySelector('form').onsubmit = function(e) {
+        document.getElementById('editProductForm').onsubmit = function(e) {
             e.preventDefault();
             const form = this;
+
+            // Kiểm tra validation client-side
+            if (!$(form).valid()) {
+                showToast("Vui lòng điền đầy đủ các thông tin bắt buộc!", "error");
+                return false;
+            }
+
             showGlobalModal({
                 title: 'Xác nhận cập nhật',
                 content: 'Bạn có chắc chắn muốn lưu các thay đổi cho sản phẩm này?',
@@ -275,6 +330,17 @@
 
             categorySelect.addEventListener('change', updateFields);
             updateFields();
+
+            // Hiển thị thông báo từ TempData nếu có
+            @if (TempData["Notification"] != null)
+            {
+                <text>
+                const notification = @Html.Raw(TempData["Notification"]);
+                if (notification) {
+                    showToast(notification.Message || notification.message, notification.Type || notification.type);
+                }
+                </text>
+            }
         });
     </script>
 }

@@ -29,10 +29,36 @@
             </span>
         </li>
         <li>
+            <i class='bx bx-trending-down'></i>
+            <span class="text">
+                @if(ViewBag.Soluonglowstock !=0)
+                {
+                    <h3>@ViewBag.Soluonglowstock</h3>
+                    <p>Low Stock</p>
+                }
+                else
+                {
+                    <h3>0</h3>
+                    <p>Low Stock</p>
+                }
+            </span>
+        </li>
+        <li>
             <i class='bx bx-trending-up'></i>
             <span class="text">
-                <h3>3</h3>
-                <p>Trending</p>
+                @if (ViewBag.Top1 != null)
+                {
+                    <h3>@ViewBag.Top1.TotalSold</h3>
+                    <p>@ViewBag.Top1.ProductName</p>
+                    
+                }
+                else
+                {
+                    <h3>0</h3>
+                    <p>Chưa có sản phẩm nào bán ra!</p>
+                }
+
+               
             </span>
         </li>
     </ul>

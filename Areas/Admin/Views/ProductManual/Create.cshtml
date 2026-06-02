@@ -39,7 +39,7 @@
             </div>
             
             <form asp-action="Create" method="post" enctype="multipart/form-data" id="createProductForm">
-                @* <div asp-validation-summary="All" class="text-danger"></div> *@
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 
                 <div class="form-section-title">
                     <h4>General Information</h4>
@@ -55,8 +55,9 @@
                         <input asp-for="Price" class="my-input" placeholder="0">
                         <span asp-validation-for="Price" class="text-danger"></span>
 
-                        <label asp-for="Brand">Brand</label>
+                        <label asp-for="Brand">Brand <span class="text-danger" style="display:inline">*</span></label>
                         <input asp-for="Brand" class="my-input" placeholder="e.g. Yonex">
+                        <span asp-validation-for="Brand" class="text-danger"></span>
                         
                         <label asp-for="CategoryId">Category <span class="text-danger" style="display:inline">*</span></label>
                         <select asp-for="CategoryId" id="CategoryId" asp-items="@(ViewData["Category"] as SelectList)" class="my-input">
@@ -67,7 +68,7 @@
 
                     <div class="form-group">
                         <label asp-for="Stock">Inventory Level <span class="text-danger" style="display:inline">*</span></label>
-                        <input asp-for="Stock" class="my-input" value="0">
+                        <input asp-for="Stock" class="my-input" placeholder="0">
                         <span asp-validation-for="Stock" class="text-danger"></span>
 
                         <label asp-for="ImageFile">Cover Image</label>
@@ -238,6 +239,17 @@
 
             categorySelect.addEventListener('change', updateFields);
             updateFields();
+
+            // Hiển thị thông báo từ TempData nếu có
+            @if (TempData["Notification"] != null)
+            {
+                <text>
+                const notification = @Html.Raw(TempData["Notification"]);
+                if (notification) {
+                    showToast(notification.Message || notification.message, notification.Type || notification.type);
+                }
+                </text>
+            }
         });
     </script>
 }

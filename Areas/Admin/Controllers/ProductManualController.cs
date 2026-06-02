@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using Getdata1.Services.Interfaces;
 
 namespace Getdata1.Areas.Admin.Controllers
 {
@@ -16,11 +17,13 @@ namespace Getdata1.Areas.Admin.Controllers
     public class ProductManualController : Controller
     {
         private readonly ApplicationDbContext _context; // dinh nghia db 
+        private readonly IProductService _productService;
         private readonly IWebHostEnvironment _webHostEnvironment; // THÊM DÒNG NÀY
-        public ProductManualController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public ProductManualController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment,IProductService productService)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _productService = productService;
        
         }
         [HttpGet]
@@ -90,6 +93,13 @@ namespace Getdata1.Areas.Admin.Controllers
                 filter.Products = rawProducts ?? new List<Product>();
                 filter.CurrentPage = page;
                 filter.TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+                // lấy data top 1 
+                var top1sp = await _productService.GetTop1Product();
+                ViewBag.Top1 = top1sp;
+                // lấy số lượng sản phẩm -> lowstock
+                var lowstocksanpham = await _productService.Laylowstock(); // lấy số lượng sản phẩm mà Low Stock
+                ViewBag.Soluonglowstock = lowstocksanpham;
+                
 
                 // 5. Fill ViewBag 
                 ViewBag.TotalProducts = totalItems;
@@ -112,60 +122,76 @@ namespace Getdata1.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product)
         {
-            product.CreatedAt = DateTime.Now;
-            // Bỏ qua lỗi validation của ProductImages vì lúc này nó chưa có dữ liệu
+            // Xóa lỗi validation của các navigation properties vì chúng không được submit từ form
+            ModelState.Remove("Category");
             ModelState.Remove("ProductImages");
+            ModelState.Remove("OrderItems");
+            ModelState.Remove("CartItems");
+            ModelState.Remove("ProductReviews");
+            ModelState.Remove("Favorites");
+            ModelState.Remove("ImageFile");
+            ModelState.Remove("GalleryFiles");
+
+            product.CreatedAt = DateTime.Now;
+
             if (ModelState.IsValid)
             {
-                // 1. Lưu ảnh chính (Main Image)
-                if (product.ImageFile != null)
+                try 
                 {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(product.ImageFile.FileName);
-                    //var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
-                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "img", fileName); // path to folder
-                    using (var stream = new FileStream(path, FileMode.Create)) { await product.ImageFile.CopyToAsync(stream); }
-                    product.Image = "/img/" + fileName;
-                }
-
-                _context.Add(product);
-                await _context.SaveChangesAsync(); // Lưu để lấy Product.Id
-
-                // 2. Lưu danh sách ảnh Gallery (GalleryFiles) - ĐÂY LÀ CHỖ QUAN TRỌNG
-                if (product.GalleryFiles != null && product.GalleryFiles.Any())
-                {
-                    foreach (var file in product.GalleryFiles)
+                    // 1. Lưu ảnh chính (Main Image)
+                    if (product.ImageFile != null)
                     {
-                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(product.ImageFile.FileName);
                         var path = Path.Combine(_webHostEnvironment.WebRootPath, "img", fileName);
-
-                        using (var stream = new FileStream(path, FileMode.Create)) { await file.CopyToAsync(stream); }
-
-                        // Tạo dòng mới cho bảng ProductsImages
-                        var newImage = new ProductsImage
-                        {
-                            ProductId = product.Id, // Gán ID của Product vừa tạo
-                            Url = "/img/" + fileName
-                        };
-                        _context.ProductsImages.Add(newImage);
+                        using (var stream = new FileStream(path, FileMode.Create)) { await product.ImageFile.CopyToAsync(stream); }
+                        product.Image = "/img/" + fileName;
                     }
-                    await _context.SaveChangesAsync(); // Lưu tất cả ảnh vào SQL
+
+                    _context.Add(product);
+                    await _context.SaveChangesAsync(); // Lưu để lấy Product.Id
+
+                    // 2. Lưu danh sách ảnh Gallery (GalleryFiles)
+                    if (product.GalleryFiles != null && product.GalleryFiles.Any())
+                    {
+                        foreach (var file in product.GalleryFiles)
+                        {
+                            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                            var path = Path.Combine(_webHostEnvironment.WebRootPath, "img", fileName);
+
+                            using (var stream = new FileStream(path, FileMode.Create)) { await file.CopyToAsync(stream); }
+
+                            var newImage = new ProductsImage
+                            {
+                                ProductId = product.Id,
+                                Url = "/img/" + fileName
+                            };
+                            _context.ProductsImages.Add(newImage);
+                        }
+                        await _context.SaveChangesAsync();
+                    }
+
+                    NotificationHelper.SetNotification(TempData, "Thêm sản phẩm mới thành công!", "success");
+                    return RedirectToAction(nameof(Index));
                 }
-             
-                NotificationHelper.SetNotification(TempData, "Thêm sản phẩm mới thành công!", "success");
-                return RedirectToAction(nameof(Index));
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Lỗi khi lưu sản phẩm: " + ex.Message);
+                }
             }
             else
             {
-                // ĐOẠN NÀY SẼ NÓI CHO BẠN BIẾT TẠI SAO NÓ KHÔNG CHẠY
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
-                foreach (var error in errors)
-                {
-                    System.Diagnostics.Debug.WriteLine("LỖI VALIDATION: " + error.ErrorMessage);
-                }
+                // Log lỗi validation để debug nếu cần
+                // var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                // var errorMsg = string.Join(" | ", errors);
+                // ModelState.AddModelError("", "Lỗi validation: " + errorMsg);
             }
-            ViewBag.Category = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            
+            // Nếu có lỗi, hiển thị lại form
+            NotificationHelper.SetNotification(TempData, "Vui lòng kiểm tra lại thông tin sản phẩm!", "error");
+            ViewData["Category"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
 
@@ -200,6 +226,10 @@ namespace Getdata1.Areas.Admin.Controllers
             ModelState.Remove("ProductImages");
             ModelState.Remove("OrderItems");
             ModelState.Remove("CartItems");
+            ModelState.Remove("ProductReviews");
+            ModelState.Remove("Favorites");
+            ModelState.Remove("ImageFile");
+            ModelState.Remove("GalleryFiles");
 
             if (ModelState.IsValid)
             {
@@ -253,6 +283,13 @@ namespace Getdata1.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Lỗi: " + ex.Message);
                     NotificationHelper.SetNotification(TempData, "Có lỗi xảy ra khi cập nhật sản phẩm.", "error");
                 }
+            }
+            else
+            {
+                // Log lỗi validation để debug
+                // var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                // var errorMsg = string.Join(" | ", errors);
+                // ModelState.AddModelError("", "Lỗi validation: " + errorMsg);
             }
             
             ViewBag.Category = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
@@ -329,5 +366,7 @@ namespace Getdata1.Areas.Admin.Controllers
 
         }
 
+
+       
     }
 }
