@@ -108,7 +108,8 @@
 
 <div class="products-wrap">
     <div class="product-grid" id="productGrid">
-        @foreach (var product in Model.Products)
+        @* type data Products is list of DTo model  *@
+        @foreach (var product in Model.Products) 
         {
             // Thiết lập Icon hiển thị dựa trên danh mục của sản phẩm
             string productIcon = product.CategoryId.ToString() switch {
@@ -154,7 +155,14 @@
                                 @product.Price.ToString("N0") đ
                             </div>
                             <div class="card-stars">
-                                ★★★★☆ <span style="font-size: 11px; color: var(--muted); font-weight: 400;">(88)</span>
+                                @* ★★★★☆ *@
+                              
+                                @* <span style="color:red;">(DEBUG: @product.AverageRating)</span> *@
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    @(i <= Math.Round(product.AverageRating) ? "★" : "☆")
+                                }
+                                <span style="font-size: 11px; color: var(--muted); font-weight: 400;">(@product.ReviewCount)</span>
                             </div>
                         </div>
                         

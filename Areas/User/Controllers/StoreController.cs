@@ -1,3 +1,4 @@
+using Getdata1.Areas.User.ViewModels;
 using Getdata1.Data;
 using Getdata1.DTOs;
 using Getdata1.Models;
@@ -131,6 +132,7 @@ namespace Getdata1.Areas.User.Controllers
         {
             try
             {
+                // VÌ SERVICE NÓ ĐÃ XỬ LÝ MAP SANG DTO NÊN CONTROLLER ĐANG THAO TÁC GÓI DỮ LIỆU DTO 
                 var product = await _productService.GetProductByIdAsync(id);
                 if (product == null)
                 {
@@ -247,6 +249,41 @@ namespace Getdata1.Areas.User.Controllers
             return Json(new { 
                 products = products,
                 searchTerm = query
+            });
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddReview(ProductReviewDto dto)
+        {
+            // validation 
+            if(!ModelState.IsValid)
+            {
+                return Json(new { success = false, messsage = " Invalid Input " });
+            }
+            //  map du lieu qua entity lay nhung thong tin co User da nhap vao -> map xuong entity Model
+            var review = new ProductReview
+            {
+                ProductId = dto.ProductId,
+                UserEmail=User.Identity.Name,
+                Rating = dto.Rating,
+                Title = dto.Title,
+                Comment = dto.Comment,
+                CreatedAt = DateTime.Now,
+                IsVerified = false
+            };
+            // lưu xuống db 
+            _context.ProductReviews.Add(review);
+            await _context.SaveChangesAsync();
+            // trả về dữ liệu json 
+            return Json(new { success = true ,
+
+                review = new
+                { // Trả về object để JS chèn vào UI
+                    userName = review.UserEmail,
+                    createdAt = review.CreatedAt.ToString("dd/MM/yyyy"),
+                    rating = review.Rating,
+                    title = review.Title,
+                    comment = review.Comment
+                }
             });
         }
     }

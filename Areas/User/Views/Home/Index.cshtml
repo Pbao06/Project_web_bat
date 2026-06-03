@@ -161,7 +161,8 @@
     </div>
     <div class="slider-container">
         <button class="slider-btn prev" onclick="scrollSlider('bestSellers', -1)"><i class='bx bx-chevron-left'></i></button>
-        <div class="products-strip standard-slider" id="bestSellers"></div>
+        <div class="products-strip standard-slider" id="bestSellers"></div>  
+        @* đoạn ở trên là dùng để render  *@
         <button class="slider-btn next" onclick="scrollSlider('bestSellers', 1)"><i class='bx bx-chevron-right'></i></button>
     </div>
 </div>
@@ -198,6 +199,7 @@
     <div class="slider-container">
         <button class="slider-btn prev" onclick="scrollSlider('newArrivals', -1)"><i class='bx bx-chevron-left'></i></button>
         <div class="products-strip standard-slider" id="newArrivals"></div>
+        @* đoạn trên là dùng để render  *@
         <button class="slider-btn next" onclick="scrollSlider('newArrivals', 1)"><i class='bx bx-chevron-right'></i></button>
     </div>
 </div>
@@ -255,6 +257,8 @@
         </div>
     </div>
 </div>
+
+
 
 @section Scripts {
     <script src="~/js/favorite.js"></script>
@@ -335,13 +339,13 @@
         }
 
         /* ── Product data ── */
-        const PRODUCTS = @Html.Raw(Json.Serialize(Model?.Select(p => new {
+        window.PRODUCTS = @Html.Raw(Json.Serialize(Model?.Select(p => new {
                 id = p.Id,
                 name = p.Name,
                 price = p.Price,
                 oldPrice = (decimal?)null,
-                rating = p.AverageRating > 0 ? p.AverageRating : 4.5,
-                reviews = p.ReviewCount > 0 ? p.ReviewCount : (p.Stock % 50 + 10),
+                rating = p.AverageRating ,
+                reviews = p.ReviewCount ,
                 badge = (DateTime.UtcNow - (p.CreatedAt ?? DateTime.UtcNow)).TotalDays < 30 ? "new" : "",
                 icon = "bx-baseball",
                 isNew = (DateTime.UtcNow - (p.CreatedAt ?? DateTime.UtcNow)).TotalDays < 30,
@@ -350,6 +354,9 @@
                 brand = p.Brand,
                 isLiked = p.IsLiked
             }) ?? Enumerable.Empty<object>()));
+
+            // Test luôn tại đây xem nó có hiện không
+     console.log("Giá trị của PRODUCTS:", window.PRODUCTS);
 
         // Khởi tạo tập hợp các sản phẩm đã thích từ Model
         let wished = new Set(PRODUCTS.filter(p => p.isLiked).map(p => p.id));

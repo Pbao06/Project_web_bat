@@ -367,7 +367,7 @@ C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\3y7qx
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\9u4jw3xv19-{0}-8g1i5p3424-8g1i5p3424.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\0chjcqw7sy-{0}-a230dp95c9-a230dp95c9.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\6jbs0lb3zu-{0}-u1gsx03kwc-u1gsx03kwc.gz
-C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\r9hx6yr2wd-{0}-12lst0f7ln-12lst0f7ln.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\h4dri69mi8-{0}-ao5l6u6oq6-ao5l6u6oq6.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\2024a02bgl-{0}-blzk2h8pw2-blzk2h8pw2.gz
 C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\syb8q8t4ss-{0}-6prg9sv335-6prg9sv335.gz
+C:\Users\OS\OneDrive\Desktop\ASP.net\Getdata1\obj\Debug\net10.0\compressed\r9hx6yr2wd-{0}-odt3attnw6-odt3attnw6.gz

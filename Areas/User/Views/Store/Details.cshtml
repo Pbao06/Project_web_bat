@@ -32,7 +32,7 @@
         .reviews-slider .review-card {
             flex: 0 0 320px;
             padding: 24px;
-            background: var(--bg2);
+            background: transparent;
             border-radius: 16px;
             border-bottom: none;
         }
@@ -299,14 +299,58 @@
                     }
                 </div>
             </div>
-            <button class="btn-cart" style="max-width:160px;padding:10px 18px;font-size:13px">Viết đánh giá</button>
+             @* <button class="btn-cart" style="max-width:160px;padding:10px 18px;font-size:13px">Viết đánh giá</button> *@
+
+
+
+             @* nhap vao de danh gia  *@
+            <button type="button" class="btn-cart" id="btnToggleReview" onclick="toggleReviewForm()" style="max-width:160px;padding:10px 18px;font-size:13px">
+                Viết đánh giá
+            </button>
         </div>
 
-        @if (Model.Reviews != null && Model.Reviews.Any())
-        {
-            <div class="slider-container">
-                <button class="slider-btn prev" onclick="scrollSlider('reviewsSlider', -1)"><i class='bx bx-chevron-left'></i></button>
-                <div class="reviews-slider standard-slider" id="reviewsSlider">
+        <div id="reviewFormContainer" style="display: none; width: 100%; clear: both; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eaeaea; font-family: 'DM Sans', 'Archivo', sans-serif;">
+            <h5 style="margin-bottom: 25px; font-weight: 600; font-size: 18px; color: #222; font-family: 'Archivo', sans-serif;">Viết đánh giá của bạn</h5>
+
+            <form id="reviewForm" asp-area="User" asp-controller="Store" asp-action="AddReview" method="post">
+                <input type="hidden" name="ProductId" value="@Model.Id" />
+
+                <div style="display: flex; gap: 30px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <select name="Rating" style="width: 100%; font-size: 14px; padding: 12px 0; border: none; border-bottom: 1px solid #ddd; outline: none; background: transparent; cursor: pointer; color: #444; font-family: inherit;" required>
+                            <option value="" disabled selected>Chọn mức đánh giá sao *</option>
+                            <option value="5">★★★★★ - Tuyệt vời</option>
+                            <option value="4">★★★★☆ - Rất tốt</option>
+                            <option value="3">★★★☆☆ - Bình thường</option>
+                            <option value="2">★★☆☆☆ - Tạm được</option>
+                            <option value="1">★☆☆☆☆ - Tệ</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <input type="email" name="UserEmail" style="width: 100%; font-size: 14px; padding: 12px 0; border: none; border-bottom: 1px solid #ddd; outline: none; background: transparent; font-family: inherit;" placeholder="Email (Nếu bạn chưa đăng nhập)" />
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <input type="text" name="Title" maxlength="200" style="width: 100%; font-size: 14px; padding: 12px 0; border: none; border-bottom: 1px solid #ddd; outline: none; background: transparent; font-family: inherit;" placeholder="Tiêu đề đánh giá (Tùy chọn)" />
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <textarea name="Comment" rows="3" style="width: 100%; font-size: 14px; padding: 12px 0; border: none; border-bottom: 1px solid #ddd; outline: none; resize: none; background: transparent; font-family: inherit;" placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm..." required></textarea>
+                </div>
+
+                <div display: flex; justify-content: space-between; align-items: center; margin-top: 30px;"  style="text-align: right;">
+                    <button type="button" onclick="toggleReviewForm()" style="margin-right: 20px; font-size: 14px; font-weight: 500; background: transparent; border: none; cursor: pointer; color: #666; font-family: inherit;">Hủy</button>
+                    <button id="btnSubmitReview" type="submit" class="btn-cart" style="font-size: 14px; font-weight: 500; padding: 10px 24px; background: #222; color: #fff; border: none; cursor: pointer; border-radius: 8px; font-family: inherit;">Gửi đánh giá</button>
+                </div>
+            </form>
+        </div>
+
+       
+           
+               <div class="reviews-slider standard-slider" id="reviewsSlider">
+                @if (Model.Reviews != null && Model.Reviews.Any())
+                {
                     @foreach (var review in Model.Reviews)
                     {
                         <div class="review-card">
@@ -331,14 +375,13 @@
                             }
                             <div class="review-helpful">@review.HelpfulCount người thấy đánh giá này hữu ích</div>
                         </div>
-                    }
-                </div>
-                <button class="slider-btn next" onclick="scrollSlider('reviewsSlider', 1)"><i class='bx bx-chevron-right'></i></button>
-            </div>
-        }
-        else
+                     }
+                                    
+                      }
+             </div> 
+        @if (Model.Reviews == null || !Model.Reviews.Any())
         {
-            <p style="text-align:center; padding: 20px; color: var(--muted);">Chưa có đánh giá nào cho sản phẩm này.</p>
+            <p id="noReviewMsg" style="text-align:center; padding: 20px; color: var(--muted);">Chưa có đánh giá nào cho sản phẩm này.</p>
         }
     </div>
 
@@ -404,6 +447,101 @@
                 updateSliderButtons('relatedSlider');
             }
         });
+
+        // open form danh gia 
+        function toggleReviewForm() {
+            var formContainer = document.getElementById("reviewFormContainer");
+            var btnToggle = document.getElementById("btnToggleReview");
+
+            if (formContainer.style.display === "none" || formContainer.style.display === "") {
+                formContainer.style.display = "block";
+                btnToggle.innerText = "Đóng form";
+            } else {
+                formContainer.style.display = "none";
+                btnToggle.innerText = "Viết đánh giá";
+            }
+        }
+
+        // DÙNG FETCH ĐỂ GỌI ->LOAD LÊN BÌNH LUẬN MỚI NHẤT -> VỪA XONG , KO CẦN TẢI TOÀN BỘ DỮ LIỆU RATING LẠI 
+        document.getElementById('reviewForm').addEventListener('submit',function(e)
+        {
+            e.preventDefault(); // block reload trang , Ajax phải có này mới gọi là ajax 
+            const formData=new FormData(this); // gói đón nó vào thùng hàng
+            fetch(this.action,{
+
+                method:'POST',
+                body:formData
+            })
+            .then(response=>response.json()).then(data=>{
+                        console.log("Bắt đầu xử lý dữ liệu..."); // Thêm cái này
+
+                        // Test thử: Nếu không quan tâm data.success, hãy log thẳng data ra
+                        console.log("Full data:", data);
+                if(data.success)
+                {
+
+                    console.log("Success  la true , chuan bi goi ham ui")
+                    showToast(" Đã lưu đánh giá thành công");
+
+                    // dọn form 
+                    //this.reset();
+                    // load dữ liệu mà json gói về ra view -
+                    console.log("Dữ liệu nhận được:", data.review)
+                    addNewReviewToUI(data.review);
+                }
+                else {
+                    console.warn("Server trả về success là false hoặc không có thuộc tính success");
+                    // Gọi thử luôn xem nó có chạy không
+                    addNewReviewToUI(data.review);
+                    alert("Lỗi: " + data.message);
+                }
+            }).catch(error => console.error('Error:', error));
+        });
+
+
+         function addNewReviewToUI(review) {
+             console.log("Đã vào hàm addNewReviewToUI"); // Thêm dòng này
+                const slider = document.getElementById('reviewsSlider');
+                const msg = document.getElementById('noReviewMsg');
+             
+
+                // Nếu có thông báo rỗng thì ẩn nó đi
+                if (msg) msg.style.display = 'none';
+
+                // Nếu slider không tồn tại, dừng hàm lại để tránh lỗi
+                if (!slider) {
+                    console.error("Không tìm thấy phần tử #reviewsSlider trong DOM");
+                    return;
+                }
+
+
+            // Nếu trước đó đang có dòng "Chưa có đánh giá nào", thì xóa nó đi
+            const emptyMsg = document.querySelector('.reviews-slider + p'); // Hoặc selector tương ứng
+            if (emptyMsg) emptyMsg.remove();
+
+            const newReviewHtml = `
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="review-avatar">${review.userName ? review.userName.substring(0, 1).toUpperCase() : "U"}</div>
+                        <div>
+                            <div class="review-name">${review.userName}</div>
+                            <div class="review-date">${review.createdAt}</div>
+                        </div>
+                        <div class="review-stars" style="margin-left:auto">
+                            ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}
+                        </div>
+                    </div>
+                    <div class="review-title">${review.title}</div>
+                    <div class="review-body">${review.comment}</div>
+                    <div class="review-helpful">0 người thấy đánh giá này hữu ích</div>
+                </div>`;
+
+            // Chèn vào đầu slider
+            slider.insertAdjacentHTML('beforeend', newReviewHtml);
+        }
+
+
+
 
         function selectOption(el, attribute) {
             // Find the container for this attribute
@@ -499,6 +637,9 @@
                     showToast('Có lỗi xảy ra khi thêm vào giỏ hàng.', 'error');
                 }
             });
+
+
+
         }
     </script>
 }

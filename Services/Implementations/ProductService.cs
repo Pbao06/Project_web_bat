@@ -19,7 +19,7 @@ namespace Getdata1.Services.Implementations
             
         public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
         {       
-            var products = await _context.Products
+            var products = await _context.Products.Include(p=>p.ProductReviews)
                 .Include(p => p.Category)
                 .Include(p => p.ProductImages)
                 .ToListAsync();
@@ -28,8 +28,8 @@ namespace Getdata1.Services.Implementations
 
         public async Task<ProductDto?> GetProductByIdAsync(int id)
         {
-            var product = await _context.Products.Include(p => p.ProductImages).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
-            // vì qua để lấy sản phẩm vào sesssion nên ở đây không cần join vào productReview cho nó lâu 
+            var product = await _context.Products.Include(p => p.ProductImages).Include(p => p.Category).Include(p=>p.ProductReviews).FirstOrDefaultAsync(p => p.Id == id);
+            // vì qua để lấy sản phẩm vào sesssion nên ở đây không cần join vào 1 số bảng mình ko sài or ko lấy thông tin từ nó 
             return _mapper.Map<ProductDto>(product); // tự động map thông tin qua Product DTO mà ko cần viết thủ công 
         }
 
@@ -55,9 +55,9 @@ namespace Getdata1.Services.Implementations
             int? categoryId, string? searchTerm, string? brand, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize)
         {
             var query = _context.Products
-                .Include(p => p.Category)
+                .Include(p => p.Category).Include(p=>p.ProductReviews)
                 .Include(p => p.ProductImages)
-                .AsQueryable();// đây là cần thiết cho 1 thông tin sản phẩm 
+                .AsQueryable();// đây là cần thiết cho 1 thông tin sản phẩm join thêm review nữa vì nó render ra luôn rating (cần thiết)
 
             // Filter by Category
             if (categoryId.HasValue)
@@ -108,7 +108,7 @@ namespace Getdata1.Services.Implementations
 
         public async Task<IEnumerable<ProductDto>> GetRelatedProductsAsync(int categoryId, int currentProductId, int count = 4)
         {
-            var products = await _context.Products
+            var products = await _context.Products.Include(p=>p.ProductReviews)
                 .Where(p => p.CategoryId == categoryId && p.Id != currentProductId)
                 .Include(p => p.Category)
                 .Include(p => p.ProductImages)

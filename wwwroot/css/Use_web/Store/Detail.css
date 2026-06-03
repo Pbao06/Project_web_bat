@@ -603,6 +603,7 @@
 .review-card {
     padding: 20px 0;
     border-bottom: 1px solid var(--border);
+    background-color: #ffffff !important; /* Ép nền trắng tinh */
 }
 
     .review-card:last-child {
@@ -653,8 +654,9 @@
 
 .review-body {
     font-size: 13px;
-    color: var(--sub);
+        color: var(--sub);
     line-height: 1.6;
+  
 }
 
 .review-tag {
@@ -672,6 +674,27 @@
     color: var(--muted);
     margin-top: 8px;
 }
+
+
+/* Đổi từ flex (ngang) thành block (dọc) */
+#reviewsSlider {
+    display: block !important; /* Trả về dạng block để nó xếp chồng */
+    width: 100%;
+    background-color: transparent !important; /* Ép nó về trong suốt */
+}
+
+    #reviewsSlider .review-card {
+        display: block; /* Ép nó nằm trên 1 dòng */
+        width: 100%; /* Chiếm hết chiều ngang */
+        border-bottom: 1px solid var(--border); /* Trả lại cái gạch dưới */
+        padding: 20px 0; /* Padding dọc */
+        border-radius: 0; /* Bỏ bo góc nếu muốn kiểu list cũ */
+
+
+    }
+
+
+
 
 /* ── RELATED PRODUCTS ── */
 .related-section {
