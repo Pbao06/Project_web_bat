@@ -15,6 +15,8 @@ namespace Getdata1.Areas.Admin.ViewModels
         public string? Status { get; set; }
         // result list — holds the filtered products
         // 👇 PART 2 — product list to display
+        // filter for Brand
+        public string? Search_Brand { get; set; }
 
         public IEnumerable<Product> Products { get; set; } = new List<Product>();
 

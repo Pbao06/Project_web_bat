@@ -97,8 +97,8 @@ namespace Getdata1.Services.Implementations
                     // Hardcoded logic for shipping fee based on method in view
                     ShippingFee = checkoutData.ShippingMethod switch
                     {
-                        "express" => 4.99m,
-                        "same-day" => 8.99m,
+                        "express" => 30000m,
+                        "same-day" => 50000m,
                         _ => 0m
                     }
                 };
@@ -116,7 +116,7 @@ namespace Getdata1.Services.Implementations
                     if (product.Stock < item.Quantity) 
                         throw new Exception($"Sản phẩm {product.Name} không đủ tồn kho.");
 
-                    var orderItem = new OrderItem
+                    var orderItem = new OrderItem  // để lưu và vào db 
                     {
                         OrderId = order.Id,
                         ProductId = item.ProductId,

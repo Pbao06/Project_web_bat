@@ -88,7 +88,7 @@ namespace Getdata1.Areas.User.Controllers
                     Role = UserRole.Customer
                 };
 
-                var save = await _userManager.CreateAsync(user, model.Password);
+                var save = await _userManager.CreateAsync(user, model.Password); // auto băm pass trong service func này r 
                 
                 if (save.Succeeded)
                 {

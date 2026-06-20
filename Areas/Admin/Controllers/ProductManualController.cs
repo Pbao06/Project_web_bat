@@ -59,6 +59,10 @@ namespace Getdata1.Areas.Admin.Controllers
                 {
                     query = query.Where(p => p.Stock <= filter.MaxStock);
                 }
+                if(filter.Search_Brand != null)
+                {
+                    query=query.Where(p=>p.Brand==filter.Search_Brand);
+                }
 
                 // New: Apply Status Filter
                 if (!string.IsNullOrEmpty(filter.Status))

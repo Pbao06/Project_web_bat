@@ -473,9 +473,9 @@
                 body:formData
             })
             .then(response=>response.json()).then(data=>{
-                        console.log("Bắt đầu xử lý dữ liệu..."); // Thêm cái này
+                        console.log("Bắt đầu xử lý dữ liệu..."); // debug
 
-                        // Test thử: Nếu không quan tâm data.success, hãy log thẳng data ra
+                        // Test thử
                         console.log("Full data:", data);
                 if(data.success)
                 {
@@ -500,7 +500,7 @@
 
 
          function addNewReviewToUI(review) {
-             console.log("Đã vào hàm addNewReviewToUI"); // Thêm dòng này
+             console.log("Đã vào hàm addNewReviewToUI"); // DEBUG
                 const slider = document.getElementById('reviewsSlider');
                 const msg = document.getElementById('noReviewMsg');
              

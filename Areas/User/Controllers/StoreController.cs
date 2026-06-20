@@ -73,7 +73,7 @@ namespace Getdata1.Areas.User.Controllers
                 var (products, totalCount) = await _productService.GetFilteredProductsAsync(
                     categoryId, searchTerm, brand, minPrice, maxPrice, sortBy, page, pageSize);
 
-                var categories = await _productService.GetAllCategoriesAsync();
+                var categories = await _productService.GetAllCategoriesAsync(); // lay all dnah muc sp releted
 
                 var viewModel = new StoreVM
                 {
@@ -93,7 +93,7 @@ namespace Getdata1.Areas.User.Controllers
                         ActionName = "Index",
                         ControllerName = "Store",
                         AreaName = "User",
-                        RouteValues = new Dictionary<string, string>
+                        RouteValues = new Dictionary<string, string> // keep value not change through when move pagination
                         {
                             { "categoryId", categoryId?.ToString() ?? "" },
                             { "searchTerm", searchTerm ?? "" },

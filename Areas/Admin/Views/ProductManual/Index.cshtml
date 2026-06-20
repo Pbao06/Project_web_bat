@@ -120,6 +120,15 @@
                                 <input type="number" name="MaxStock" value="@Model.MaxStock" placeholder="Max" onchange="this.form.submit()" />
                             </div>
                         </div>
+                        @* filter theo Brand *@
+                        <div class="filter-group select-box">
+                            <select asp-for="Search_Brand" onchange="this.form.submit()">
+                                <option value="">All Brand</option>
+                                <option value="Yonex">Yonex</option>
+                                <option value="Victor">Victor</option>
+                                <option value="Lining">Lining</option>
+                            </select>
+                        </div>
 
                         @* filter theo status *@
                         <div class="filter-group select-box">

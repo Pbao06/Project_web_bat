@@ -47,17 +47,17 @@ namespace Getdata1.Areas.User.Controllers
             }
         }
 
-        private string GetfinalVariant(ProductDto product,string? ProvidedVariant )
-        {
-            if (!string.IsNullOrWhiteSpace(ProvidedVariant)) return ProvidedVariant;
-            var attributes = new List<string>
-            {
-                /// đây là những thứ mà khách hàng chọn 
-                product.Color,product.Weight
-                ,product.Size,product.Length,
-            };
-            return string.Join(" / ", attributes.Where(a => !string.IsNullOrWhiteSpace(a)));
-        }
+        //private string GetfinalVariant(ProductDto product,string? ProvidedVariant )
+        //{
+        //    if (!string.IsNullOrWhiteSpace(ProvidedVariant)) return ProvidedVariant;
+        //    var attributes = new List<string>
+        //    {
+        //        /// đây là những thứ mà khách hàng chọn 
+        //        product.Color,product.Weight
+        //        ,product.Size,product.Length,
+        //    };
+        //    return string.Join(" / ", attributes.Where(a => !string.IsNullOrWhiteSpace(a)));
+        //}
 
 
 
@@ -87,7 +87,7 @@ namespace Getdata1.Areas.User.Controllers
                 }
                 else
                 {
-                    cart.Items.Add(new CartItemDto
+                    cart.Items.Add(new CartItemDto     // vừa theem vào cart và -> map qia CartItemDto để render ra view 
                     {
                         ProductId = product.Id,
                         ProductName = product.Name,
@@ -101,39 +101,7 @@ namespace Getdata1.Areas.User.Controllers
 
 
                 HttpContext.Session.Set(CartSessionKey, cart); // save lại cho vào cart user
-                //check thông tin sp tồn tại
-                // check xem giỏ hàng đã tồn tại chưa nếu chưa thì create
-                // tìm variant của chúng, -> trong giỏ hàng , -> check thg đó xem nó tồn tại trong giỏ chưa nếu có r thì +quantity
-                // nếu chưa có thì tạo new cartItem DTO rồi lưu vào giỏ(session)
-                //var product = await _productService.GetProductByIdAsync(productId);
-                //if (product == null)
-                //{
-                //    return Json(new { success = false, message = " Sản phẩm không tồn tại" });
-                //}
-                //var cart = HttpContext.Session.Get<CartDto>(CartSessionKey) ?? new CartDto();
-                //// tìm chi tiết sản phẩm biến variant 
-                //var finalVariant = GetfinalVariant(product, variant);
-                //var existing = cart.Items.FirstOrDefault(p => p.ProductId == productId && p.VariantInfo == finalVariant);
-
-                //if (existing != null) // nếu sản phẩm đã có trong giỏ session
-                //{
-                //    existing.Quantity+= quantity;
-                //}    
-                //else
-                //{
-                //    // tạo new cartItem
-                //    cart.Items.Add(new CartItemDto
-                //    {
-                //        ProductId=productId,
-                //        ProductName=product.Name,
-                //        VariantInfo = finalVariant,
-                //        CategoryName= product.CategoryName,
-                //        Price=product.Price,
-                //        Quantity=quantity,
-                //        Image=product.Image, 
-                //    });
-                //} 
-                //HttpContext.Session.Set(CartSessionKey, cart); // lưu tất cả vào session 
+              
 
                 return Json(new { 
                     success = true, 
@@ -181,7 +149,7 @@ namespace Getdata1.Areas.User.Controllers
         }
 
         [HttpGet]
-        public IActionResult Checkout()
+        public IActionResult Checkout() // chuyển sang trang thanh toán 
         {
             if (!User.Identity.IsAuthenticated) // nếu ko có account 
             {

@@ -92,7 +92,7 @@ namespace Getdata1
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller}/{action}/{id?}",
-                defaults: new { area = "Admin", controller = "Home", action = "Index"}
+                defaults: new { area = "User", controller = "Home", action = "Index"}
             );
 
             // Seed
