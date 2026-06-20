@@ -21,8 +21,7 @@ A web-based management system developed to streamline inventory tracking and ord
 - ![Cart](https://github.com/user-attachments/assets/ee7e370c-a8d4-46c2-a733-89c8c63c0692)
 - ![Payment](https://github.com/user-attachments/assets/4255f140-9637-416a-864c-aa80281bc2a9)
 - ![History order](https://github.com/user-attachments/assets/3d6ecf8c-e056-4dc7-bc25-86a09e59e02f)
-- ![Dashboard Admin](<img width="1331" height="624" alt="image" src="https://github.com/user-attachments/assets/692a598b-19a5-4fde-905f-afa8a66cb313" />
-)
+
 
 ## 💡 How to Run
 1. Clone this repository: `git clone https://github.com/Pbao06/Project_web_bat`
