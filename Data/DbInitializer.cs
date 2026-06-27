@@ -147,20 +147,20 @@ namespace Getdata1.Data
                 context.Products.AddRange(
                     new Product
                     {
-                        Name = "Yonex Astrox 100ZZ",
+                        Name = "Victor 100ZZ",
                         Price = 4500000,
-                        Image = "80f929d8-65e0-4d0d-8eed-68db75cfafe6.jfif",
+                        Image = "2b39099d-6791-447e-ae49-fe99fcb887c7.webp",
                         CategoryId = racketCat,
                         Stock = 15,
-                        Brand = "Yonex",
-                        Description = "The Astrox 100ZZ is the flagship model of the Astrox series, designed for advanced players.",
+                        Brand = "Victor",
+                        Description = "The Victor designed for advanced players.",
                         CreatedAt = DateTime.UtcNow
                     },
                     new Product
                     {
                         Name = "Victor Thruster F Claw",
                         Price = 3800000,
-                        Image = "87aec0e0-7e74-43cf-81a1-556ae80f45a6.jfif",
+                        Image = "19233823-2183-4a05-99f3-9cc9d985ded1.jpg",
                         CategoryId = racketCat,
                         Stock = 10,
                         Brand = "Victor",
@@ -171,7 +171,7 @@ namespace Getdata1.Data
                     {
                         Name = "Li-Ning Tectonic 7",
                         Price = 3200000,
-                        Image = "00366836-ff66-4c8a-81c8-63703e9fe13d.jfif",
+                        Image = "134240fe-57cd-449c-be7d-3ee49c6d9bd3.webp",
                         CategoryId = racketCat,
                         Stock = 20,
                         Brand = "Li-Ning",
@@ -182,7 +182,7 @@ namespace Getdata1.Data
                     {
                         Name = "Yonex Aerobite String",
                         Price = 250000,
-                        Image = "0fa366d8-c9d7-4980-89eb-b58ef0063f43.webp",
+                        Image = "String.webp",
                         CategoryId = 6, // Accessories/String
                         Stock = 100,
                         Brand = "Yonex",
@@ -191,20 +191,20 @@ namespace Getdata1.Data
                     },
                     new Product
                     {
-                        Name = "Mizuno Wave Claw 2",
+                        Name = "GEARLOGIC MUSE BACKPACK",
                         Price = 2900000,
-                        Image = "73f8b8cd-cf6f-47dd-ad46-cdbf3cca3391.webp",
-                        CategoryId = shoeCat,
+                        Image = "fd90fe9a-a1d0-46e8-ba7c-4bb16e8c7e0b.webp",
+                        CategoryId = 5,
                         Stock = 12,
-                        Brand = "Mizuno",
-                        Description = "Professional badminton shoes with excellent cushioning.",
+                        Brand = "Yonex",
+                        Description = "Professional badminton pags with excellent cushioning.",
                         CreatedAt = DateTime.UtcNow
                     },
                     new Product
                     {
                         Name = "Yonex Power Cushion 65Z3",
                         Price = 3100000,
-                        Image = "9be9220d-9cad-4778-a251-61f124655042.webp",
+                        Image = "c3c18144-2774-4202-9d22-49632b18f47e.webp",
                         CategoryId = shoeCat,
                         Stock = 8,
                         Brand = "Yonex",
@@ -215,10 +215,10 @@ namespace Getdata1.Data
                     {
                         Name = "Victor AS-30 Shuttlecock",
                         Price = 450000,
-                        Image = "c18f8ea5-897d-4d6d-a542-2cd68c6adf41.png",
+                        Image = "1a432aa5-146c-4ad9-a364-c4cbb9b6c49d.webp",
                         CategoryId = shuttleCat,
                         Stock = 50,
-                        Brand = "Victor",
+                        Brand = "Yonex",
                         Description = "Premium goose feather shuttlecocks for tournament use.",
                         CreatedAt = DateTime.UtcNow
                     },
@@ -226,7 +226,7 @@ namespace Getdata1.Data
                     {
                         Name = "Yonex Team Bag 3-Pack",
                         Price = 1200000,
-                        Image = "1a432aa5-146c-4ad9-a364-c4cbb9b6c49d.webp",
+                        Image = "991044db-b780-448f-b001-001fb8f88da6.webp",
                         CategoryId = 5, // Bags
                         Stock = 25,
                         Brand = "Yonex",
