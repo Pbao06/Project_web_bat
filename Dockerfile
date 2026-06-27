@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 as build
 WORKDIR /src 
 # copy file project va cac goi framework
-COPY ["Getdata.csproj","./"]
+COPY ["Getdata1.csproj","./"]
 RUN dotnet restore
 
 # copy het source code vao image 
