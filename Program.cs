@@ -15,15 +15,18 @@ namespace Getdata1
             var builder = WebApplication.CreateBuilder(args);
 
             // 1. DbContext đăng kí cho database 
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            // Cấu hình DbContext với ServerVersion.AutoDetect
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
             // 2. Identity — đã có AddIdentity thì KHÔNG cần AddAuthentication riêng
             // bên dưới là đăng kí dịch vụ cho identity 
             builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
             {
                 //  update intend for password 
-                options.Password.RequireDigit = false;
+                options.Password.RequireDigit = false;  
                 options.Password.RequiredLength = 6;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
@@ -46,6 +49,7 @@ namespace Getdata1
             // đăng kí gọi service ( hợp long nhất thể interface , và thg culi ) là 1 
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
 
             // 6. Session ta 
             builder.Services.AddSession(options =>

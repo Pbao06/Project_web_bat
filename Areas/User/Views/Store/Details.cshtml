@@ -609,7 +609,7 @@
             .then(data => {
                 if (data.success) {
                     if (isRedirect) {
-                        window.location.href = '/User/Cart';
+                        window.location.href = '/User/Cart'; // XU LY XONG REDIRECT CART 
                     } else {
                         // showNotification(data.message);
                         if (typeof showToast === 'function') {

@@ -183,7 +183,7 @@
                     </div>
                     <div class="pay-tab" onclick="selectPay(this,'banking')">
                         <i class='bx bx-building-house'></i> Banking
-                    </div>
+                        </div>
                     <div class="pay-tab" onclick="selectPay(this,'cod')">
                         <i class='bx bx-money'></i> COD
                     </div>
@@ -563,45 +563,53 @@
                 zipCode: document.getElementById('zip').value.trim(),
                 notes: document.getElementById('notes').value.trim(),
                 shippingMethod: selectedShipping,
-                paymentMethod: document.querySelector('.pay-tab.active').textContent.trim(),
+                paymentMethod: selectedPaymentType,
                 promoCode: currentCart?.appliedPromoCode
             };
+             try{
+                        const response = await fetch('/User/Order/PlaceOrder', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                            },
+                            body: JSON.stringify(checkoutData)
+                        });
 
-            try {
-                const response = await fetch('/User/Order/PlaceOrder', { // gọi controller(API)
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                    },
-                    body: JSON.stringify(checkoutData)
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showToast('Đặt hàng thành công!', 'success');
-                    document.getElementById('confirmOrderNum').textContent = '#PBAO-SUCCESS';
-                    document.getElementById('confirmOverlay').classList.add('show');
-                    
-                    setTimeout(() => {
-                        window.location.href = result.redirectUrl;
-                    }, 2000);
-                } else {
+                        const result = await response.json();
+                        // console.log(result); ← Thêm dòng này
+                        // alert(JSON.stringify(result)); ← thêm dòng này, nó sẽ popup lên trước khi redirect
+
+                        if (result.success) {
+                            if (result.isOnline) {
+                               
+                                window.location.href = result.redirectUrl;
+                            } else {
+                                showToast('Đặt hàng thành công!', 'success');
+                                document.getElementById('confirmOrderNum').textContent = '#PBAO-SUCCESS';
+                                document.getElementById('confirmOverlay').classList.add('show');
+
+                                setTimeout(() => {
+                                    window.location.href = result.redirectUrl;
+                                }, 1000);
+                            }
+                        } else {
+                            btn.innerHTML = originalContent;
+                            btn.disabled = false;
+                            showToast(result.message || 'Có lỗi xảy ra khi đặt hàng.', 'error');
+                        }
+                } catch (error) {
                     btn.innerHTML = originalContent;
                     btn.disabled = false;
-                    showToast(result.message || 'Có lỗi xảy ra khi đặt hàng.', 'error');
+                    console.error('Error:', error);
+                    showToast('Có lỗi xảy ra khi kết nối máy chủ.', 'error');
                 }
-            } catch (error) {
-                btn.innerHTML = originalContent;
-                btn.disabled = false;
-                console.error('Error:', error);
-                showToast('Có lỗi xảy ra khi kết nối máy chủ.', 'error');
-            }
         }
+                           
+               
 
         document.addEventListener('DOMContentLoaded', () => {
             loadOrderSummary();
         });
     </script>
-}
+   }

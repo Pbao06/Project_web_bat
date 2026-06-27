@@ -2,7 +2,9 @@ using AutoMapper;
 using Getdata1.Data;
 using Getdata1.DTOs;
 using Getdata1.Models;
+using Getdata1.Models.Enums;
 using Getdata1.Services.Interfaces;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace Getdata1.Services.Implementations
@@ -69,6 +71,7 @@ namespace Getdata1.Services.Implementations
             _context._Orders.Add(order);
             return await _context.SaveChangesAsync() > 0;
         }
+      
 
         public async Task<int> CreateOrderFromCartAsync(int userId, CheckoutDto checkoutData, CartDto cart)
         {
@@ -138,6 +141,14 @@ namespace Getdata1.Services.Implementations
                 await transaction.RollbackAsync();
                 throw;
             }
+        }
+        public async Task UpdateOrderStatusAsync(int orderid,OrderStatus newstatus)
+        {
+            var order = await _context._Orders.FindAsync(orderid);
+            if (order == null) throw new Exception($" Error cannot found order {orderid} ");
+            order.Status = newstatus;
+            // await 
+            await _context.SaveChangesAsync();
         }
     }
 }

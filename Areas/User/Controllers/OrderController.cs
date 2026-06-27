@@ -1,11 +1,15 @@
+using AspNetCoreGeneratedDocument;
 using Getdata1.Areas.User.ViewModels;
 using Getdata1.DTOs;
 using Getdata1.Helpers;
 using Getdata1.Models;
 using Getdata1.Models.Enums;
+using Getdata1.Services.Implementations;
 using Getdata1.Services.Interfaces;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace Getdata1.Areas.User.Controllers
@@ -15,11 +19,15 @@ namespace Getdata1.Areas.User.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
+        private readonly IPaymentService _PaymentService;
+        private readonly IConfiguration _config;
         private const string CartSessionKey = "UserCart";
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService,IPaymentService PaymentService,IConfiguration configuration)
         {
             _orderService = orderService;
+            _PaymentService = PaymentService;
+            _config = configuration;
         }
 
         [HttpGet]
@@ -59,10 +67,18 @@ namespace Getdata1.Areas.User.Controllers
                 {
                     // 2. Xoá giỏ hàng sau khi đặt thành công
                     HttpContext.Session.Remove(CartSessionKey);
-
                     // 3. Trả về link redirect tới trang Success (bảo mật bằng TempData)
                     TempData["LastOrderId"] = orderId;
                     return Json(new { success = true, redirectUrl = Url.Action("Success", new { id = orderId }) });
+                    //GOI USER NEU THANH TOAN ONLINE 
+                    //if (checkoutData.PaymentMethod == "banking")
+                    //{
+                    //    string paymentUrl = await _PaymentService.CreatePaymentUrlAsync(orderId, HttpContext);
+                    //    return Json(new {success = true,isOnline=true, redirectUrl = paymentUrl});
+                    //}
+                    //// else neeu la tien mat 
+                    //// Nếu thanh toán khi nhận hàng (COD)
+                    //return Json(new { success = true, isOnline = false, redirectUrl = Url.Action("Index","Order", new { id = orderId }) });
                 }
 
                 return Json(new { success = false, message = "Không thể tạo đơn hàng." });
@@ -129,5 +145,54 @@ namespace Getdata1.Areas.User.Controllers
 
             return View("~/Areas/User/Views/Cart/Order.cshtml", viewModel);
         }
+
+
+        public async Task<IActionResult> PaymentCallBack()
+        {
+            // 1. Lấy toàn bộ tham số từ VNPAY gửi về
+            var queryParams = Request.Query;
+
+            // 2. Lấy HashSecret từ cấu hình (phải khớp với Key trên trang Admin VNPAY)
+            string hashSecret = _config["VnPay:HashSecret"]?.Trim();
+            // 3. Kiểm tra tính hợp lệ của chữ ký (vnp_SecureHash)
+            //service hoặc helper class để kiểm tra (VnPayLibrary)
+            var vnPay = new VnPayLibrary(); // Đây là class thư viện chuẩn của VNPAY
+            foreach (var (key, value) in queryParams)
+            {
+                if (!string.IsNullOrEmpty(key) && key.StartsWith("vnp_"))
+                {
+                    vnPay.AddRequestData(key, value);
+                }
+            }
+            var vnp_SecureHash = Request.Query["vnp_SecureHash"].ToString(); // lay serce t code cua sever va vnpay da cap 
+            bool checkSignature = vnPay.ValidateSignature(vnp_SecureHash, hashSecret); // chec kchu ki 
+            if (checkSignature)
+            {
+                var vnp_ResponseCode = Request.Query["vnp_ResponseCode"].ToString();
+                var vnp_TxnRef = Request.Query["vnp_TxnRef"].ToString(); // Đây là OrderId
+                if (vnp_ResponseCode == "00")
+                {
+                    // THANH TOÁN THÀNH CÔNG
+                    // Gọi service để cập nhật status đơn hàng trong DB
+                    await _orderService.UpdateOrderStatusAsync(int.Parse(vnp_TxnRef), OrderStatus.Paid);
+
+                    return RedirectToAction("Success", new { id = int.Parse(vnp_TxnRef) });
+                }
+                else
+                {
+                    // THANH TOÁN THẤT BẠI
+                    NotificationHelper.SetNotification(TempData, "Payment fail.", "error");
+                    // Đẩy khách về trang giỏ hàng hoặc trang đặt hàng
+                    return RedirectToAction("Index", "Cart");
+                }
+            }
+            else
+            {
+                // CHỮ KÝ SAI (Có dấu hiệu can thiệp)
+                return View("PaymentError");
+            }
+        }
+
+
+        }
     }
-}

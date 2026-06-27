@@ -442,7 +442,7 @@
         loadCart();
         renderSuggest();
         
-        const isAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
+        const isAuthenticated = @User.Identity!.IsAuthenticated.ToString().ToLower();
 
         document.getElementById('promoInput').addEventListener('keydown', e => {
             if (e.key === 'Enter') applyPromo();
