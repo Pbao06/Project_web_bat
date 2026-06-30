@@ -98,8 +98,8 @@ namespace Getdata1.Areas.Admin.Controllers
                 filter.CurrentPage = page;
                 filter.TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
                 // lấy data top 1 
-                var top1sp = await _productService.GetTop1Product();
-                ViewBag.Top1 = top1sp;
+                //var top1sp = await _productService.GetTop1Product();
+                //ViewBag.Top1 = top1sp;
                 // lấy số lượng sản phẩm -> lowstock
                 var lowstocksanpham = await _productService.Laylowstock(); // lấy số lượng sản phẩm mà Low Stock
                 ViewBag.Soluonglowstock = lowstocksanpham;

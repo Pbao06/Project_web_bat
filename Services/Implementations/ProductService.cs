@@ -156,19 +156,19 @@ namespace Getdata1.Services.Implementations
             return _mapper.Map<IEnumerable<ProductDto>>(products);
         }
         // lấy sản phẩm bán chạy nhất 
-        public async Task<Top1ProductDTO> GetTop1Product()
-        {
-            // thg loz Dto chỉ là nơi để hứng và xử lý dữ liệu  đựng tạm  -> thg model là cái khung 
-            // DATA SQL LÀ CỤC ĐẤT SÉT => MƯỢN KHUNG DTO -> NẶN RA HÌNH HÀI -> LẤY ĐẤT ĐÃ NẶN RA KHỎI KHUNG TRẢ VỀ CHO CONTROLLER 
-            // Nhịp 1: Chạy lệnh EXEC nguyên thủy, không chế cháo, và bưng trọn gói về RAM (dùng ToListAsync)
-            var listResult = await _context.Database
-                .SqlQuery<Top1ProductDTO>($"EXEC sp_Laytop1sanpham")
-                .ToListAsync();
+        //public async Task<Top1ProductDTO> GetTop1Product()
+        //{
+        //    // thg loz Dto chỉ là nơi để hứng và xử lý dữ liệu  đựng tạm  -> thg model là cái khung 
+        //    // DATA SQL LÀ CỤC ĐẤT SÉT => MƯỢN KHUNG DTO -> NẶN RA HÌNH HÀI -> LẤY ĐẤT ĐÃ NẶN RA KHỎI KHUNG TRẢ VỀ CHO CONTROLLER 
+        //    // Nhịp 1: Chạy lệnh EXEC nguyên thủy, không chế cháo, và bưng trọn gói về RAM (dùng ToListAsync)
+        //    var listResult = await _context.Database
+        //        .SqlQuery<Top1ProductDTO>($"EXEC sp_Laytop1sanpham")
+        //        .ToListAsync();
 
-            // Nhịp 2: Lúc này data đã nằm an toàn trên RAM của C#. Mình thoải mái thò tay vào lấy thằng đầu tiên ra!
-            var topProduct = listResult.FirstOrDefault();
-            return topProduct;
-        }
+        //    // Nhịp 2: Lúc này data đã nằm an toàn trên RAM của C#. Mình thoải mái thò tay vào lấy thằng đầu tiên ra!
+        //    var topProduct = listResult.FirstOrDefault();
+        //    return topProduct;
+        //}
         // Hàm đếm số lượng sản phẩm đang bị outstock
         public async Task<int> Laylowstock()
         {

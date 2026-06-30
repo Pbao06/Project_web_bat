@@ -15,7 +15,7 @@ namespace Getdata1.Services.Interfaces
             int? categoryId, string? searchTerm, string? brand, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize);
         Task<IEnumerable<ProductDto>> GetRelatedProductsAsync(int categoryId, int currentProductId, int count = 4);
         Task<IEnumerable<ProductDto>> SearchQuickAsync(string query, int limit = 5);
-        Task<Top1ProductDTO> GetTop1Product();
+        //Task<Top1ProductDTO> GetTop1Product();
         Task<int> Laylowstock();
     }
 }
